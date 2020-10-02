@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">DigitalSupplierAgent</string>
+
+    <string name="email_hint_txt">Email</string>
+    <string name="password_hint_txt">Password</string>
+    <string name="remember_me_check">Remember me</string>
+    <string name="forgot_password"><u>Forgot password?</u></string>
+    <string name="sign_in_btn">Sign in</string>
+    <string name="no_account_txt">Don\'t have an account yet?</string>
+    <string name="sign_up">Sign up now</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="role">Role</string>
+    <string name="phone_number">Phone number</string>
+    <string name="terms_conditions">I agree to the terms &amp; conditions</string>
+    <string name="sign_up_btn">Sign up</string>
+    <string name="account_exist">Already have an account?</string>
+</resources>
