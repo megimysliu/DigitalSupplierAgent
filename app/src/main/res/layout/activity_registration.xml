@@ -101,6 +101,7 @@
                     app:boxStrokeColor="@color/colorGray"
                     app:boxStrokeWidth="1dp"
                     android:layout_marginBottom="8dp"
+                    app:endIconMode="password_toggle"
                     app:endIconDrawable="@drawable/ic_visibility"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
