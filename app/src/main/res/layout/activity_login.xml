@@ -99,6 +99,7 @@
                     android:textAllCaps="false"
                     android:layout_marginBottom="24dp"
                     android:text="@string/sign_in_btn"
+                    android:backgroundTint="@color/colorBlack"
                     android:layout_height="wrap_content"/>
 
                 <TextView

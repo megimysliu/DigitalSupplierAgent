@@ -16,4 +16,7 @@
     <string name="terms_conditions">I agree to the terms &amp; conditions</string>
     <string name="sign_up_btn">Sign up</string>
     <string name="account_exist">Already have an account?</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
