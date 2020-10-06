@@ -64,7 +64,6 @@
         app:boxStrokeColor="@color/colorGray"
         app:boxStrokeWidth="1dp"
         android:layout_marginBottom="4dp"
-
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -73,7 +72,7 @@
             android:layout_height="wrap_content"
             android:lines="3"
             android:maxLines="3"
-            android:hint="@string/description" />
+            android:hint="@string/notes" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -106,6 +105,16 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <Button
+        android:id="@+id/outlinedButton"
+        android:layout_width="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:text="@string/select_place"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+        android:layout_marginBottom="4dp"
+        />
+
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -125,35 +134,83 @@
             android:hint="@string/date" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:boxStrokeColor="@color/colorGray"
-        app:boxStrokeWidth="1dp"
-        app:endIconMode="custom"
-        app:endIconDrawable="@drawable/ic_time"
-        android:layout_marginBottom="4dp"
-        app:helperTextEnabled="true"
-        app:helperText="@string/time_helper_txt"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginBottom="4dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/appointment_time"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/time" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:boxStrokeColor="@color/colorGray"
+            app:boxStrokeWidth="1dp"
+            app:endIconMode="custom"
+            app:endIconDrawable="@drawable/ic_time"
+            android:layout_marginBottom="4dp"
+            app:helperTextEnabled="true"
+            app:helperText="@string/time_helper_txt"
+            android:layout_weight="1"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/appointment_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/time" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/colorGray"
+            app:boxStrokeWidth="1dp"
+            android:layout_marginBottom="4dp"
+            app:helperTextEnabled="true"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/duration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/duration" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+
 
     <Button
-        android:id="@+id/outlinedButton"
-        android:layout_width="wrap_content"
+        android:id="@+id/addPhotos"
+        android:layout_width="match_parent"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
-        android:text="@string/select_place"
-        app:icon="@drawable/ic_add_location"
+        android:text="@string/add_photo"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+        app:boxStrokeColor="@color/colorGray"
+        app:boxStrokeWidth="1dp"
         android:layout_marginBottom="4dp"
         />
+
+    <Button
+        android:id="@+id/add_appointment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_appointment"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@color/colorBlack"
+        android:background="@drawable/button_shape"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="24dp"
+        android:textAllCaps="false"
+
+        android:layout_marginBottom="16dp"/>
+
+
 
 </LinearLayout>
 
