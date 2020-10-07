@@ -7,5 +7,9 @@
 
     <color name="colorLightGray">#fafafa</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorRed">#AE0A0A</color>
+    <color name="colorYellow">#F6BE16</color>
+    <color name="colorGreen">#4CAF50</color>
+
 
 </resources>

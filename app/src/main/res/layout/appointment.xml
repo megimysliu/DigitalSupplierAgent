@@ -2,221 +2,157 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp">
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <LinearLayout
+                android:id="@+id/appointment_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/business_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="134dp"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/kfc"
+                    android:contentDescription="KFC"
+                    android:layout_marginBottom="16dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@android:color/white"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/appointment_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Appointment title"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        />
+                    <TextView
+                        android:id="@+id/client_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Client name:"
+
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textColor="?android:attr/textColorSecondary"
+                        />
+
+                    <TextView
+                        android:id="@+id/appointment_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Location:"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textColor="?android:attr/textColorSecondary"
+                        />
+                    <TextView
+                        android:id="@+id/apointment_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Date:"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textColor="?android:attr/textColorSecondary"
+                        />
+
+                    <TextView
+                        android:id="@+id/appointment_duration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Duration:"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textColor="?android:attr/textColorSecondary"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="This is a description This is a description
+                         This is a description This is a description This is a descriptionThis is a description"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textColor="?android:attr/textColorSecondary"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/addAppointmentLabel"
+                android:id="@+id/comments_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/add_appointment"
-                android:layout_centerHorizontal="true"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp"
-                android:layout_alignParentTop="true"/>
-<LinearLayout
-    android:id="@+id/formLinear"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:layout_below="@+id/addAppointmentLabel"
-    android:layout_marginTop="32dp"
-    android:orientation="vertical">
+                android:text="@string/comments"
+                android:layout_below="@id/appointment_linear"
+                android:layout_marginTop="24dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="8dp"
+                android:textAppearance="?attr/textAppearanceHeadline6"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:boxStrokeColor="@color/colorGray"
-        app:boxStrokeWidth="1dp"
-        android:layout_marginBottom="4dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <Button
+                android:id="@+id/add_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="16dp"
+                android:layout_below="@id/appointment_linear"
+                android:layout_marginStart="16dp"
+                android:textAllCaps="false"
+                app:icon="@drawable/ic_add"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:layout_alignBaseline="@id/comments_label"
+                android:text="@string/add_comment" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/title" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:boxStrokeColor="@color/colorGray"
-        app:boxStrokeWidth="1dp"
-        android:layout_marginBottom="4dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lines="3"
-            android:maxLines="3"
-            android:hint="@string/notes" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:boxStrokeColor="@color/colorGray"
-        app:boxStrokeWidth="1dp"
-        android:layout_marginBottom="4dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/appointment_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/type" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-
-        <AutoCompleteTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="@string/client"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:id="@+id/outlinedButton"
-        android:layout_width="match_parent"
-        android:layout_gravity="center_horizontal"
-        android:layout_height="wrap_content"
-        android:text="@string/select_place"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-        android:layout_marginBottom="4dp"
-        />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:boxStrokeColor="@color/colorGray"
-        app:boxStrokeWidth="1dp"
-        app:endIconMode="custom"
-        app:endIconDrawable="@drawable/ic_calendar"
-        android:layout_marginBottom="4dp"
-        app:helperTextEnabled="true"
-        app:helperText="@string/helper_txt"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/appointment_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/date" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_marginBottom="4dp">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:boxStrokeColor="@color/colorGray"
-            app:boxStrokeWidth="1dp"
-            app:endIconMode="custom"
-            app:endIconDrawable="@drawable/ic_time"
-            android:layout_marginBottom="4dp"
-            app:helperTextEnabled="true"
-            app:helperText="@string/time_helper_txt"
-            android:layout_weight="1"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/appointment_time"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/comments_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/time" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:boxStrokeColor="@color/colorGray"
-            app:boxStrokeWidth="1dp"
-            android:layout_marginBottom="4dp"
-            app:helperTextEnabled="true"
-            android:layout_marginLeft="8dp"
-            android:layout_weight="1"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/duration"
+                android:layout_below="@id/comments_label"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp"
+                android:layout_alignParentStart="true"
+                android:visibility="invisible"
+                android:layout_marginStart="8dp"/>
+            <TextView
+                android:id="@+id/no_comments_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/duration" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout>
-
-
-
-    <Button
-        android:id="@+id/addPhotos"
-        android:layout_width="match_parent"
-        android:layout_gravity="center_horizontal"
-        android:layout_height="wrap_content"
-        android:text="@string/add_photo"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-        app:boxStrokeColor="@color/colorGray"
-        app:boxStrokeWidth="1dp"
-        android:layout_marginBottom="4dp"
-        />
-
-    <Button
-        android:id="@+id/add_appointment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add_appointment"
-        android:layout_gravity="center_horizontal"
-        android:backgroundTint="@color/colorBlack"
-        android:background="@drawable/button_shape"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="24dp"
-        android:textAllCaps="false"
-
-        android:layout_marginBottom="16dp"/>
-
-
-
-</LinearLayout>
+                android:text="@string/no_comments"
+                android:layout_marginTop="64dp"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_marginBottom="24dp"
+                android:layout_below="@id/comments_label"
+                android:layout_centerHorizontal="true"/>
 
 
         </RelativeLayout>
 
     </ScrollView>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
