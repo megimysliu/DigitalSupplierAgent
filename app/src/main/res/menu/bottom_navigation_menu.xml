@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/clientsFragment"
+        android:title="@string/clients"
+        android:icon="@drawable/ic_list"/>
+
+    <item
+        android:id="@+id/meetingsFragment"
+        android:title="@string/meetings"
+        android:icon="@drawable/ic_meeting"/>
+
+    <item
+        android:id="@+id/addFragment"
+        android:title="@string/add"
+        android:icon="@drawable/ic_plus_sign"/>
+
+    <item
+        android:id="@+id/productsFragment"
+        android:title="@string/products"
+        android:icon="@drawable/ic_product"/>
+
+    <item
+        android:id="@+id/ordersFragment"
+        android:title="@string/orders"
+        android:icon="@drawable/ic_shopping_bag_of_normal_design_outline"/>
+
+
+
+
+
+
+</menu>

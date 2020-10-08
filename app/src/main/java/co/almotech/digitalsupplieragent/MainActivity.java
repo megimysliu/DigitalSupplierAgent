@@ -1,6 +1,7 @@
 package co.almotech.digitalsupplieragent;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,5 +24,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
 
 
+    }
+
+    private void setViews(){
+
+       // NavigationUI.setUpWithNavController(mBinding.bottomNavView,mBinding.fragNavHost);
     }
 }
