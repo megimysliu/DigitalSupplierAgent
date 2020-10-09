@@ -9,6 +9,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scrollbars="none"
         android:layout_margin="8dp">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -20,9 +21,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="16dp"
                 android:layout_alignParentTop="true">
 
                 <LinearLayout
@@ -34,8 +32,7 @@
                     android:layout_alignParentTop="true"
                     android:background="@color/colorLightGray"
                     android:layout_marginBottom="16dp"
-                    android:padding="8dp"
-                    android:layout_marginTop="16dp">
+                    android:padding="8dp">
 
 
 
@@ -183,7 +180,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/colorMediumGray"
-                    android:layout_margin="8dp"/>
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"/>
 
                 <LinearLayout
                     android:id="@+id/linearLayout"
@@ -213,7 +211,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/colorMediumGray"
-                    android:layout_margin="8dp"/>
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"/>
 
                 <Button
                     android:id="@+id/charge"
@@ -224,6 +223,7 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="16dp"
                     android:textAllCaps="false"
+                    android:backgroundTint="@android:color/black"
                     android:layout_marginBottom="24dp"
                     android:text="@string/charge"
                     android:layout_height="wrap_content"/>
