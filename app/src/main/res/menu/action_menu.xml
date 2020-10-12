@@ -2,22 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/profile"
+        android:id="@+id/agentFragment"
         android:title="@string/profile"
         android:icon="@drawable/ic_profile_user"
         android:iconTint="@android:color/white"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/cart"
+        android:id="@+id/cartFragment"
         android:title="@string/orders"
         android:icon="@drawable/ic_cart"
         android:iconTint="@android:color/white"
         app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/logout"
-        android:title="@string/logout"
-        android:icon="@drawable/ic_logout"
-        android:iconTint="@android:color/white"
-        app:showAsAction="ifRoom"/>
+
 
 </menu>

@@ -13,7 +13,11 @@
         android:id="@+id/meetingsFragment"
         android:name="co.almotech.digitalsupplieragent.fragments.MeetingsFragment"
         android:label="fragment_meetings"
-        tools:layout="@layout/fragment_meetings" />
+        tools:layout="@layout/fragment_meetings" >
+        <action
+            android:id="@+id/action_meetingsFragment_to_addMeetingFragment"
+            app:destination="@id/addMeetingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addFragment"
         android:name="co.almotech.digitalsupplieragent.fragments.AddFragment"
@@ -29,4 +33,17 @@
         android:name="co.almotech.digitalsupplieragent.fragments.OrdersFragment"
         android:label="fragment_orders"
         tools:layout="@layout/fragment_orders" />
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="co.almotech.digitalsupplieragent.fragments.CartFragment"
+        android:label="CartFragment" />
+    <fragment
+        android:id="@+id/agentFragment"
+        android:name="co.almotech.digitalsupplieragent.fragments.AgentFragment"
+        android:label="AgentFragment" />
+    <fragment
+        android:id="@+id/addMeetingFragment"
+        android:name="co.almotech.digitalsupplieragent.fragments.AddMeetingFragment"
+        android:label="fragment_add_meeting"
+        tools:layout="@layout/fragment_add_meeting" />
 </navigation>
