@@ -158,11 +158,7 @@
 
 
 
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/terms_conditions"/>
+
                 <Button
                     android:id="@+id/log_in_btn"
                     android:layout_width="match_parent"
@@ -186,7 +182,7 @@
                     android:text="@string/account_exist"/>
 
                 <TextView
-                    android:id="@+id/sign_up_textView"
+                    android:id="@+id/sign_in_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

@@ -3,6 +3,7 @@ package co.almotech.digitalsupplieragent.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,7 @@ import co.almotech.digitalsupplieragent.R;
 import co.almotech.digitalsupplieragent.databinding.FragmentLoginBinding;
 
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements View.OnClickListener {
     private FragmentLoginBinding mBinding;
 
 
@@ -21,11 +22,6 @@ public class LoginFragment extends Fragment {
     }
 
 
-    public static LoginFragment newInstance(String param1, String param2) {
-        LoginFragment fragment = new LoginFragment();
-
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,7 +33,12 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = FragmentLoginBinding.inflate(inflater,container,false);
-        View v = mBinding.getRoot();
-        return v;
+        mBinding.signUpTextView.setOnClickListener(this);
+        return  mBinding.getRoot();
+    }
+
+    @Override
+    public void onClick(View v) {
+        Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_registrationFragment);
     }
 }

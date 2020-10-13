@@ -3,6 +3,7 @@ package co.almotech.digitalsupplieragent.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,7 @@ import co.almotech.digitalsupplieragent.databinding.FragmentMeetingsBinding;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MeetingsFragment extends Fragment {
+public class MeetingsFragment extends Fragment implements View.OnClickListener {
     private FragmentMeetingsBinding mBinding;
 
     public MeetingsFragment() {
@@ -26,7 +27,14 @@ public class MeetingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = FragmentMeetingsBinding.inflate(inflater,container,false);
-        View v = mBinding.getRoot();
-        return v;
+         mBinding.addMeeting.setOnClickListener(this);
+
+        return mBinding.getRoot();
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        Navigation.findNavController(v).navigate(R.id.action_meetingsFragment_to_addMeetingFragment);
     }
 }

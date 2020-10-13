@@ -225,7 +225,7 @@
                     android:textAllCaps="false"
                     android:backgroundTint="@android:color/black"
                     android:layout_marginBottom="24dp"
-                    android:text="@string/charge"
+                    android:text="@string/add_order"
                     android:layout_height="wrap_content"/>
 
             </LinearLayout>

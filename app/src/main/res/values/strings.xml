@@ -72,4 +72,6 @@
     <string name="splash">Splash icon</string>
     <string name="digital_supplier">DigitalSupplierAgent</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_order">Add order</string>
+    <string name="add_products">Add products</string>
 </resources>

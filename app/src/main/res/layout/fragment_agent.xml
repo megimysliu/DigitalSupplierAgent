@@ -169,7 +169,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
-                android:text="Appointments"
+                android:text="@string/meetings"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
