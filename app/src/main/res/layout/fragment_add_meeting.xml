@@ -166,16 +166,9 @@
                     android:weightSum="2"
                     android:layout_marginBottom="4dp">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:boxStrokeColor="@color/colorGray"
                         app:boxStrokeWidth="1dp"
@@ -195,7 +188,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:boxStrokeColor="@color/colorGray"
                         app:boxStrokeWidth="1dp"

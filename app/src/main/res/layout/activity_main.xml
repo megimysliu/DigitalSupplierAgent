@@ -17,7 +17,7 @@
             android:layout_height="?attr/actionBarSize"
             app:title="@string/digital_supplier"
             app:menu="@menu/action_menu"
-            app:navigationIcon="@drawable/ic_logout_"
+
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
             />
 

@@ -23,62 +23,24 @@
                 android:orientation="vertical"
                 android:layout_alignParentTop="true">
 
-                <LinearLayout
-                    android:id="@+id/clientLinear"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/client"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:background="@color/colorLightGray"
-                    android:layout_marginBottom="16dp"
-                    android:padding="8dp">
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="24dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
-
-
-                    <TextView
-                        android:id="@+id/avatar"
-                        android:layout_width="85dp"
-                        android:layout_height="85dp"
-                        android:background="@drawable/circle"
-                        android:gravity="center_vertical|center_horizontal"
-                        android:padding="4dp"
-                        android:paddingBottom="16dp"
-                        android:text="AJ"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="30sp"
-                        android:textStyle="bold"
-                        android:layout_marginRight="16dp" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    <AutoCompleteTextView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/clientName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Andrea Jones"
-                            android:textStyle="bold"
-                            android:textSize="18sp"/>
+                        android:inputType="text"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:hint="@string/select_client"
+                        />
 
-                        <TextView
-                            android:id="@+id/email"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="andrea.jones@gmail.com"/>
-
-                        <TextView
-                            android:id="@+id/phone_number"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="+355 79 56 908"/>
-
-                    </LinearLayout>
-                </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
