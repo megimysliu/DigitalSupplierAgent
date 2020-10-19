@@ -74,4 +74,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_order">Add order</string>
     <string name="add_products">Add products</string>
+    <string name="add_location_label_txt">Click button to add location</string>
+    <string name="categories">Categories</string>
+    <string name="view_all">View all</string>
+    <string name="address">Address</string>
+
+
 </resources>

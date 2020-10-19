@@ -129,7 +129,7 @@
                         android:id="@+id/add_location_btn"
                         android:layout_width="0dp"
                         android:layout_gravity="center_horizontal"
-                        android:layout_height="66dp"
+                        android:layout_height="64dp"
                         android:text="@string/select_place"
                         android:layout_weight="1"
                         android:textAllCaps="false"

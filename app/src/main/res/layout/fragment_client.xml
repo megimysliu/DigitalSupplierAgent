@@ -47,7 +47,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="28dp"
                     android:layout_marginTop="40dp"
-                    android:layout_toRightOf="@id/avatar"
+                    android:layout_toEndOf="@id/avatar"
                     android:text="Andrea Jones"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -62,11 +62,11 @@
                     android:background="@drawable/circle"
                     android:layout_marginTop="16dp"
                     android:backgroundTint="@android:color/white"
-                    android:drawableRight="@drawable/ic_email"
                     android:drawablePadding="4dp"
-                    android:drawableTint="@color/colorPrimary"
                     android:gravity="center"
-                    android:padding="4dp" />
+                    android:padding="4dp"
+                    app:drawableTint="@color/colorPrimary"
+                    app:drawableEndCompat="@drawable/ic_email" />
 
                 <TextView
                     android:id="@+id/email"
@@ -75,7 +75,7 @@
                     android:layout_alignBaseline="@+id/email_label"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="32dp"
-                    android:layout_toRightOf="@id/email_label"
+                    android:layout_toEndOf="@id/email_label"
                     android:text="andrea.jones@gmail.com" />
 
                 <TextView
@@ -86,14 +86,13 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
                     android:background="@drawable/circle"
                     android:backgroundTint="@android:color/white"
-                    android:drawableRight="@drawable/ic_call"
                     android:drawablePadding="4dp"
-                    android:drawableTint="@color/colorPrimary"
                     android:gravity="center"
-                    android:padding="4dp" />
+                    android:padding="4dp"
+                    app:drawableTint="@color/colorPrimary"
+                    app:drawableEndCompat="@drawable/ic_call" />
 
                 <TextView
                     android:id="@+id/phone_number"
@@ -103,8 +102,38 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
-                    android:layout_toRightOf="@+id/phone_number_label"
+                    android:layout_toEndOf="@+id/phone_number_label"
                     android:text="+355 89 75 76 890" />
+
+                <TextView
+                    android:id="@+id/location_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/phone_number_label"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/circle"
+                    android:backgroundTint="@android:color/white"
+                    android:drawablePadding="4dp"
+                    android:gravity="center"
+                    app:drawableTint="@color/colorPrimary"
+                    app:drawableEndCompat="@drawable/ic_location"/>
+
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/location_icon"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_toEndOf="@+id/location_icon"
+                    android:text="@string/location_label" />
+
+
+
 
             </RelativeLayout>
 

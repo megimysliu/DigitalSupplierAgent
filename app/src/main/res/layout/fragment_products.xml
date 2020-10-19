@@ -44,12 +44,55 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <TextView
+                android:id="@+id/categories_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/categories"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:layout_below="@+id/search_cardview"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"/>
+
+            <TextView
+                android:id="@+id/view_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/categories_label"
+                android:text="@string/view_all"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="8dp"
+                android:textSize="16sp"
+                android:visibility="invisible"
+                android:textColor="@color/colorPrimary"
+                app:drawableTint="@color/colorPrimary"
+                app:drawableEndCompat="@drawable/ic_arrow_right" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/categories_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/categories_label"/>
+
+            <TextView
+                android:id="@+id/products_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/products"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:layout_below="@+id/categories_recyclerview"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/products_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_below="@id/search_cardview"/>
+                android:layout_margin="8dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/products_label"/>
         </RelativeLayout>
 
     </ScrollView>
