@@ -2,23 +2,30 @@ package co.almotech.digitalsupplieragent.fragments;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import co.almotech.digitalsupplieragent.R;
+import java.util.Objects;
+
+import co.almotech.digitalsupplieragent.BottomNavGraphDirections;
+import co.almotech.digitalsupplieragent.auth.LoginViewModel;
 import co.almotech.digitalsupplieragent.databinding.FragmentLoginBinding;
+import co.almotech.digitalsupplieragent.data.model.ModelUserResponse;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
+public class LoginFragment extends Fragment {
 
-public class LoginFragment extends Fragment implements View.OnClickListener {
     private FragmentLoginBinding mBinding;
     private NavController navController;
+    LoginViewModel mLoginViewModel;
 
 
     public LoginFragment() {
@@ -37,24 +44,50 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = FragmentLoginBinding.inflate(inflater,container,false);
-        mBinding.signUpTextView.setOnClickListener(this);
-        mBinding.forgotPassword.setOnClickListener(this);
+
+        mLoginViewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
+
+        mBinding.logInBtn.setOnClickListener(v -> {
+        mLoginViewModel.login(Objects.requireNonNull(mBinding.email.getText().toString()),
+                             Objects.requireNonNull(mBinding.password.getText().toString()));
+            mLoginViewModel.loginLiveData.observe(getViewLifecycleOwner(),this::verifyLoginCredentials);
+
+        });
+
+        mBinding.forgotPassword.setOnClickListener(v -> {
+            NavHostFragment.findNavController(this)
+                    .navigate(LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment());
+        });
+
+        mBinding.signUpTextView.setOnClickListener(v -> {
+
+            NavHostFragment.findNavController(this)
+                    .navigate(LoginFragmentDirections.actionLoginFragmentToRegistrationFragment());
+
+        });
+
+
         return  mBinding.getRoot();
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        navController = Navigation.findNavController(view);
+
+    private void verifyLoginCredentials(ModelUserResponse response){
+        if(!response.getError()){
+           mLoginViewModel.setToken(response.getToken());
+           mLoginViewModel.changeUserData(response.getData());
+            NavHostFragment.findNavController(this).navigate(BottomNavGraphDirections.actionHome());
+        }else{
+            if(response.getMessage().equals("Unauthorized Access")){
+
+                Toast.makeText(requireContext(),"Incorrect email/password",Toast.LENGTH_SHORT).show();
+            }else{
+
+                Toast.makeText(requireContext(),response.getMessage(),Toast.LENGTH_SHORT).show();
+
+            }
+
+        }
     }
 
-    @Override
-    public void onClick(View v) {
-        if(v == mBinding.signUpTextView ) {
-            navController.navigate(R.id.action_loginFragment_to_registrationFragment);
-        }else if(v == mBinding.forgotPassword){
-        navController.navigate(R.id.action_loginFragment_to_forgotPasswordFragment);
-    }
 
     }
-}

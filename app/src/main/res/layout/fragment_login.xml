@@ -84,9 +84,9 @@
                         android:id="@+id/remember_me"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:layout_weight="1"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginEnd="8dp"
                         android:text="@string/remember_me_check"/>
 
                     <TextView
@@ -102,14 +102,14 @@
                     android:id="@+id/log_in_btn"
                     android:layout_width="match_parent"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/button_shape"
+                    style="@style/MainButton"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="16dp"
                     android:textAllCaps="false"
                     android:layout_marginBottom="24dp"
                     android:text="@string/sign_in_btn"
-                    android:backgroundTint="@color/colorBlack"
+
                     android:layout_height="wrap_content"/>
 
                 <TextView

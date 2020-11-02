@@ -17,10 +17,37 @@
     <style name="MtButtonStyle"
         parent="Widget.MaterialComponents.Button">
         <item name="materialThemeOverlay">@style/BlackButtonThemeOverlay</item>
+        <item name="backgroundColor">@android:color/black</item>
     </style>
 
     <style name="BlackButtonThemeOverlay">
         <item name="backgroundColor">@color/colorBlack</item>
+    </style>
+
+    <style name="iconBtn"
+        parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/colorLightRed</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="minWidth">24dp</item>
+
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="paddingStart">0dp</item>
+        <item name="paddingEnd">2dp</item>
+        <item name="iconPadding">0dp</item>
+        <item name="cornerRadius">4dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="iconGravity">textStart</item>
+
+    </style>
+
+    <style name="MainButton" parent="Widget.MaterialComponents.Button">
+        <item name="background">@drawable/button_shape</item>
+        <item name="backgroundTint">@android:color/black</item>
     </style>
 
 

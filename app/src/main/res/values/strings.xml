@@ -62,7 +62,7 @@
     <string name="location_label">Location</string>
     <string name="meeting_img_desc">Image description</string>
     <string name="send_email_btn_text">Send email</string>
-    <string name="change_password">Forgot password</string>
+
     <string name="forgot_pwd_detail_txt">A link will be sent to your email to reset your password</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="save_changes">Save changes</string>
@@ -78,6 +78,28 @@
     <string name="categories">Categories</string>
     <string name="view_all">View all</string>
     <string name="address">Address</string>
+    <string name="add_client">Add client</string>
+    <string name="img_description">Category img</string>
+    <string name="inital_quantity">0</string>
+    <string name="name">Name</string>
+    <string name="nuis">Nuis</string>
+    <string name="close">Close</string>
+    <string name="search_categories">Search for categories</string>
+    <string name="change_password">Change password</string>
+    <string name="old_password">Old password</string>
+    <string name="new_password">New password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="created_at">Created on</string>
+    <string name="cash">Cash</string>
+    <string name="quantity">Items: %s </string>
+    <string name="currency">$%s</string>
+    <string name="url_category_photos">https://develop.almotech.co/digital_supplier/public/storage/</string>
+    <string name="escape_char">\n</string>
+    <string name="empty_str"> </string>
+    <string name="logout_confirm_txt">Are you sure you want to log out?</string>
+    <string name="forgot_password_title">Forgot password</string>
+    <string name="added_to_cart">Added to cart</string>
+
 
 
 </resources>
