@@ -64,13 +64,12 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
         mMainViewModel = new ViewModelProvider(requireActivity()).get(ClientsViewModel.class);
         mLoginViewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
         setHasOptionsMenu(true);
-
         mBinding = FragmentClientsBinding.inflate(inflater,container,false);
-
-        mNavController = NavHostFragment.findNavController(this);
-        mMainViewModel.getClients();
-        setupRecyclerView();
         mMainViewModel.clients().observe(getViewLifecycleOwner(),this::consumeClients);
+        setupRecyclerView();
+        mNavController = NavHostFragment.findNavController(this);
+
+        mMainViewModel.getClients();
 
         View v = mBinding.getRoot();
 
@@ -78,24 +77,24 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
              mNavController.navigate(ClientsFragmentDirections.actionAddClient())
                 );
 
-        mBinding.searchTxt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                searchClient(s.toString());
-
-            }
-        });
+//        mBinding.searchTxt.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//                searchClient(s.toString());
+//
+//            }
+//        });
 
 
         System.out.println("Clients : " + mClients);
@@ -160,6 +159,7 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
             if(clients != null){
                 mClients.clear();
                 mClients.addAll(clients);
+                mClientsAdapter.notifyDataSetChanged();
 
             }
         }else{
@@ -174,13 +174,13 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
 
     }
 
-    private void searchClient(String s) {
-        List<ModelClients> data = StreamSupport.stream(mClients)
-                .filter(modelClients -> modelClients.getName().contains(s)).collect(toList());
-
-        mClientsAdapter = new ClientsAdapter(this, data);
-        mBinding.clientsRecyclerview.setAdapter(mClientsAdapter);
-    }
+//    private void searchClient(String s) {
+//        List<ModelClients> data = StreamSupport.stream(mClients)
+//                .filter(modelClients -> modelClients.getName().contains(s)).collect(toList());
+//
+//        mClientsAdapter = new ClientsAdapter(this, data);
+//        mBinding.clientsRecyclerview.setAdapter(mClientsAdapter);
+//    }
 
 
 }

@@ -34,7 +34,7 @@
             android:textColor="@color/colorPrimary"
             android:textSize="30sp"
             android:textStyle="bold"
-            android:layout_marginEnd="16dp" />
+            android:layout_marginEnd="8dp" />
 
         <LinearLayout
             android:id="@+id/clientLinear"
@@ -45,7 +45,7 @@
             android:layout_toEndOf="@id/avatar"
             android:layout_marginStart="8dp"
             android:padding="8dp"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="8dp">
 
 
 

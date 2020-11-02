@@ -132,6 +132,7 @@ public class ProductsFragment extends Fragment implements CategoriesAdapter.Cate
                 mViewModel.selectedCategory = -1;
             }else{
                 mAdapter.setSelected(categories.get(0).getId());
+                updateProducts(categories.get(0).getId());
             }
 
             mAdapter.notifyDataSetChanged();

@@ -30,27 +30,17 @@
             android:contentDescription="@string/img_description"
             app:srcCompat="@drawable/ic_arrow_right" />
 
-        <TextView
-            android:id="@+id/dateCircle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="@{MyDateFormat.shortDate(order.createdAt)}"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
 
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:orientation="vertical"
-            android:layout_marginBottom="16dp"
-            android:layout_toEndOf="@id/dateCircle">
+            android:layout_marginBottom="8dp"
+            android:layout_alignParentStart="true">
 
             <TextView
                 android:id="@+id/title"
@@ -67,20 +57,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{MyDateFormat.getFormattedDate(order.createdAt) +  ' ' +'|' + ' '  + order.status}"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:id="@+id/sum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.format(@string/currency,Integer.toString(order.priceTotal))}"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:textSize="18sp"
+                android:textStyle="bold"
+             />
+
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/sum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="@{String.format(@string/currency,Integer.toString(order.priceTotal))}"
-            android:textAppearance="?attr/textAppearanceHeadline6"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginEnd="16dp"
-            android:layout_toStartOf="@id/imageView2"/>
+
 
 
     </RelativeLayout>

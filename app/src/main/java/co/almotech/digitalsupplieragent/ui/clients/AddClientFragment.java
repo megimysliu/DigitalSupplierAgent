@@ -42,7 +42,7 @@ public class AddClientFragment extends Fragment {
         mNavController = NavHostFragment.findNavController(this);
 
 
-        mBinding.addLocationBtn.setOnClickListener(v ->{
+        mBinding.locationText.setOnClickListener(v ->{
 
             mNavController.navigate(AddClientFragmentDirections.actionAddClientFragmentToMapsFragment());
                 });

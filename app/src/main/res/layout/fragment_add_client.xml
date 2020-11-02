@@ -122,21 +122,14 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/locationText"
                             android:layout_width="match_parent"
+                            android:textSize="14sp"
+                            android:focusableInTouchMode="false"
+                            android:cursorVisible="false"
+                            android:inputType="textNoSuggestions"
                             android:layout_height="wrap_content"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <Button
-                        android:id="@+id/add_location_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_height="64dp"
-                        android:text="@string/select_place"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        app:icon="@drawable/ic_add_location"
-                        app:iconPadding="4dp"
 
-                        />
 
                 </LinearLayout>
 
