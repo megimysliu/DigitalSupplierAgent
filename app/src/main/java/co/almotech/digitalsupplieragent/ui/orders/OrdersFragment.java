@@ -124,6 +124,7 @@ public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrd
             List<ModelOrders> orders = response.getOrders();
             mOrders.clear();
             mOrders.addAll(orders);
+            mAdapter.notifyDataSetChanged();
         }else{
             Toast.makeText(getContext(),response.getMessage(),Toast.LENGTH_SHORT).show();
             Timber.e(response.getMessage());

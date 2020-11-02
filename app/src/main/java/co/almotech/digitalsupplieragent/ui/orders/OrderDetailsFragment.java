@@ -63,6 +63,7 @@ public class OrderDetailsFragment extends Fragment {
             List<ModelOrderItems> items = response.getData();
             mItems.clear();
             mItems.addAll(items);
+            mAdapter.notifyDataSetChanged();
         }else{
             Toast.makeText(getContext(),response.getMessage(),Toast.LENGTH_SHORT).show();
         }

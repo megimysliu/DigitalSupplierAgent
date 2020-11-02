@@ -8,6 +8,8 @@ import androidx.navigation.NavController;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +18,17 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.almotech.digitalsupplieragent.data.model.ModelClients;
 import co.almotech.digitalsupplieragent.databinding.FragmentAllProductsBinding;
 import co.almotech.digitalsupplieragent.data.model.ModelProducts;
 import co.almotech.digitalsupplieragent.data.model.ModelProductsResponse;
 import co.almotech.digitalsupplieragent.ui.cart.CartViewModel;
+import co.almotech.digitalsupplieragent.ui.clients.ClientsAdapter;
 import dagger.hilt.android.AndroidEntryPoint;
+import java8.util.stream.StreamSupport;
 import timber.log.Timber;
+
+import static java8.util.stream.Collectors.toList;
 
 @AndroidEntryPoint
 public class AllProductsFragment extends Fragment {
@@ -41,8 +48,26 @@ public class AllProductsFragment extends Fragment {
         mBinding = FragmentAllProductsBinding.inflate(inflater,container,false);
         mViewModel = new ViewModelProvider(requireActivity()).get(CategoriesViewModel.class);
         mCartViewModel = new ViewModelProvider(requireActivity()).get(CartViewModel.class);
-        mViewModel.getAllProducts();
         mViewModel.products().observe(getViewLifecycleOwner(), this::consumeProducts);
+        mViewModel.getAllProducts();
+       mBinding.searchTxt.addTextChangedListener(new TextWatcher() {
+           @Override
+           public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+           }
+
+           @Override
+           public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+           }
+
+           @Override
+           public void afterTextChanged(Editable editable) {
+
+               searchProduct(editable.toString());
+
+           }
+       });
         setupProductsRecyclerView();
         return mBinding.getRoot();
     }
@@ -69,4 +94,16 @@ public class AllProductsFragment extends Fragment {
         }
 
     }
+
+
+    private void searchProduct(String s) {
+        List<ModelProducts> data = StreamSupport.stream(mProducts)
+                .filter(modelProducts -> modelProducts.getName()!=null)
+                .filter(modelProducts -> modelProducts.getName().toLowerCase().contains(s.toLowerCase())).collect(toList());
+
+        mProductAdapter = new ProductAdapter( data,mCartViewModel,getContext());
+        mBinding.productsRecyclerview.setAdapter(mProductAdapter);
+        mProductAdapter.notifyDataSetChanged();
+    }
+
 }

@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +17,14 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.almotech.digitalsupplieragent.data.model.ModelProducts;
 import co.almotech.digitalsupplieragent.databinding.FragmentCategoriesBinding;
 import co.almotech.digitalsupplieragent.data.model.ModelCategories;
 import co.almotech.digitalsupplieragent.data.model.ModelCategoriesResponse;
 import dagger.hilt.android.AndroidEntryPoint;
+import java8.util.stream.StreamSupport;
+
+import static java8.util.stream.Collectors.toList;
 
 @AndroidEntryPoint
 public class CategoriesFragment extends Fragment {
@@ -34,8 +40,27 @@ public class CategoriesFragment extends Fragment {
                              Bundle savedInstanceState) {
         mViewModel = new ViewModelProvider(requireActivity()).get(CategoriesViewModel.class);
         mBinding = FragmentCategoriesBinding.inflate(inflater,container,false);
-        setupRecyclerView();
         mViewModel.categories().observe(getViewLifecycleOwner(),this::consumeCategories);
+        setupRecyclerView();
+        mBinding.searchTxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                searchCategories(editable.toString());
+
+            }
+        });
+
         return mBinding.getRoot();
     }
 
@@ -54,8 +79,19 @@ public class CategoriesFragment extends Fragment {
             List<ModelCategories> categories = response.getData();
             mCategories.clear();
             mCategories.addAll(categories);
+            mAdapter.notifyDataSetChanged();
         }else{
             Toast.makeText(getContext(),response.getMessage(),Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void searchCategories(String s) {
+        List<ModelCategories> data = StreamSupport.stream(mCategories)
+                .filter(modelCategories -> modelCategories.getName()!=null)
+                .filter(modelCategories -> modelCategories.getName().toLowerCase().contains(s.toLowerCase())).collect(toList());
+
+        mAdapter = new CategoryAdapter( mCategories);
+        mBinding.categoriesRecyclerview.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 }

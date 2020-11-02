@@ -77,24 +77,24 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
              mNavController.navigate(ClientsFragmentDirections.actionAddClient())
                 );
 
-//        mBinding.searchTxt.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//                searchClient(s.toString());
-//
-//            }
-//        });
+        mBinding.searchTxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                searchClient(s.toString());
+
+            }
+        });
 
 
         System.out.println("Clients : " + mClients);
@@ -174,13 +174,15 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
 
     }
 
-//    private void searchClient(String s) {
-//        List<ModelClients> data = StreamSupport.stream(mClients)
-//                .filter(modelClients -> modelClients.getName().contains(s)).collect(toList());
-//
-//        mClientsAdapter = new ClientsAdapter(this, data);
-//        mBinding.clientsRecyclerview.setAdapter(mClientsAdapter);
-//    }
+    private void searchClient(String s) {
+        List<ModelClients> data = StreamSupport.stream(mClients)
+                .filter(modelClients -> modelClients.getName()!=null)
+                .filter(modelClients -> modelClients.getName().toLowerCase().contains(s.toLowerCase())).collect(toList());
+
+        mClientsAdapter = new ClientsAdapter(this, data);
+        mBinding.clientsRecyclerview.setAdapter(mClientsAdapter);
+        mClientsAdapter.notifyDataSetChanged();
+    }
 
 
 }

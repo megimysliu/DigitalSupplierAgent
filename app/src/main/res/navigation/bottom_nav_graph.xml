@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/clientsFragment"
         android:name="co.almotech.digitalsupplieragent.ui.clients.ClientsFragment"
-        android:label="fragment_clients"
+        android:label="Clients"
         tools:layout="@layout/fragment_clients" >
         <action
             android:id="@+id/action_add_client"
@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/meetingsFragment"
         android:name="co.almotech.digitalsupplieragent.fragments.MeetingsFragment"
-        android:label="fragment_meetings"
+        android:label="Meetings"
         tools:layout="@layout/fragment_meetings" >
         <action
             android:id="@+id/action_meetingsFragment_to_addMeetingFragment"
@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/addFragment"
         android:name="co.almotech.digitalsupplieragent.ui.orders.AddOrderFragment"
-        android:label="fragment_add"
+        android:label="Add Order"
         tools:layout="@layout/fragment_add" >
         <action
             android:id="@+id/action_orders"
@@ -40,9 +40,9 @@
     <fragment
         android:id="@+id/productsFragment"
         android:name="co.almotech.digitalsupplieragent.ui.categories.ProductsFragment"
-        android:label="fragment_products"
+        android:label="Products"
         tools:layout="@layout/fragment_products" >
-        <action
+           <action
             android:id="@+id/action_categories"
             app:destination="@id/categoriesFragment" />
         <action
@@ -52,7 +52,7 @@
     <fragment
         android:id="@+id/ordersFragment"
         android:name="co.almotech.digitalsupplieragent.ui.orders.OrdersFragment"
-        android:label="fragment_orders"
+        android:label="Order"
         tools:layout="@layout/fragment_orders" >
         <action
             android:id="@+id/action_order_detail"
@@ -61,11 +61,11 @@
     <fragment
         android:id="@+id/cartFragment"
         android:name="co.almotech.digitalsupplieragent.ui.cart.CartFragment"
-        android:label="CartFragment" />
+        android:label="Cart" />
     <fragment
         android:id="@+id/agentFragment"
         android:name="co.almotech.digitalsupplieragent.ui.profile.AgentFragment"
-        android:label="AgentFragment" >
+        android:label="Agent" >
         <action
             android:id="@+id/action_agentFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
@@ -73,12 +73,12 @@
     <fragment
         android:id="@+id/addMeetingFragment"
         android:name="co.almotech.digitalsupplieragent.fragments.AddMeetingFragment"
-        android:label="fragment_add_meeting"
+        android:label="Add Meeting"
         tools:layout="@layout/fragment_add_meeting" />
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="co.almotech.digitalsupplieragent.fragments.EditProfileFragment"
-        android:label="fragment_edit_profile"
+        android:label="Edit Profile"
         tools:layout="@layout/fragment_edit_profile" >
         <action
             android:id="@+id/action_change_password"
@@ -94,14 +94,12 @@
     <action
         android:id="@+id/action_agent"
         app:destination="@id/agentFragment"
-        app:popUpTo="@id/clientsFragment"
-        app:popUpToInclusive="true" />
+        app:popUpTo="@id/clientsFragment"/>
 
     <action
         android:id="@+id/action_cart"
         app:destination="@id/cartFragment"
-        app:popUpTo="@id/clientsFragment"
-        app:popUpToInclusive="true" />
+        app:popUpTo="@id/clientsFragment"/>
 
 
     <fragment
@@ -118,7 +116,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="co.almotech.digitalsupplieragent.fragments.LoginFragment"
-        android:label="fragment_login"
+        android:label="Login"
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_registrationFragment"
@@ -130,7 +128,7 @@
     <fragment
         android:id="@+id/registrationFragment"
         android:name="co.almotech.digitalsupplieragent.fragments.RegistrationFragment"
-        android:label="fragment_registration"
+        android:label="Registration"
         tools:layout="@layout/fragment_registration" >
         <action
             android:id="@+id/action_registrationFragment_to_loginFragment"
@@ -141,7 +139,7 @@
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="co.almotech.digitalsupplieragent.fragments.ForgotPasswordFragment"
-        android:label="fragment_forgot_password"
+        android:label="Forgot Password"
         tools:layout="@layout/fragment_forgot_password" >
         <action
             android:id="@+id/action_forgotPasswordFragment_to_loginFragment"
@@ -158,7 +156,7 @@
     <fragment
         android:id="@+id/mapsFragment"
         android:name="co.almotech.digitalsupplieragent.ui.maps.MapsFragment"
-        android:label="fragment_maps"
+        android:label="Map"
         tools:layout="@layout/fragment_maps" >
         <action
             android:id="@+id/actionSendLocation"
@@ -167,7 +165,7 @@
     <fragment
         android:id="@+id/categoriesFragment"
         android:name="co.almotech.digitalsupplieragent.ui.categories.CategoriesFragment"
-        android:label="CategoriesFragment" />
+        android:label=" All Categories" />
     <fragment
         android:id="@+id/allProductsFragment"
         android:name="co.almotech.digitalsupplieragent.ui.categories.AllProductsFragment"
@@ -180,9 +178,9 @@
     <fragment
         android:id="@+id/orderDetailsFragment"
         android:name="co.almotech.digitalsupplieragent.ui.orders.OrderDetailsFragment"
-        android:label="OrderDetailsFragment" />
+        android:label="Order Details" />
     <fragment
         android:id="@+id/clientFragment"
         android:name="co.almotech.digitalsupplieragent.ui.clients.ClientFragment"
-        android:label="ClientFragment" />
+        android:label="Client" />
 </navigation>

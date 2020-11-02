@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding mBinding;
     private NavController mNavController;
     private MaterialToolbar mToolbar;
+    private AppBarConfiguration mAppBarConfiguration;
 
 
     @Override
@@ -50,11 +51,13 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(mBinding.bottomNavView, mNavController);
         mToolbar = mBinding.topAppBar;
         setSupportActionBar(mToolbar);
-        NavigationUI.setupActionBarWithNavController(this,mNavController);
+        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.clientsFragment,R.id.meetingsFragment,
+                R.id.addFragment,R.id.productsFragment,R.id.ordersFragment).build();
+        NavigationUI.setupWithNavController(mToolbar,mNavController,mAppBarConfiguration);
         List<Integer> noActionBarDestinations = Arrays.asList(R.id.splashFragment,
-                R.id.loginFragment, R.id.registrationFragment, R.id.addFragment,R.id.addMeetingFragment,R.id.forgotPasswordFragment);
+                R.id.loginFragment, R.id.registrationFragment,R.id.addMeetingFragment,R.id.forgotPasswordFragment);
         List<Integer> noBottomNavBarDestinations = Arrays.asList(R.id.splashFragment,
-                R.id.loginFragment,R.id.registrationFragment, R.id.addFragment,R.id.addMeetingFragment,R.id.forgotPasswordFragment);
+                R.id.loginFragment,R.id.registrationFragment,R.id.addMeetingFragment,R.id.forgotPasswordFragment);
 
         mNavController.addOnDestinationChangedListener((controller, destination, arguments) -> {
 
