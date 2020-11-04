@@ -27,7 +27,7 @@ public class ModelItem {
     @Expose
     private int price;
 
-    @SerializedName("its_package")
+    @SerializedName("is_package")
     @Expose
     private String itsPackage;
 
@@ -52,6 +52,18 @@ public class ModelItem {
         this.itsPackage = "no";
         this.note = "";
         this.quantity = 1;
+    }
+
+
+    @Ignore
+    public ModelItem(ModelProducts product, int quantity){
+
+        this.id = product.getId();
+        this.price = product.getPrice();
+        this.itsPackage = "no";
+        this.note = "";
+        this.quantity = quantity;
+
     }
 
     public int getGenId() {

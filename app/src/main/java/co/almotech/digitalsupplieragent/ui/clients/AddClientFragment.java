@@ -1,5 +1,10 @@
 package co.almotech.digitalsupplieragent.ui.clients;
 
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 import co.almotech.digitalsupplieragent.R;
@@ -44,8 +50,26 @@ public class AddClientFragment extends Fragment {
 
         mBinding.locationText.setOnClickListener(v ->{
 
-            mNavController.navigate(AddClientFragmentDirections.actionAddClientFragmentToMapsFragment());
-                });
+            if(isGoogleMapsInstalled()){
+
+                mNavController.navigate(AddClientFragmentDirections.actionAddClientFragmentToMapsFragment());
+            }else{
+
+               new MaterialAlertDialogBuilder(requireContext())
+                        .setTitle(getResources().getString(R.string.google_maps_error_title))
+                        .setMessage(getResources().getString(R.string.google_maps_supporting_text))
+                     .setNegativeButton(android.R.string.no,null)
+        .setPositiveButton(android.R.string.yes, ( dialog, which ) ->{
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.google.android.apps.maps"));
+            startActivity(intent);
+
+        })
+        .show();
+
+            }
+            });
+
+
 
         mBinding.addClient.setOnClickListener(v ->
                 System.out.println("Text "+ mBinding.locationText.getText().toString()));
@@ -67,6 +91,20 @@ public class AddClientFragment extends Fragment {
 
         });
 
+    }
+
+    public boolean isGoogleMapsInstalled()
+    {
+        try
+        {
+            ApplicationInfo info = getContext().getPackageManager()
+                    .getApplicationInfo("com.google.android.apps.maps", 0 );
+            return true;
+        }
+        catch(PackageManager.NameNotFoundException e)
+        {
+            return false;
+        }
     }
 
 

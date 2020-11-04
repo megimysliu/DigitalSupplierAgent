@@ -1,5 +1,6 @@
 package co.almotech.digitalsupplieragent.ui.categories;
 
+import android.media.audiofx.DynamicsProcessing;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -73,19 +74,23 @@ public class AllProductsFragment extends Fragment {
     }
 
     private void setupProductsRecyclerView(){
-        RecyclerView recyclerView = mBinding.productsRecyclerview;
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         mProductAdapter = new ProductAdapter(mProducts,mCartViewModel,getContext());
-        recyclerView.setAdapter(mProductAdapter);
+        mBinding.productsRecyclerview.setAdapter(mProductAdapter);
 
     }
 
     private void consumeProducts(ModelProductsResponse response){
 
+        mBinding.progressCircular.setVisibility(View.GONE);
         if(!response.getError()){
             List<ModelProducts> products = response.getData();
             mProducts.clear();
             mProducts.addAll(products);
+            if(mProducts.isEmpty()){
+                mBinding.productsRelative.setVisibility(View.GONE);
+                mBinding.errorLinear.setVisibility(View.VISIBLE);
+            }
             mProductAdapter.notifyDataSetChanged();
 
         }else{

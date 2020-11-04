@@ -76,7 +76,7 @@ public class CartAdapter  extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 .filter(p-> p.getId() == item.getId())
                 .findFirst()
                 .orElse(null);
-         viewModel.addToCart(product);
+         viewModel.addToCartWithQuantity(product,item.getQuantity());
         notifyItemInserted(position);
     }
 

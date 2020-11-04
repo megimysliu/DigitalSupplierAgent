@@ -1,6 +1,7 @@
 package co.almotech.digitalsupplieragent.ui.categories;
 
 import android.app.AlertDialog;
+import android.media.audiofx.DynamicsProcessing;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -106,22 +107,21 @@ public class ProductsFragment extends Fragment implements CategoriesAdapter.Cate
     }
     private void setupRecyclerView(){
 
-        RecyclerView recyclerView = mBinding.categoriesRecyclerview;
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
         mAdapter = new CategoriesAdapter(this,mCategories);
-        recyclerView.setAdapter(mAdapter);
+        mBinding.categoriesRecyclerview.setAdapter(mAdapter);
 
     }
 
     private void setupProductsRecyclerView(){
-        RecyclerView recyclerView = mBinding.productsRecyclerview;
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         mProductAdapter = new ProductAdapter(mProducts,mCartViewModel,getContext());
-        recyclerView.setAdapter(mProductAdapter);
+        mBinding.productsRecyclerview.setAdapter(mProductAdapter);
 
     }
 
     private void consumeCategories(ModelCategoriesResponse response){
+
+        mBinding.progressCircular.setVisibility(View.GONE);
 
         if(!response.getError()){
             List<ModelCategories> categories = response.getData();
@@ -149,6 +149,13 @@ public class ProductsFragment extends Fragment implements CategoriesAdapter.Cate
             List<ModelProducts> products = response.getData();
             mProducts.clear();
             mProducts.addAll(products);
+            if(mProducts.isEmpty()){
+                mBinding.productsRecyclerview.setVisibility(View.GONE);
+                mBinding.errorProductsLinear.setVisibility(View.VISIBLE);
+            }else{
+                mBinding.productsRecyclerview.setVisibility(View.VISIBLE);
+                mBinding.errorProductsLinear.setVisibility(View.GONE);
+            }
             mProductAdapter.notifyDataSetChanged();
 
         }else{

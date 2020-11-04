@@ -32,23 +32,36 @@
 
 
 
+
+        <ImageView
+            android:id="@+id/order_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_boxes"
+            android:contentDescription="@string/img_description"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="8dp"
+            android:layout_centerVertical="true"
+            />
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_toEndOf="@id/order_icon"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:orientation="vertical"
             android:layout_marginBottom="8dp"
-            android:layout_alignParentStart="true">
+            android:layout_centerVertical="true">
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/client_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{order.clientName}"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:textSize="16sp"
+                tools:text="@string/client_name_placeholder"
                 android:layout_marginBottom="4dp"
                 android:textStyle="bold" />
 
@@ -58,6 +71,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{MyDateFormat.getFormattedDate(order.createdAt) +  ' ' +'|' + ' '  + order.status}"
                 android:textSize="14sp"
+                tools:text="@string/date_placeholder"
                 android:layout_marginBottom="4dp"/>
 
             <TextView
@@ -67,6 +81,7 @@
                 android:text="@{String.format(@string/currency,Integer.toString(order.priceTotal))}"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:textSize="18sp"
+                tools:text="@string/quantity_placeholder"
                 android:textStyle="bold"
              />
 

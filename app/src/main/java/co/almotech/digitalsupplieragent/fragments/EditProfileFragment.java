@@ -30,7 +30,8 @@ public class EditProfileFragment extends Fragment {
 
         mBinding = FragmentEditProfileBinding.inflate(inflater,container,false);
         mNavController = NavHostFragment.findNavController(this);
-        mBinding.changePasswordBtn.setOnClickListener( v -> EditProfileFragmentDirections.actionChangePassword());
+        mBinding.changePasswordBtn.setOnClickListener( v ->
+                mNavController.navigate(EditProfileFragmentDirections.actionChangePassword()));
         return mBinding.getRoot();
     }
 }

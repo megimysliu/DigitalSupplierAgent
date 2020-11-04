@@ -1,6 +1,7 @@
 package co.almotech.digitalsupplieragent.network;
 
 import co.almotech.digitalsupplieragent.data.model.ModelCategoriesResponse;
+import co.almotech.digitalsupplieragent.data.model.ModelChangePasswordResponse;
 import co.almotech.digitalsupplieragent.data.model.ModelClientsResponse;
 import co.almotech.digitalsupplieragent.data.model.ModelCreateOrder;
 import co.almotech.digitalsupplieragent.data.model.ModelCreateOrderResponse;
@@ -49,8 +50,13 @@ Single<ModelClientsResponse> getMyClients();
 
 @POST("make_order")
 @Headers("Content-Type: application/json")
-    Single<ModelCreateOrderResponse> createOrder(@Body ModelCreateOrder createOrder);
+Single<ModelCreateOrderResponse> createOrder(@Body ModelCreateOrder createOrder);
 
+@FormUrlEncoded
+@POST("change_password")
+Single<ModelChangePasswordResponse> changePassword(@Field("old_password") String oldPassword,
+                                                   @Field("password") String password,
+                                                   @Field("password_confirmation") String passwordConfirmation);
 
 
 }

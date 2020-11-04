@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,13 +31,17 @@ import java.util.List;
 import co.almotech.digitalsupplieragent.BottomNavGraphDirections;
 import co.almotech.digitalsupplieragent.R;
 import co.almotech.digitalsupplieragent.auth.LoginViewModel;
+import co.almotech.digitalsupplieragent.data.model.ModelCategories;
 import co.almotech.digitalsupplieragent.databinding.FragmentOrdersBinding;
 import co.almotech.digitalsupplieragent.data.model.ModelOrders;
 import co.almotech.digitalsupplieragent.data.model.ModelOrdersResponse;
+import co.almotech.digitalsupplieragent.ui.categories.CategoryAdapter;
 import dagger.hilt.android.AndroidEntryPoint;
+import java8.util.stream.StreamSupport;
 import timber.log.Timber;
 
 import static android.widget.LinearLayout.VERTICAL;
+import static java8.util.stream.Collectors.toList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -95,6 +101,24 @@ public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrd
         mBinding = FragmentOrdersBinding.inflate(inflater,container,false);
         setupRecyclerView();
         mController = NavHostFragment.findNavController(this);
+        mBinding.searchTxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                searchOrders(editable.toString());
+
+            }
+        });
 
         return mBinding.getRoot();
     }
@@ -119,11 +143,16 @@ public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrd
     }
 
     private void consumeOrders(ModelOrdersResponse response){
+        mBinding.progressCircular.setVisibility(View.GONE);
         if(!response.getError()){
 
             List<ModelOrders> orders = response.getOrders();
             mOrders.clear();
             mOrders.addAll(orders);
+            if(mOrders.isEmpty()){
+                mBinding.ordersRelative.setVisibility(View.GONE);
+                mBinding.errorLinear.setVisibility(View.VISIBLE);
+            }
             mAdapter.notifyDataSetChanged();
         }else{
             Toast.makeText(getContext(),response.getMessage(),Toast.LENGTH_SHORT).show();
@@ -136,5 +165,15 @@ public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrd
         mLoginViewModel.logout();
         ProcessPhoenix.triggerRebirth(requireContext());
 
+    }
+
+    private void searchOrders(String s) {
+        List<ModelOrders> data = StreamSupport.stream(mOrders)
+                .filter(modelOrders -> modelOrders.getClientName()!=null)
+                .filter(modelOrders -> modelOrders.getClientName().toLowerCase().contains(s.toLowerCase())).collect(toList());
+
+        mAdapter = new OrdersAdapter(data,this);
+        mBinding.ordersRecyclerview.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 }

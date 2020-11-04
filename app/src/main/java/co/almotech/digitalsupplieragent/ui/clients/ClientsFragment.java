@@ -136,7 +136,6 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
 
     private void setupRecyclerView(){
         RecyclerView recyclerView =  mBinding.clientsRecyclerview;
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), VERTICAL);
         recyclerView.addItemDecoration(itemDecor);
         mClientsAdapter = new ClientsAdapter(this,mClients);
@@ -154,11 +153,16 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
 
     private void consumeClients(ModelClientsResponse response){
 
+        mBinding.progressCircular.setVisibility(View.GONE);
         if(!response.getError()){
             List<ModelClients> clients = response.getData();
             if(clients != null){
                 mClients.clear();
                 mClients.addAll(clients);
+                if(mClients.isEmpty()){
+                    mBinding.clientsRelative.setVisibility(View.GONE);
+                    mBinding.errorLinear.setVisibility(View.VISIBLE);
+                }
                 mClientsAdapter.notifyDataSetChanged();
 
             }

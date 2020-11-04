@@ -99,7 +99,14 @@
     <string name="logout_confirm_txt">Are you sure you want to log out?</string>
     <string name="forgot_password_title">Forgot password</string>
     <string name="added_to_cart">Added to cart</string>
-
+    <string name="client_name_placeholder">Client Name</string>
+    <string name="date_placeholder">Weekday, dd MMM YYYY | Approved</string>
+    <string name="quantity_placeholder">$0</string>
+    <string name="no_results">No results found</string>
+    <string name="category_placeholder">Category</string>
+    <string name="no_items_err_msg">No items here</string>
+    <string name="google_maps_error_title">Google Maps not installed</string>
+    <string name="google_maps_supporting_text">You need to have Google Maps installed in your device to set the location</string>
 
 
 </resources>

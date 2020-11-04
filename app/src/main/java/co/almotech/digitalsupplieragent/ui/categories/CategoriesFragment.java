@@ -90,7 +90,7 @@ public class CategoriesFragment extends Fragment {
                 .filter(modelCategories -> modelCategories.getName()!=null)
                 .filter(modelCategories -> modelCategories.getName().toLowerCase().contains(s.toLowerCase())).collect(toList());
 
-        mAdapter = new CategoryAdapter( mCategories);
+        mAdapter = new CategoryAdapter(data);
         mBinding.categoriesRecyclerview.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }

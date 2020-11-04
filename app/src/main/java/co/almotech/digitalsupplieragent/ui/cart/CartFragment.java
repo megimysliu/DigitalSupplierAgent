@@ -57,17 +57,23 @@ public class CartFragment extends Fragment {
     }
 
     private void setupRecyclerView(){
-        RecyclerView recyclerView = mBinding.cartRecyclerview;
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         mAdapter = new CartAdapter(mItems, mProducts, mViewModel,getContext());
-        recyclerView.setAdapter(mAdapter);
+        mBinding.cartRecyclerview.setAdapter(mAdapter);
         enableSwipeToDeleteAndUndo();
 
     }
 
     private void consumeItems(List<ModelItem> items){
+
+        mBinding.progressCircular.setVisibility(View.GONE);
         mItems.clear();
         mItems.addAll(items);
+        if(mItems.isEmpty()){
+            mBinding.errorLinear.setVisibility(View.VISIBLE);
+        }else{
+            mBinding.errorLinear.setVisibility(View.GONE);
+        }
         mAdapter.notifyDataSetChanged();
 
     }

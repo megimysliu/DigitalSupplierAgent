@@ -101,6 +101,24 @@ public class CartViewModel  extends ViewModel {
 
     }
 
+    public void addToCartWithQuantity(ModelProducts product,int quantity){
+        if(product != null){
+            ModelItem item = new ModelItem(product,quantity);
+            mDisposable.add(mRepository.insert(item)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(this::getAllItems,
+                            throwable -> mDisposable.add(mRepository.updateQuantity(item.getId())
+                                    .subscribeOn(Schedulers.io())
+                                    .subscribe(this::getAllItems))));
+
+        }
+
+
+
+    }
+
+
     public void clearCart(){
 
         mDisposable.add(mRepository.deleteAll()
