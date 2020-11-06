@@ -1,65 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:weightSum="100">
+    android:layout_height="match_parent">
 
-
-
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="70"
-        tools:context=".ui.maps.MapsFragment"
+        android:layout_height="wrap_content">
 
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="8dp"
-        android:layout_weight="30">
-
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginEnd="16dp">
+            android:layout_height="match_parent"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/location"
+
+
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                tools:context=".ui.maps.MapsFragment"
+
+                />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/location_label" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:orientation="vertical"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp">
 
-        <Button
-            android:id="@+id/add_location_btn"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="64dp"
-            android:text="@string/select_place"
-            android:textAllCaps="false"
-            app:icon="@drawable/ic_add_location"
-            app:iconPadding="4dp"
-            android:layout_marginTop="16dp"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="16dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_marginEnd="16dp">
 
-            />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/location"
+                        android:layout_width="match_parent"
+                        android:inputType="textNoSuggestions"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/location_label" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
+                <Button
+                    android:id="@+id/add_location_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="64dp"
+                    android:text="@string/select_place"
+                    android:textAllCaps="false"
+                    app:icon="@drawable/ic_add_location"
+                    app:iconPadding="4dp"
+                    android:layout_marginTop="16dp"
+
+                    />
+
+            </LinearLayout>
 
 
-</LinearLayout>
+        </LinearLayout>
 
 
+
+
+    </ScrollView>
+
+</RelativeLayout>

@@ -142,11 +142,13 @@ public class AddOrderFragment extends Fragment {
         int clientId = mClientsViewModel.selectedClient.get();
         if(clientId == -1){
             mBinding.client.setError("Please select client");
+            mBinding.client.requestFocus();
             return;
         }
         String type = typeChoice;
         if(typeChoice.equals("")){
             mBinding.type.setError("Please select type");
+            mBinding.type.requestFocus();
             return;
         }
         List<ModelItem> items = mCartViewModel.getItems().getValue();

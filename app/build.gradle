@@ -95,6 +95,7 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     //streamsupport
     implementation 'net.sourceforge.streamsupport:streamsupport:1.7.2'
+    implementation 'pub.devrel:easypermissions:3.0.0'
 
 
 

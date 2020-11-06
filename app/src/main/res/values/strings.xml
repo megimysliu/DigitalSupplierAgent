@@ -107,6 +107,7 @@
     <string name="no_items_err_msg">No items here</string>
     <string name="google_maps_error_title">Google Maps not installed</string>
     <string name="google_maps_supporting_text">You need to have Google Maps installed in your device to set the location</string>
+    <string name="location_rationale">Allow DigitalSupplierAgent to access your location?</string>
 
 
 </resources>

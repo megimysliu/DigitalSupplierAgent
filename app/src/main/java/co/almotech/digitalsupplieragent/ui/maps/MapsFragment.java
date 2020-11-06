@@ -2,37 +2,51 @@ package co.almotech.digitalsupplieragent.ui.maps;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+import android.widget.inline.InlineContentView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import java.io.IOError;
 import java.io.IOException;
+import java.security.Permission;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -40,54 +54,92 @@ import java.util.Locale;
 import co.almotech.digitalsupplieragent.R;
 import co.almotech.digitalsupplieragent.databinding.FragmentMapsBinding;
 import co.almotech.digitalsupplieragent.utils.LocationData;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
-public class MapsFragment extends Fragment {
+public class MapsFragment extends Fragment implements EasyPermissions.PermissionCallbacks{
 
     private FragmentMapsBinding mBinding;
     private double lat;
     private double lng;
     NavController mNavController;
     private static final String ADDRESS = "Address";
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private static final String LAT = "Lat";
     private static final String LNG = "Lng";
     private SharedViewModel mViewModel;
     private FusedLocationProviderClient mFusedLocationProviderClient;
-    private Location currentLocation;
-    private static final int REQUEST_CODE = 178;
-    private boolean permissionGranted = false;
+    LocationRequest mLocationRequest;
+    Location mLastLocation;
+    Marker mCurrLocationMarker;
+    GoogleMap mGoogleMap;
+
+    LocationCallback mLocationCallback = new LocationCallback() {
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            List<Location> locationList = locationResult.getLocations();
+            if (locationList.size() > 0) {
+                Location location = locationList.get(locationList.size() - 1);
+                Log.d("MapsFragment", "Location: " + location.getLatitude() + " " + location.getLongitude());
+                mLastLocation = location;
+                if (mCurrLocationMarker != null) {
+                    mCurrLocationMarker.remove();
+                }
+
+
+                Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+                final List<Address>[] addresses = new List[]{new ArrayList<>()};
+                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng);
+                 mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+
+                mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                try {
+                    addresses[0] = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+
+                    lat = latLng.latitude;
+                    lng = latLng.longitude;
+                    mBinding.location.setText(addresses[0].get(0).getAddressLine(0));
+
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+    };
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
 
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            LatLng tirana = new LatLng(41.328422, 19.818684);
-            LatLng currentPos;
-            if(permissionGranted){
-                currentPos = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
-                googleMap.addMarker(new MarkerOptions().position(currentPos));
-            }else{
-                googleMap.addMarker(new MarkerOptions().position(tirana));
-            }
-
-
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom( tirana,15));
-
+            mGoogleMap = googleMap;
+            Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
             final List<Address>[] addresses = new List[]{new ArrayList<>()};
+            mLocationRequest = new LocationRequest();
+            mLocationRequest.setInterval(60000); // two minute interval
+            mLocationRequest.setFastestInterval(60000);
+            mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            getLocation();
 
-            googleMap.setOnMapClickListener(latLng-> {
 
-                googleMap.clear();
-                googleMap.addMarker(new MarkerOptions().position(latLng));
-                Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
-                try{
-                    addresses[0] =  geocoder.getFromLocation(latLng.latitude, latLng.longitude,1);
+            mGoogleMap.setOnMapClickListener(latLng -> {
+
+                mGoogleMap.clear();
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng);
+                mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+
+
+                try {
+                    addresses[0] = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
 
                     lat = latLng.latitude;
                     lng = latLng.longitude;
                     mBinding.location.setText(addresses[0].get(0).getAddressLine(0));
 
-                }catch (IOException exception){
+                } catch (IOException exception) {
                     exception.printStackTrace();
                 }
 
@@ -100,83 +152,145 @@ public class MapsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mViewModel = ViewModelProviders.of(requireActivity()).get(SharedViewModel.class);
-        fetchLastlocation();
-
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
 
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mFusedLocationProviderClient != null) {
+            mFusedLocationProviderClient.removeLocationUpdates(mLocationCallback);
+        }
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mBinding = FragmentMapsBinding.inflate(inflater,container,false);
+        mBinding = FragmentMapsBinding.inflate(inflater, container, false);
         mNavController = NavHostFragment.findNavController(this);
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
-        fetchLastlocation();
 
-        SupportMapFragment mapFragment =
-                (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(callback);
-        }
+
         return mBinding.getRoot();
     }
 
-    private void fetchLastlocation() {
-
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
 
-            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
-            return;
-        }
-
-        mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (currentLocation != null) {
-                    currentLocation = location;
-                    Toast.makeText(getContext(), "Current location " + currentLocation.getLatitude() + "," +
-                            currentLocation.getLongitude(), Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-
-    }
 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mBinding.addLocationBtn.setOnClickListener(v ->{
+        mBinding.addLocationBtn.setOnClickListener(v -> {
 
-            LocationData locationData = new LocationData(lat,lng,mBinding.location.getText().toString());
+            LocationData locationData = new LocationData(lat, lng, mBinding.location.getText().toString());
             mViewModel.setLocation(locationData);
-            mViewModel.setAddress(mBinding.location.getText().toString());
+
             requireActivity().onBackPressed();
 
         });
 
+        SupportMapFragment mapFragment =
+                (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(callback);
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+
+    }
+
+
+
+
+    @SuppressLint("MissingPermission")
+    @AfterPermissionGranted(MY_PERMISSIONS_REQUEST_LOCATION)
+    private void getLocation(){
+
+
+        if(EasyPermissions.hasPermissions(getContext(),Manifest.permission.ACCESS_FINE_LOCATION)){
+            mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
+
+                if(location!= null){
+
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    markerOptions.position(new LatLng(location.getLatitude(),location.getLongitude()));
+                    mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()), 15));
+                mFusedLocationProviderClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+             mGoogleMap.setMyLocationEnabled(true);
+
+                }
+
+            });
+        }else{
+            Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+            final List<Address>[] addresses = new List[]{new ArrayList<>()};
+            LatLng latLng = new LatLng(41.328422, 19.818684);
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(latLng);
+            mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+
+            try {
+                addresses[0] = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+
+                lat = latLng.latitude;
+                lng = latLng.longitude;
+                mBinding.location.setText(addresses[0].get(0).getAddressLine(0));
+
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+        }
+
+
+    }
+
+
+
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
 
 
 
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
 
-        switch (requestCode) {
-            case REQUEST_CODE:
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+            final List<Address>[] addresses = new List[]{new ArrayList<>()};
+            LatLng latLng = new LatLng(41.328422, 19.818684);
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(latLng);
+            mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
 
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    permissionGranted = true;
-                    fetchLastlocation();
-                }
-                break;
+            try {
+                addresses[0] = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+
+                lat = latLng.latitude;
+                lng = latLng.longitude;
+                mBinding.location.setText(addresses[0].get(0).getAddressLine(0));
+
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+
         }
+
+
     }
 }

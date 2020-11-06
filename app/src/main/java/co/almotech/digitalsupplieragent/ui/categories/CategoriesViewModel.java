@@ -53,6 +53,11 @@ public class CategoriesViewModel extends ViewModel {
 
     }
 
+    public void getCategoriesAndProducts(int categoryId){
+
+        
+    }
+
     public void setCategoryProducts(Integer categoryId, ModelProductsResponse response){
         productsByCategory.setValue(response);
         if(prodCategory.get(categoryId) == null){
