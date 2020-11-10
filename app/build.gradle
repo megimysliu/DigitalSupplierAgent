@@ -97,6 +97,10 @@ dependencies {
     implementation 'net.sourceforge.streamsupport:streamsupport:1.7.2'
     implementation 'pub.devrel:easypermissions:3.0.0'
 
+    //lottie
+    def lottieVersion = "3.4.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
+
 
 
 

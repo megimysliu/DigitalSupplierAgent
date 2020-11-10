@@ -1,16 +1,22 @@
 package co.almotech.digitalsupplieragent.repo;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import co.almotech.digitalsupplieragent.data.model.ModelCategoriesResponse;
+import co.almotech.digitalsupplieragent.data.model.ModelClients;
 import co.almotech.digitalsupplieragent.data.model.ModelClientsResponse;
+import co.almotech.digitalsupplieragent.data.model.ModelCreateClientResponse;
 import co.almotech.digitalsupplieragent.data.model.ModelCreateOrder;
 import co.almotech.digitalsupplieragent.data.model.ModelCreateOrderResponse;
 import co.almotech.digitalsupplieragent.data.model.ModelOrderItemsResponse;
 import co.almotech.digitalsupplieragent.data.model.ModelOrdersResponse;
 import co.almotech.digitalsupplieragent.data.model.ModelProductsResponse;
+import co.almotech.digitalsupplieragent.data.model.ModelResponse;
 import co.almotech.digitalsupplieragent.network.API;
 import io.reactivex.Single;
+import retrofit2.http.Field;
 
 public class MainRepository {
 
@@ -53,5 +59,10 @@ public class MainRepository {
 
     public Single<ModelCreateOrderResponse> createOrder(ModelCreateOrder createOrder){
         return api.createOrder(createOrder);
+    }
+
+    public Single<ModelCreateClientResponse> createClient(String name,String email, String phoneNumber, int accountType,
+                                                         String nuis, String lat,String lng, String address){
+        return api.createClient(name, email, phoneNumber, accountType, nuis, lat, lng, address);
     }
 }

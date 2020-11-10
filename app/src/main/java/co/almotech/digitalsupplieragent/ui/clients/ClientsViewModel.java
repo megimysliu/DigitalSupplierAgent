@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel;
 
 import co.almotech.digitalsupplieragent.data.model.ModelClients;
 import co.almotech.digitalsupplieragent.data.model.ModelClientsResponse;
+import co.almotech.digitalsupplieragent.data.model.ModelCreateClientResponse;
+import co.almotech.digitalsupplieragent.data.model.ModelResponse;
 import co.almotech.digitalsupplieragent.repo.MainRepository;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -19,6 +21,8 @@ public class ClientsViewModel extends ViewModel {
     private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     private final MutableLiveData<ModelClientsResponse> clients = new MutableLiveData<>();
+    private final MutableLiveData<ModelClientsResponse> myClients = new MutableLiveData<>();
+    private final MutableLiveData<ModelCreateClientResponse> createClient = new MutableLiveData<>();
 
     private final MutableLiveData<ModelClients> client = new MutableLiveData<>();
     public final ObservableInt selectedClient = new ObservableInt(-1);
@@ -34,12 +38,28 @@ public class ClientsViewModel extends ViewModel {
         .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(clients::setValue,
                         throwable ->
-                        clients.setValue(ModelClientsResponse.Companion.modelError(throwable))
+                        clients.setValue(ModelClientsResponse.modelError(throwable))
                 ));
     }
 
     public void setSelectedClient(int id){
         selectedClient.set(id);
+    }
+
+    public void createClient(String name,String email, String phoneNumber, int accountType,
+                             String nuis, String lat,String lng, String address){
+
+        mDisposable.add(mRepository.createClient(name, email, phoneNumber, accountType, nuis, lat, lng, address)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(createClient::setValue, throwable -> createClient.setValue( new ModelCreateClientResponse(true,throwable.toString())) ));
+
+    }
+
+    public void loadClients(){
+        mDisposable.add(mRepository.getMyClients()
+                .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(response -> myClients.setValue(response), throwable -> myClients.setValue(ModelClientsResponse.modelError(throwable)))
+        );
     }
 
     public void setClient(ModelClients client){
@@ -59,4 +79,11 @@ public class ClientsViewModel extends ViewModel {
     public LiveData<ModelClientsResponse> clients(){
         return clients;
     }
+    public LiveData<ModelClientsResponse> getMyClients(){
+        return myClients;
+    }
+    public LiveData<ModelCreateClientResponse> getCreateClientRes(){
+        return createClient;
+    }
+
 }

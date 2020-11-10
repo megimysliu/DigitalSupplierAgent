@@ -117,11 +117,13 @@ public class MapsFragment extends Fragment implements EasyPermissions.Permission
             mGoogleMap = googleMap;
             Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
             final List<Address>[] addresses = new List[]{new ArrayList<>()};
+            getLocation();
+
             mLocationRequest = new LocationRequest();
             mLocationRequest.setInterval(60000); // two minute interval
             mLocationRequest.setFastestInterval(60000);
             mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-            getLocation();
+
 
 
             mGoogleMap.setOnMapClickListener(latLng -> {
@@ -152,7 +154,10 @@ public class MapsFragment extends Fragment implements EasyPermissions.Permission
         super.onCreate(savedInstanceState);
 
         mViewModel = ViewModelProviders.of(requireActivity()).get(SharedViewModel.class);
+
+
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+
 
     }
 
@@ -217,22 +222,56 @@ public class MapsFragment extends Fragment implements EasyPermissions.Permission
     private void getLocation(){
 
 
-        if(EasyPermissions.hasPermissions(getContext(),Manifest.permission.ACCESS_FINE_LOCATION)){
+        if(EasyPermissions.hasPermissions(requireContext(),Manifest.permission.ACCESS_FINE_LOCATION)){
             mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
 
-                if(location!= null){
+                if (location != null) {
 
                     MarkerOptions markerOptions = new MarkerOptions();
-                    markerOptions.position(new LatLng(location.getLatitude(),location.getLongitude()));
+                    markerOptions.position(new LatLng(location.getLatitude(), location.getLongitude()));
                     mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
-                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()), 15));
-                mFusedLocationProviderClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
-             mGoogleMap.setMyLocationEnabled(true);
+                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 15));
+                    mFusedLocationProviderClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+                    mGoogleMap.setMyLocationEnabled(true);
 
                 }
-
             });
-        }else{
+
+
+                } else {
+
+            EasyPermissions.requestPermissions(
+                    this, getString(R.string.location_rationale),
+                    MY_PERMISSIONS_REQUEST_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+
+
+            }
+
+
+
+
+
+
+
+
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+//
+//        if(EasyPermissions.hasPermissions(getContext(),Manifest.permission.ACCESS_FINE_LOCATION)){
+//
+//        }
+
+
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+
+        if(EasyPermissions.somePermissionDenied(this,Manifest.permission.ACCESS_FINE_LOCATION)){
+
             Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
             final List<Address>[] addresses = new List[]{new ArrayList<>()};
             LatLng latLng = new LatLng(41.328422, 19.818684);
@@ -251,24 +290,8 @@ public class MapsFragment extends Fragment implements EasyPermissions.Permission
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
+
         }
-
-
-    }
-
-
-
-
-    @Override
-    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-
-
-
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
             final List<Address>[] addresses = new List[]{new ArrayList<>()};

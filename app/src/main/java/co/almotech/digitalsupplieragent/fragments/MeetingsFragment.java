@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.transition.MaterialFadeThrough;
 import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import co.almotech.digitalsupplieragent.BottomNavGraphDirections;
@@ -86,5 +88,11 @@ public class MeetingsFragment extends Fragment  {
         mLoginViewModel.logout();
         ProcessPhoenix.triggerRebirth(requireContext());
 
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setEnterTransition(new MaterialFadeThrough());
     }
 }

@@ -12,7 +12,9 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:transitionName="@string/client_fragment_transition_name"
+        >
 
         <ScrollView
             android:layout_width="match_parent"
@@ -138,6 +140,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="16dp"
+                        android:layout_marginEnd="16dp"
                         android:layout_toEndOf="@+id/location_icon"
                         android:text="@{client.address}" />
 

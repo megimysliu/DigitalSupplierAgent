@@ -16,6 +16,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:transitionName="@{@string/client_item_transition_name(client.id)}"
         android:padding="4dp">
 
         <TextView

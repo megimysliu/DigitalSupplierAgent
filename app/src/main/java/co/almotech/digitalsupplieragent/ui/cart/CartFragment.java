@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +22,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.almotech.digitalsupplieragent.R;
+import co.almotech.digitalsupplieragent.data.model.ModelCategories;
 import co.almotech.digitalsupplieragent.data.model.ModelItem;
 import co.almotech.digitalsupplieragent.data.model.ModelPrices;
 import co.almotech.digitalsupplieragent.data.model.ModelProducts;
 import co.almotech.digitalsupplieragent.databinding.FragmentCartBinding;
+import co.almotech.digitalsupplieragent.ui.categories.CategoryAdapter;
+import co.almotech.digitalsupplieragent.ui.categories.ProductAdapter;
 import co.almotech.digitalsupplieragent.utils.SwipeToDeleteCallback;
+import java8.util.stream.StreamSupport;
 import timber.log.Timber;
+
+import static java8.util.stream.Collectors.toList;
 
 
 public class CartFragment extends Fragment {
@@ -52,6 +60,23 @@ public class CartFragment extends Fragment {
         mViewModel.getProducts().observe(getViewLifecycleOwner(),this::consumeProducts);
         setupRecyclerView();
         System.out.println("Items: " + mItems.toString());
+        mBinding.searchTxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                searchCartItems(editable.toString());
+
+            }
+        });
         View view = mBinding.getRoot();
         return view;
     }
@@ -115,5 +140,34 @@ public class CartFragment extends Fragment {
 
         ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeToDeleteCallback);
         itemTouchhelper.attachToRecyclerView(mBinding.cartRecyclerview);
+    }
+
+    private void searchCartItems(String s) {
+        List<ModelProducts> data = StreamSupport.stream(mProducts)
+                .filter(model -> model.getName() != null)
+                .filter(model -> model.getName().toLowerCase().contains(s.toLowerCase())).collect(toList());
+       List<ModelItem> items = new ArrayList<>();
+
+       for( ModelItem item : mItems){
+
+           if(isItem(data,item)){
+               items.add(item);
+           }
+
+       }
+
+        mAdapter = new CartAdapter(items, data, mViewModel,getContext());
+        mBinding.cartRecyclerview.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private boolean isItem(List<ModelProducts> products, ModelItem item){
+
+        for(ModelProducts product: products){
+            if(product.getId() == item.getId()){
+                return true;
+            }
+        }
+        return false;
     }
 }

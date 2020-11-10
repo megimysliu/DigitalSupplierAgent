@@ -10,7 +10,9 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".ui.clients.ClientsFragment">
+        tools:context=".ui.clients.ClientsFragment"
+        android:transitionName="shared_element_container"
+        >
 
 
         <LinearLayout
@@ -36,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/no_results"
                 android:layout_marginTop="16dp"
-                android:textSize="24dp"
+                android:textSize="24sp"
                 android:textColor="@color/colorPrimary"/>
 
         </LinearLayout>
@@ -99,6 +101,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:orientation="vertical"
+                    android:transitionGroup="true"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:layout_below="@id/search_cardview"/>
             </RelativeLayout>
@@ -117,7 +120,8 @@
             app:strokeColor="@color/colorPrimary"
             android:contentDescription="@string/add_client"
             app:srcCompat="@drawable/ic_add"
-            app:tint="@android:color/white"/>
+            app:tint="@android:color/white"
+            />
 
     </FrameLayout>
 </layout>

@@ -1,30 +1,23 @@
 package co.almotech.digitalsupplieragent.ui.categories;
 
-import android.media.audiofx.DynamicsProcessing;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import co.almotech.digitalsupplieragent.data.model.ModelClients;
 import co.almotech.digitalsupplieragent.databinding.FragmentAllProductsBinding;
 import co.almotech.digitalsupplieragent.data.model.ModelProducts;
 import co.almotech.digitalsupplieragent.data.model.ModelProductsResponse;
 import co.almotech.digitalsupplieragent.ui.cart.CartViewModel;
-import co.almotech.digitalsupplieragent.ui.clients.ClientsAdapter;
 import dagger.hilt.android.AndroidEntryPoint;
 import java8.util.stream.StreamSupport;
 import timber.log.Timber;

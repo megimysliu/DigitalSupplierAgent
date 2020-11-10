@@ -20,8 +20,8 @@ import co.almotech.digitalsupplieragent.data.model.ModelClients;
 
 public class AutoCompleteAdapter extends ArrayAdapter<ModelClients> {
 
-    private List<ModelClients> mAllClients;
-    private List<ModelClients> mFilteredClients;
+    private List<ModelClients> mAllClients = new ArrayList<>();
+    private List<ModelClients> mFilteredClients = new ArrayList<>();
 
     public AutoCompleteAdapter(@NonNull Context context, @NonNull List<ModelClients> clients) {
         super(context,0,  clients);
@@ -78,8 +78,11 @@ public class AutoCompleteAdapter extends ArrayAdapter<ModelClients> {
 
 
             clear();
-            addAll((List) results.values);
-            notifyDataSetChanged();
+            if(results.values !=null){
+                addAll((List) results.values);
+                notifyDataSetChanged();
+            }
+
         }
 
         @Override

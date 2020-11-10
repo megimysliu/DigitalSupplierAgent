@@ -108,6 +108,14 @@
     <string name="google_maps_error_title">Google Maps not installed</string>
     <string name="google_maps_supporting_text">You need to have Google Maps installed in your device to set the location</string>
     <string name="location_rationale">Allow DigitalSupplierAgent to access your location?</string>
-
+    <string name="initials">AJ</string>
+    <string name="client_name">Andrea Jones</string>
+    <string name="client_email">andrea.jones@gmail.com</string>
+    <string name="my_clients">My clients</string>
+    <string name="search_categories_and_products">Search products or categories</string>
+    <string name="client_item_transition_name">client_item_%1$d</string>
+    <string name="client_fragment_transition_name">client_fragment_transition</string>
+    <string name="order_item_transition_name">client_item_%1$d</string>
+    <string name="order_details_transition_name">client_fragment_transition</string>
 
 </resources>

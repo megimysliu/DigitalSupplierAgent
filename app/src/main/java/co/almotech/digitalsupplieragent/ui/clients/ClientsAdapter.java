@@ -61,7 +61,7 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsV
             View v = mBinding.getRoot();
             v.setOnClickListener(view ->
 
-                listener.onClientClick(client)
+                listener.onClientClick(client,v)
             );
 
 
@@ -71,6 +71,6 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsV
 
     public interface ClientClickListener{
 
-        void onClientClick(ModelClients client);
+        void onClientClick(ModelClients client, View view);
     }
 }

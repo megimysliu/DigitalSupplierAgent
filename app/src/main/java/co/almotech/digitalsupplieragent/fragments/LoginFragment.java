@@ -50,9 +50,10 @@ public class LoginFragment extends Fragment {
         mBinding.logInBtn.setOnClickListener(v -> {
         mLoginViewModel.login(Objects.requireNonNull(mBinding.email.getText().toString()),
                              Objects.requireNonNull(mBinding.password.getText().toString()));
-            mLoginViewModel.loginLiveData.observe(getViewLifecycleOwner(),this::verifyLoginCredentials);
+
 
         });
+        mLoginViewModel.loginLiveData.observe(getViewLifecycleOwner(),this::verifyLoginCredentials);
 
         mBinding.forgotPassword.setOnClickListener(v -> {
             NavHostFragment.findNavController(this)
@@ -77,14 +78,15 @@ public class LoginFragment extends Fragment {
            mLoginViewModel.changeUserData(response.getData());
             NavHostFragment.findNavController(this).navigate(BottomNavGraphDirections.actionHome());
         }else{
+
             if(response.getMessage().equals("Unauthorized Access")){
-
-                Toast.makeText(requireContext(),"Incorrect email/password",Toast.LENGTH_SHORT).show();
-            }else{
-
+                Toast.makeText(getContext(),"Incorrect email/password",Toast.LENGTH_SHORT).show();
+            }else {
                 Toast.makeText(requireContext(),response.getMessage(),Toast.LENGTH_SHORT).show();
-
             }
+
+
+
 
         }
     }

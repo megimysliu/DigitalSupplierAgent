@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.fragment.FragmentNavigator;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.material.transition.MaterialFadeThrough;
 import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import java.util.ArrayList;
@@ -135,10 +138,14 @@ public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrd
     }
 
     @Override
-    public void onClickOrder(ModelOrders order) {
+    public void onClickOrder(ModelOrders order,View v) {
 
         mViewModel.setOrder(order);
-        mController.navigate(OrdersFragmentDirections.actionOrderDetail());
+
+        String transitionName =  getString(R.string.order_details_transition_name);
+        FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder()
+                .addSharedElement(v,transitionName).build();
+        mController.navigate(OrdersFragmentDirections.actionOrderDetail(),extras);
 
     }
 
@@ -175,5 +182,11 @@ public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrd
         mAdapter = new OrdersAdapter(data,this);
         mBinding.ordersRecyclerview.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setEnterTransition(new MaterialFadeThrough());
     }
 }

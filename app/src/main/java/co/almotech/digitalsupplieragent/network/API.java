@@ -1,13 +1,18 @@
 package co.almotech.digitalsupplieragent.network;
 
+import java.util.List;
+
 import co.almotech.digitalsupplieragent.data.model.ModelCategoriesResponse;
 import co.almotech.digitalsupplieragent.data.model.ModelChangePasswordResponse;
+import co.almotech.digitalsupplieragent.data.model.ModelClients;
 import co.almotech.digitalsupplieragent.data.model.ModelClientsResponse;
+import co.almotech.digitalsupplieragent.data.model.ModelCreateClientResponse;
 import co.almotech.digitalsupplieragent.data.model.ModelCreateOrder;
 import co.almotech.digitalsupplieragent.data.model.ModelCreateOrderResponse;
 import co.almotech.digitalsupplieragent.data.model.ModelOrderItemsResponse;
 import co.almotech.digitalsupplieragent.data.model.ModelOrdersResponse;
 import co.almotech.digitalsupplieragent.data.model.ModelProductsResponse;
+import co.almotech.digitalsupplieragent.data.model.ModelResponse;
 import co.almotech.digitalsupplieragent.data.model.ModelUserResponse;
 import io.reactivex.Single;
 import retrofit2.http.Body;
@@ -59,4 +64,12 @@ Single<ModelChangePasswordResponse> changePassword(@Field("old_password") String
                                                    @Field("password_confirmation") String passwordConfirmation);
 
 
+@FormUrlEncoded
+@POST("create_client")
+    Single<ModelCreateClientResponse> createClient(@Field("name") String name, @Field("email") String email,
+                                                   @Field("phone_number") String phoneNumber,
+                                                   @Field("account_type") int accountType,
+                                                   @Field("nuis") String nuis,
+                                                   @Field("lat") String lat, @Field("lng") String lng,
+                                                   @Field("address") String address);
 }

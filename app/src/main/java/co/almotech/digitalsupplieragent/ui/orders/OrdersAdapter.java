@@ -53,12 +53,12 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
             mBinding.setOrder(order);
             mBinding.executePendingBindings();
             View v = mBinding.getRoot();
-            v.setOnClickListener(view -> listener.onClickOrder(order));
+            v.setOnClickListener(view -> listener.onClickOrder(order,v));
         }
 
     }
 
     public  interface OnClickOrderListener{
-        void onClickOrder(ModelOrders order);
+        void onClickOrder(ModelOrders order,View v);
     }
 }

@@ -2,6 +2,7 @@ package co.almotech.digitalsupplieragent.ui.orders;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.google.android.material.transition.MaterialFadeThrough;
 import com.google.gson.internal.bind.ArrayTypeAdapter;
 
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ import co.almotech.digitalsupplieragent.data.model.ModelCreateOrder;
 import co.almotech.digitalsupplieragent.data.model.ModelCreateOrderResponse;
 import co.almotech.digitalsupplieragent.data.model.ModelItem;
 import co.almotech.digitalsupplieragent.data.model.ModelProducts;
+import co.almotech.digitalsupplieragent.data.model.ModelResponse;
 import co.almotech.digitalsupplieragent.databinding.FragmentAddBinding;
 import co.almotech.digitalsupplieragent.ui.cart.CartViewModel;
 import co.almotech.digitalsupplieragent.ui.clients.ClientsViewModel;
@@ -141,13 +144,13 @@ public class AddOrderFragment extends Fragment {
         String note = mBinding.notes.getText().toString();
         int clientId = mClientsViewModel.selectedClient.get();
         if(clientId == -1){
-            mBinding.client.setError("Please select client");
+            mBinding.clientAutocomplete.setError("Please select client");
             mBinding.client.requestFocus();
             return;
         }
         String type = typeChoice;
         if(typeChoice.equals("")){
-            mBinding.type.setError("Please select type");
+            mBinding.typeAutocomplete.setError("Please select type");
             mBinding.type.requestFocus();
             return;
         }
@@ -170,5 +173,11 @@ public class AddOrderFragment extends Fragment {
 
 
         }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setEnterTransition(new MaterialFadeThrough());
     }
 }

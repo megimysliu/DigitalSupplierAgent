@@ -5,13 +5,17 @@ import android.media.audiofx.DynamicsProcessing;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 
+import com.google.android.material.transition.MaterialFadeThrough;
 import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import java.util.ArrayList;
@@ -36,7 +41,10 @@ import co.almotech.digitalsupplieragent.data.model.ModelProducts;
 import co.almotech.digitalsupplieragent.data.model.ModelProductsResponse;
 import co.almotech.digitalsupplieragent.ui.cart.CartViewModel;
 import dagger.hilt.android.AndroidEntryPoint;
+import java8.util.stream.StreamSupport;
 import timber.log.Timber;
+
+import static java8.util.stream.Collectors.toList;
 
 
 @AndroidEntryPoint
@@ -51,6 +59,7 @@ public class ProductsFragment extends Fragment implements CategoriesAdapter.Cate
     private List<ModelProducts> mProducts = new ArrayList<>();
     private NavController mNavController;
     private LoginViewModel mLoginViewModel;
+    private int categoryId = -1;
 
 
 
@@ -94,11 +103,38 @@ public class ProductsFragment extends Fragment implements CategoriesAdapter.Cate
         mCartViewModel = new ViewModelProvider(requireActivity()).get(CartViewModel.class);
         mBinding = FragmentProductsBinding.inflate(inflater,container,false);
         mBinding.setLifecycleOwner(getViewLifecycleOwner());
+
+        mViewModel.getFirstCategory().observe(getViewLifecycleOwner(), integer -> {
+            categoryId = integer;
+            System.out.println("Id value " + categoryId);
+            mViewModel.getCategoriesAndProducts(integer);
+
+        });
+
+        System.out.println("First category id: " + String.valueOf(categoryId));
         mViewModel.categories().observe(getViewLifecycleOwner(), this::consumeCategories);
         setHasOptionsMenu(true);
         mViewModel.categoryProducts().observe(getViewLifecycleOwner(),this::consumeProducts);
         setupRecyclerView();
         setupProductsRecyclerView();
+        mBinding.searchTxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                searchProduct(editable.toString());
+
+            }
+        });
         mNavController = NavHostFragment.findNavController(this);
         mBinding.viewAll.setOnClickListener(v -> mNavController.navigate(ProductsFragmentDirections.actionCategories()));
         mBinding.viewAllProducts.setOnClickListener(v -> mNavController.navigate(ProductsFragmentDirections.actionAllProducts()));
@@ -132,7 +168,7 @@ public class ProductsFragment extends Fragment implements CategoriesAdapter.Cate
                 mViewModel.selectedCategory = -1;
             }else{
                 mAdapter.setSelected(categories.get(0).getId());
-                updateProducts(categories.get(0).getId());
+                //updateProducts(categories.get(0).getId());
             }
 
             mAdapter.notifyDataSetChanged();
@@ -183,5 +219,29 @@ public class ProductsFragment extends Fragment implements CategoriesAdapter.Cate
         mLoginViewModel.logout();
         ProcessPhoenix.triggerRebirth(requireContext());
 
+    }
+
+    private void searchProduct(String s) {
+        List<ModelProducts> data = StreamSupport.stream(mProducts)
+                .filter(modelProducts -> modelProducts.getName()!=null)
+                .filter(modelProducts -> modelProducts.getName().toLowerCase().contains(s.toLowerCase())).collect(toList());
+
+        mProductAdapter = new ProductAdapter( data,mCartViewModel,getContext());
+        mBinding.productsRecyclerview.setAdapter(mProductAdapter);
+        mProductAdapter.notifyDataSetChanged();
+
+        List<ModelCategories> dataCat = StreamSupport.stream(mCategories)
+                .filter(modelCategories -> modelCategories.getName() != null)
+                .filter(modelCategories -> modelCategories.getName().toLowerCase().contains(s.toLowerCase())).collect(toList());
+
+        mAdapter = new CategoriesAdapter(this, dataCat);
+        mBinding.categoriesRecyclerview.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setEnterTransition(new MaterialFadeThrough());
     }
 }

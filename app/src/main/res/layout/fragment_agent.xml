@@ -52,6 +52,7 @@
                         android:gravity="center"
                         android:paddingBottom="16dp"
                         android:text="@{viemodel.user.name.substring(0,1).toUpperCase()}"
+                        tools:text="@string/initials"
                         android:padding="4dp"
                         android:textColor="@color/colorPrimary"
                         android:textSize="32sp"
@@ -65,8 +66,9 @@
                         android:layout_marginStart="28dp"
                         android:layout_marginTop="40dp"
                         android:layout_alignBaseline="@id/avatar"
-                        android:layout_toRightOf="@id/avatar"
+                        android:layout_toEndOf="@id/avatar"
                         android:text="@{viemodel.user.name}"
+                        tools:text="@string/client_name"
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
@@ -93,6 +95,8 @@
                         android:layout_alignBaseline="@+id/email_label"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="32dp"
+                        android:layout_marginBottom="24dp"
+                        tools:text="@string/client_email"
                         android:layout_toEndOf="@id/email_label"
                         android:text="@{viemodel.user.email}" />
 
@@ -109,6 +113,7 @@
                         android:backgroundTint="@android:color/white"
                         android:drawableRight="@drawable/ic_call"
                         android:drawablePadding="4dp"
+                        android:visibility="gone"
                         android:drawableTint="@color/colorPrimary"
                         android:gravity="center"
                         android:padding="4dp" />
@@ -121,6 +126,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="16dp"
+                        android:visibility="gone"
                         android:layout_toRightOf="@+id/phone_number_label"
                         android:text="+355 89 75 76 890" />
 
@@ -149,6 +155,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="32dp"
                     android:text="$34000"
+                    android:visibility="gone"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -160,6 +167,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="4dp"
+                    android:visibility="gone"
                     android:text="Total sales" />
 
                 <View
@@ -179,6 +187,7 @@
                     android:layout_below="@+id/total_sales"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="16dp"
+                    android:visibility="gone"
                     android:layout_marginTop="32dp"
                     android:text="@string/meetings"
                     android:textSize="24sp"
@@ -192,6 +201,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:visibility="gone"
                     android:orientation="horizontal"
                     android:weightSum="4">
 
@@ -199,6 +209,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:visibility="gone"
                         android:orientation="vertical"
                         android:padding="8dp">
 
@@ -223,6 +234,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:visibility="gone"
                         android:orientation="vertical"
                         android:padding="8dp">
 
@@ -253,6 +265,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:visibility="gone"
                         android:orientation="vertical"
                         android:padding="8dp">
 
@@ -276,6 +289,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:visibility="gone"
                         android:orientation="vertical"
                         android:padding="8dp">
 
@@ -312,27 +326,69 @@
 
 
                 <TextView
-                    android:id="@+id/orders_label"
-
-
-
+                    android:id="@+id/clients_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="32dp"
                     android:layout_below="@id/statisticsAppointmentLinear"
-                    android:text="Orders"
+                    android:text="@string/my_clients"
                     android:textSize="24sp"
                     android:textStyle="bold" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/clients_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:layout_below="@id/clients_label"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="16dp"/>
+
+
+                <LinearLayout
+                    android:id="@+id/error_clients_linear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="24dp"
+                    android:visibility="gone"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/clients_label">
+
+                    <ImageView
+                        android:id="@+id/error_client_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        app:srcCompat="@drawable/ic_error_404"
+                        android:contentDescription="@string/img_description"
+
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no_results"
+                        android:layout_marginTop="16dp"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimary"/>
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/statisticsLinear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/orders_label"
+                    android:layout_below="@+id/clients_label"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="8dp"
+                    android:visibility="gone"
                     android:layout_marginBottom="16dp"
                     android:layout_marginTop="8dp"
                     android:orientation="horizontal"

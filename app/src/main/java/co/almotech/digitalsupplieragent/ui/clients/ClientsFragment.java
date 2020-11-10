@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.fragment.FragmentNavigator;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,8 +22,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.android.material.transition.MaterialElevationScale;
+import com.google.android.material.transition.MaterialFadeThrough;
 import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import java.util.ArrayList;
@@ -30,6 +36,7 @@ import java.util.List;
 import co.almotech.digitalsupplieragent.BottomNavGraphDirections;
 import co.almotech.digitalsupplieragent.R;
 import co.almotech.digitalsupplieragent.auth.LoginViewModel;
+import co.almotech.digitalsupplieragent.data.model.ModelResponse;
 import co.almotech.digitalsupplieragent.databinding.FragmentClientsBinding;
 import co.almotech.digitalsupplieragent.data.model.ModelClients;
 import co.almotech.digitalsupplieragent.data.model.ModelClientsResponse;
@@ -73,9 +80,14 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
 
         View v = mBinding.getRoot();
 
-        mBinding.addClient.setOnClickListener(view ->
-             mNavController.navigate(ClientsFragmentDirections.actionAddClient())
-                );
+        mBinding.addClient.setOnClickListener(view -> {
+
+
+                    FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder()
+                            .addSharedElement(mBinding.getRoot(),"shared_elements_container").build();
+                    mNavController.navigate(ClientsFragmentDirections.actionAddClient());
+                });
+
 
         mBinding.searchTxt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -145,9 +157,19 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
     }
 
     @Override
-    public void onClientClick(ModelClients client) {
+    public void onClientClick(ModelClients client ,View view) {
+        String transitionName =  getString(R.string.client_fragment_transition_name);
+
+        FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder()
+                .addSharedElement(view,transitionName).build();
+        MaterialElevationScale elevationScale = new MaterialElevationScale(false);
+        elevationScale.setDuration(200);
+        //setExitTransition(elevationScale);
+        MaterialElevationScale elevation = new MaterialElevationScale(true);
+        elevation.setDuration(200);
+        //setReenterTransition(elevation);
         mMainViewModel.setClient(client);
-        mNavController.navigate(ClientsFragmentDirections.actionClient());
+        mNavController.navigate(ClientsFragmentDirections.actionClient(),extras);
 
     }
 
@@ -155,7 +177,7 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
 
         mBinding.progressCircular.setVisibility(View.GONE);
         if(!response.getError()){
-            List<ModelClients> clients = response.getData();
+            List<ModelClients> clients =response.getData();
             if(clients != null){
                 mClients.clear();
                 mClients.addAll(clients);
@@ -189,4 +211,11 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
     }
 
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+    }
 }

@@ -82,6 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="16dp"
+                    android:padding="8dp"
                     app:srcCompat="@drawable/ic_add_to_cart"
                     android:contentDescription="@string/img_description"
                     android:layout_centerVertical="true"

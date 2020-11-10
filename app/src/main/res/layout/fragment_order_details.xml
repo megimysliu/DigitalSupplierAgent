@@ -13,7 +13,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.orders.OrderDetailsFragment">
+        tools:context=".ui.orders.OrderDetailsFragment"
+        android:transitionName="@string/order_details_transition_name">
 
         <ScrollView
             android:layout_width="match_parent"

@@ -15,7 +15,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:padding="8dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:transitionName="@{@string/order_item_transition_name(order.id)}">
 
         <ImageView
             android:id="@+id/imageView2"
