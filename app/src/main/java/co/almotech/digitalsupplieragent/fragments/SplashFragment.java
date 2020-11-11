@@ -6,12 +6,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
-
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import co.almotech.digitalsupplieragent.BottomNavGraphDirections;
 import co.almotech.digitalsupplieragent.auth.LoginViewModel;
 import co.almotech.digitalsupplieragent.databinding.FragmentSplashBinding;
@@ -51,6 +49,7 @@ public class SplashFragment extends Fragment {
 
             NavDirections directions;
             if(mLoginViewModel.getToken() == null){
+
 
                 directions = SplashFragmentDirections.actionSplashFragmentToLoginFragment();
 

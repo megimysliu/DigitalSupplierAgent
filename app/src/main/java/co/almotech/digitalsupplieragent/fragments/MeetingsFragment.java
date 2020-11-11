@@ -8,19 +8,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.google.android.material.transition.MaterialFadeThrough;
 import com.jakewharton.processphoenix.ProcessPhoenix;
-
 import co.almotech.digitalsupplieragent.BottomNavGraphDirections;
 import co.almotech.digitalsupplieragent.R;
 import co.almotech.digitalsupplieragent.auth.LoginViewModel;
@@ -93,6 +88,6 @@ public class MeetingsFragment extends Fragment  {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setEnterTransition(new MaterialFadeThrough());
+       // setEnterTransition(new MaterialFadeThrough());
     }
 }

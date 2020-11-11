@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import co.almotech.digitalsupplieragent.R;
 import co.almotech.digitalsupplieragent.databinding.FragmentAddMeetingBinding;
 
 public class AddMeetingFragment extends Fragment {

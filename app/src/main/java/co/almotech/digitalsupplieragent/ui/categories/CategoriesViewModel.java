@@ -7,17 +7,13 @@ import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import java.util.HashMap;
 import java.util.List;
-
 import co.almotech.digitalsupplieragent.data.model.ModelCategories;
 import co.almotech.digitalsupplieragent.data.model.ModelCategoriesResponse;
-import co.almotech.digitalsupplieragent.data.model.ModelProducts;
 import co.almotech.digitalsupplieragent.data.model.ModelProductsResponse;
 import co.almotech.digitalsupplieragent.repo.MainRepository;
 import co.almotech.digitalsupplieragent.utils.CategoriesAndProducts;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;

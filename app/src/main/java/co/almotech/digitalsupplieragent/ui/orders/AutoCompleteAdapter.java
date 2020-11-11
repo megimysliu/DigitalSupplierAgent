@@ -5,22 +5,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-
 import android.widget.Filter;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import co.almotech.digitalsupplieragent.R;
 import co.almotech.digitalsupplieragent.data.model.ModelClients;
 
 public class AutoCompleteAdapter extends ArrayAdapter<ModelClients> {
 
-    private List<ModelClients> mAllClients = new ArrayList<>();
+    private List<ModelClients> mAllClients;
     private List<ModelClients> mFilteredClients = new ArrayList<>();
 
     public AutoCompleteAdapter(@NonNull Context context, @NonNull List<ModelClients> clients) {
@@ -61,8 +57,12 @@ public class AutoCompleteAdapter extends ArrayAdapter<ModelClients> {
             }else{
                 String filterPattern  = constraint.toString().toLowerCase().trim();
                 for(ModelClients  client: mAllClients){
-                    if(client.getName().toLowerCase().contains(filterPattern)){
-                        mFilteredClients.add(client);
+                    if(client.getName()!=null){
+
+                        if(client.getName().toLowerCase().contains(filterPattern)){
+                            mFilteredClients.add(client);
+                    }
+
                     }
                 }
             }

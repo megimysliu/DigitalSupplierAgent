@@ -2,7 +2,6 @@ package co.almotech.digitalsupplieragent.ui.orders;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -13,8 +12,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -24,25 +21,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import com.google.android.material.transition.MaterialFadeThrough;
 import com.jakewharton.processphoenix.ProcessPhoenix;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import co.almotech.digitalsupplieragent.BottomNavGraphDirections;
 import co.almotech.digitalsupplieragent.R;
 import co.almotech.digitalsupplieragent.auth.LoginViewModel;
-import co.almotech.digitalsupplieragent.data.model.ModelCategories;
 import co.almotech.digitalsupplieragent.databinding.FragmentOrdersBinding;
 import co.almotech.digitalsupplieragent.data.model.ModelOrders;
 import co.almotech.digitalsupplieragent.data.model.ModelOrdersResponse;
-import co.almotech.digitalsupplieragent.ui.categories.CategoryAdapter;
 import dagger.hilt.android.AndroidEntryPoint;
 import java8.util.stream.StreamSupport;
 import timber.log.Timber;
-
 import static android.widget.LinearLayout.VERTICAL;
 import static java8.util.stream.Collectors.toList;
 
@@ -57,6 +47,7 @@ public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrd
     private OrdersAdapter mAdapter;
     private NavController mController;
     private LoginViewModel mLoginViewModel;
+    private NavController mNavController;
 
     public OrdersFragment() {
 
@@ -100,7 +91,7 @@ public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrd
         mViewModel.getOrders();
         mViewModel.orders().observe(getViewLifecycleOwner(),this::consumeOrders);
         setHasOptionsMenu(true);
-
+        mNavController = NavHostFragment.findNavController(this);
         mBinding = FragmentOrdersBinding.inflate(inflater,container,false);
         setupRecyclerView();
         mController = NavHostFragment.findNavController(this);
@@ -170,7 +161,10 @@ public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrd
     private void logout(){
 
         mLoginViewModel.logout();
-        ProcessPhoenix.triggerRebirth(requireContext());
+        //ProcessPhoenix.triggerRebirth(requireContext());
+        mNavController.navigate(BottomNavGraphDirections.actionLogout());
+
+
 
     }
 
@@ -187,6 +181,7 @@ public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrd
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setEnterTransition(new MaterialFadeThrough());
+//        setEnterTransition(new MaterialFadeThrough());
+//        setExitTransition(new MaterialFadeThrough());
     }
 }

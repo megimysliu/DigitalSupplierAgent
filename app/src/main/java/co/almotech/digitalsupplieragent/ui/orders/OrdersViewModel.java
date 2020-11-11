@@ -4,9 +4,6 @@ import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import co.almotech.digitalsupplieragent.data.model.ModelCreateOrder;
-import co.almotech.digitalsupplieragent.data.model.ModelCreateOrderResponse;
 import co.almotech.digitalsupplieragent.data.model.ModelOrderItemsResponse;
 import co.almotech.digitalsupplieragent.data.model.ModelOrders;
 import co.almotech.digitalsupplieragent.data.model.ModelOrdersResponse;

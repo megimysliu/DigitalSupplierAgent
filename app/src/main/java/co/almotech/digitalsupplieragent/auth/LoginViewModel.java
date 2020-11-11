@@ -24,14 +24,14 @@ public class LoginViewModel extends ViewModel {
 
     private RepositoryLogin mRepositoryLogin;
     private SharedPreferences mPreferences;
-    private SavedStateHandle savedStateHandle;
+
     public static final String PREFERENCE_TOKEN = "Token";
 
     @ViewModelInject
-    public LoginViewModel(RepositoryLogin repositoryLogin, SharedPreferences preferences, @Assisted SavedStateHandle savedStateHandle){
+    public LoginViewModel(RepositoryLogin repositoryLogin, SharedPreferences preferences){
         this.mRepositoryLogin = repositoryLogin;
         this.mPreferences = preferences;
-        this.savedStateHandle = savedStateHandle;
+
         getUserData();
 
     }
@@ -94,6 +94,7 @@ public class LoginViewModel extends ViewModel {
     @SuppressLint("ApplySharedPref")
     public void logout(){
         mPreferences.edit().clear().commit();
+        setToken(null);
     }
 
     @Override

@@ -3,12 +3,9 @@ package co.almotech.digitalsupplieragent.ui.clients;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
-
 import co.almotech.digitalsupplieragent.databinding.ClientItemBinding;
 import co.almotech.digitalsupplieragent.data.model.ModelClients;
 

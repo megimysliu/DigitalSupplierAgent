@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_nav_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/clientsFragment">
 
 
     <fragment
@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_client"
             app:destination="@id/clientFragment" />
+        <action
+            android:id="@+id/action_splash"
+            app:destination="@id/loginFragment" />
     </fragment>
 
 
@@ -74,6 +77,10 @@
 
 
 
+    <action
+        android:id="@+id/action_logout"
+        app:destination="@id/loginFragment"
+        app:popUpTo="@id/loginFragment"/>
     <fragment
         android:id="@+id/cartFragment"
         android:name="co.almotech.digitalsupplieragent.ui.cart.CartFragment"
@@ -90,6 +97,11 @@
             app:destination="@id/clientFragment" />
     </fragment>
 
+
+    <action
+        android:id="@+id/logout_device"
+        app:destination="@id/splashFragment"
+        app:popUpTo="@id/loginFragment"/>
 
     <fragment
         android:id="@+id/addMeetingFragment"
@@ -124,6 +136,9 @@
         android:id="@+id/action_cart"
         app:destination="@id/cartFragment"
         app:popUpTo="@id/clientsFragment"/>
+
+
+
 
 
     <fragment

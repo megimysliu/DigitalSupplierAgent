@@ -1,27 +1,19 @@
 package co.almotech.digitalsupplieragent;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
-import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toolbar;
 
 import com.google.android.material.appbar.MaterialToolbar;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-
 import co.almotech.digitalsupplieragent.databinding.ActivityMainBinding;
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -40,14 +32,17 @@ public class MainActivity extends AppCompatActivity {
         mBinding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = mBinding.getRoot();
         setContentView(view);
-       // getSupportActionBar().setTitle(getString(R.string.digital_supplier));
         setViews();
 
 
     }
 
     private void setViews(){
-         mNavController = Navigation.findNavController(this,R.id.fragNavHost);
+
+        NavHostFragment navHostFragment = (NavHostFragment)getSupportFragmentManager()
+                .findFragmentById(R.id.fragNavHost);
+        mNavController = navHostFragment.getNavController();
+
         NavigationUI.setupWithNavController(mBinding.bottomNavView, mNavController);
         mToolbar = mBinding.topAppBar;
         setSupportActionBar(mToolbar);
@@ -79,4 +74,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        return mNavController.navigateUp() || super.onSupportNavigateUp();
+    }
 }

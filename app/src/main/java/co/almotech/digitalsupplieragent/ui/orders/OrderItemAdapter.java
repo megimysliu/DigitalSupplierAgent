@@ -2,12 +2,9 @@ package co.almotech.digitalsupplieragent.ui.orders;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
-
 import co.almotech.digitalsupplieragent.databinding.OrderItemBinding;
 import co.almotech.digitalsupplieragent.data.model.ModelOrderItems;
 

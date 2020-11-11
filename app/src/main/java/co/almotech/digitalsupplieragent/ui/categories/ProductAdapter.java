@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-
 import co.almotech.digitalsupplieragent.R;
 import co.almotech.digitalsupplieragent.databinding.ProductItemBinding;
 import co.almotech.digitalsupplieragent.data.model.ModelProducts;

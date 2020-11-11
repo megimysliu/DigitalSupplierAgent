@@ -10,20 +10,14 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
-
-import com.google.android.material.transition.MaterialFadeThrough;
-import com.google.gson.internal.bind.ArrayTypeAdapter;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import co.almotech.digitalsupplieragent.R;
 import co.almotech.digitalsupplieragent.data.model.ModelClients;
 import co.almotech.digitalsupplieragent.data.model.ModelClientsResponse;
@@ -31,11 +25,9 @@ import co.almotech.digitalsupplieragent.data.model.ModelCreateOrder;
 import co.almotech.digitalsupplieragent.data.model.ModelCreateOrderResponse;
 import co.almotech.digitalsupplieragent.data.model.ModelItem;
 import co.almotech.digitalsupplieragent.data.model.ModelProducts;
-import co.almotech.digitalsupplieragent.data.model.ModelResponse;
 import co.almotech.digitalsupplieragent.databinding.FragmentAddBinding;
 import co.almotech.digitalsupplieragent.ui.cart.CartViewModel;
 import co.almotech.digitalsupplieragent.ui.clients.ClientsViewModel;
-
 import static android.widget.LinearLayout.VERTICAL;
 
 
@@ -178,6 +170,6 @@ public class AddOrderFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setEnterTransition(new MaterialFadeThrough());
+       // setEnterTransition(new MaterialFadeThrough());
     }
 }

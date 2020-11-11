@@ -13,7 +13,6 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:transitionName="@string/client_fragment_transition_name"
         >
 
         <ScrollView

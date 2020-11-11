@@ -217,7 +217,7 @@ public class ProductsFragment extends Fragment implements CategoriesAdapter.Cate
     private void logout(){
 
         mLoginViewModel.logout();
-        ProcessPhoenix.triggerRebirth(requireContext());
+        //ProcessPhoenix.triggerRebirth(requireContext());
 
     }
 
@@ -242,6 +242,7 @@ public class ProductsFragment extends Fragment implements CategoriesAdapter.Cate
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setEnterTransition(new MaterialFadeThrough());
+//        setEnterTransition(new MaterialFadeThrough());
+//        setExitTransition(new MaterialFadeThrough());
     }
 }
