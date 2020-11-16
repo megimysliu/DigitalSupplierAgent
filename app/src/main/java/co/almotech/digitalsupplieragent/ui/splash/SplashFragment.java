@@ -1,4 +1,4 @@
-package co.almotech.digitalsupplieragent.fragments;
+package co.almotech.digitalsupplieragent.ui.splash;
 
 import android.os.Bundle;
 
@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import co.almotech.digitalsupplieragent.BottomNavGraphDirections;
 import co.almotech.digitalsupplieragent.auth.LoginViewModel;
 import co.almotech.digitalsupplieragent.databinding.FragmentSplashBinding;
+import co.almotech.digitalsupplieragent.ui.splash.SplashFragmentDirections;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint

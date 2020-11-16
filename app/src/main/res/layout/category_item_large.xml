@@ -6,6 +6,7 @@
 
     <data>
         <import type="co.almotech.digitalsupplieragent.data.model.ModelCategories"/>
+        <import type="co.almotech.digitalsupplieragent.utils.Urls"/>
         <import type="android.text.Html"/>
         <variable
             name="category"
@@ -38,7 +39,7 @@
                     android:layout_height="120dp"
                     android:layout_margin="8dp"
                     android:layout_gravity="center_horizontal"
-                    bind:image="@{@string/url_category_photos + category.image}"
+                    bind:image="@{Urls.getUrl(category.image)}"
                     bind:placeholder="@{@drawable/ic_noimg}"
                     android:scaleType="centerCrop"
                     android:contentDescription="@string/img_description"/>

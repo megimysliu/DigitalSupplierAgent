@@ -33,7 +33,6 @@ public class ClientFragment extends Fragment {
         transition.setDuration(300);
         transition.setScrimColor(Color.TRANSPARENT);
         transition.setAllContainerColors(requireContext().getColor(R.color.colorLightGray));
-
         setSharedElementEnterTransition(transition);
 
     }

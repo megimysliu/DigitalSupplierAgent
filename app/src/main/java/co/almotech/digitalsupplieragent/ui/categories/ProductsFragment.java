@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -110,6 +111,11 @@ public class ProductsFragment extends Fragment implements CategoriesAdapter.Cate
             mViewModel.getCategoriesAndProducts(integer);
 
         });
+
+        NavOptions navOptions = new NavOptions.Builder()
+                .setPopUpTo(R.id.clientsFragment, false)
+                .build();
+
 
         System.out.println("First category id: " + String.valueOf(categoryId));
         mViewModel.categories().observe(getViewLifecycleOwner(), this::consumeCategories);
@@ -245,4 +251,6 @@ public class ProductsFragment extends Fragment implements CategoriesAdapter.Cate
 //        setEnterTransition(new MaterialFadeThrough());
 //        setExitTransition(new MaterialFadeThrough());
     }
+
+
 }

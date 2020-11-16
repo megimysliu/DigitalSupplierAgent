@@ -151,6 +151,12 @@ public class AddOrderFragment extends Fragment {
             Toast.makeText(getContext(),"Cart can't be empty",Toast.LENGTH_SHORT).show();
             return;
         }
+        if(mBinding.notes.getText().toString().equals("")){
+
+            mBinding.noteLayout.setError("Field is required");
+            mBinding.notes.requestFocus();
+            return;
+        }
 
         ModelCreateOrder order = new ModelCreateOrder(note, clientId,type, items);
 

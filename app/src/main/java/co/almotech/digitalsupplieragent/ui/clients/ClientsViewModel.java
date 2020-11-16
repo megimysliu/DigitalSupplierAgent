@@ -1,9 +1,11 @@
 package co.almotech.digitalsupplieragent.ui.clients;
 
 import androidx.databinding.ObservableInt;
+import androidx.hilt.Assisted;
 import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 import co.almotech.digitalsupplieragent.data.model.ModelClients;
 import co.almotech.digitalsupplieragent.data.model.ModelClientsResponse;
@@ -24,10 +26,12 @@ public class ClientsViewModel extends ViewModel {
 
     private final MutableLiveData<ModelClients> client = new MutableLiveData<>();
     public final ObservableInt selectedClient = new ObservableInt(-1);
+    private final SavedStateHandle savedStateHandle;
 
     @ViewModelInject
-    public ClientsViewModel(MainRepository mainRepository){
+    public ClientsViewModel(MainRepository mainRepository,@Assisted SavedStateHandle savedStateHandle){
         mRepository = mainRepository;
+        this.savedStateHandle = savedStateHandle;
     }
 
     public void getClients(){

@@ -115,7 +115,7 @@
     <string name="search_categories_and_products">Search products or categories</string>
     <string name="client_item_transition_name">client_item_%1$d</string>
     <string name="client_fragment_transition_name">client_fragment_transition</string>
-    <string name="order_item_transition_name">client_item_%1$d</string>
-    <string name="order_details_transition_name">client_fragment_transition</string>
+    <string name="order_item_transition_name">order_item_%1$d</string>
+    <string name="order_details_transition_name">order_fragment_transition</string>
 
 </resources>

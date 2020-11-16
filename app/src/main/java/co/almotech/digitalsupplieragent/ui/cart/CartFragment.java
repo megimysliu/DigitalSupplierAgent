@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -77,8 +78,15 @@ public class CartFragment extends Fragment {
 
             }
         });
-        View view = mBinding.getRoot();
-        return view;
+
+        mBinding.deleteBtn.setOnClickListener( view -> {
+            new MaterialAlertDialogBuilder(getContext())
+                    .setTitle("Delete cart")
+                    .setMessage("Are you sure you want to delete all items?")
+                    .setNegativeButton("No",null)
+                    .setPositiveButton("Yes",(dialog,which) -> deleteAll()).show();
+        });
+        return mBinding.getRoot();
     }
 
     private void setupRecyclerView(){
@@ -169,5 +177,10 @@ public class CartFragment extends Fragment {
             }
         }
         return false;
+    }
+
+    private void deleteAll(){
+        mViewModel.clearCart();
+        mAdapter.notifyDataSetChanged();
     }
 }

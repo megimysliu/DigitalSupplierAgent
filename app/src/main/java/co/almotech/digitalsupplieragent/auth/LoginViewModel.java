@@ -94,7 +94,7 @@ public class LoginViewModel extends ViewModel {
     @SuppressLint("ApplySharedPref")
     public void logout(){
         mPreferences.edit().clear().commit();
-        setToken(null);
+
     }
 
     @Override

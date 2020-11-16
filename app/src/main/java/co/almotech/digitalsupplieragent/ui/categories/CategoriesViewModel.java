@@ -3,9 +3,11 @@ package co.almotech.digitalsupplieragent.ui.categories;
 import android.util.Log;
 
 import androidx.databinding.ObservableInt;
+import androidx.hilt.Assisted;
 import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +31,7 @@ public class CategoriesViewModel extends ViewModel {
     private final MutableLiveData<ModelProductsResponse> allProducts = new MutableLiveData<>();
     private final MutableLiveData<Integer> firstCategory =  new MutableLiveData<>();
     public final ObservableInt firstCat = new ObservableInt();
+    private final SavedStateHandle savedStateHandle;
 
 
 
@@ -36,8 +39,9 @@ public class CategoriesViewModel extends ViewModel {
     private MainRepository mRepository;
 
     @ViewModelInject
-    public CategoriesViewModel(MainRepository repository){
+    public CategoriesViewModel(MainRepository repository, @Assisted SavedStateHandle savedStateHandle){
         this.mRepository = repository;
+        this.savedStateHandle = savedStateHandle;
         getCategories();
 
         Log.d(" First categor",String.valueOf(firstCategory.getValue()));

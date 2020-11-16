@@ -47,7 +47,7 @@ public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrd
     private OrdersAdapter mAdapter;
     private NavController mController;
     private LoginViewModel mLoginViewModel;
-    private NavController mNavController;
+
 
     public OrdersFragment() {
 
@@ -91,10 +91,10 @@ public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrd
         mViewModel.getOrders();
         mViewModel.orders().observe(getViewLifecycleOwner(),this::consumeOrders);
         setHasOptionsMenu(true);
-        mNavController = NavHostFragment.findNavController(this);
+        mController = NavHostFragment.findNavController(this);
         mBinding = FragmentOrdersBinding.inflate(inflater,container,false);
         setupRecyclerView();
-        mController = NavHostFragment.findNavController(this);
+
         mBinding.searchTxt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -114,6 +114,7 @@ public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrd
             }
         });
 
+
         return mBinding.getRoot();
     }
 
@@ -131,11 +132,12 @@ public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrd
     @Override
     public void onClickOrder(ModelOrders order,View v) {
 
-        mViewModel.setOrder(order);
+
 
         String transitionName =  getString(R.string.order_details_transition_name);
         FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder()
                 .addSharedElement(v,transitionName).build();
+        mViewModel.setOrder(order);
         mController.navigate(OrdersFragmentDirections.actionOrderDetail(),extras);
 
     }
@@ -162,7 +164,7 @@ public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrd
 
         mLoginViewModel.logout();
         //ProcessPhoenix.triggerRebirth(requireContext());
-        mNavController.navigate(BottomNavGraphDirections.actionLogout());
+        mController.navigate(BottomNavGraphDirections.actionLogout());
 
 
 
@@ -181,7 +183,8 @@ public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrd
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setEnterTransition(new MaterialFadeThrough());
-//        setExitTransition(new MaterialFadeThrough());
+
     }
+
+
 }

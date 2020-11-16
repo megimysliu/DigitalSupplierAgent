@@ -1,4 +1,4 @@
-package co.almotech.digitalsupplieragent.fragments;
+package co.almotech.digitalsupplieragent.ui.meeting;
 
 import android.app.AlertDialog;
 import android.os.Bundle;

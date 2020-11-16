@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_nav_graph"
-    app:startDestination="@id/clientsFragment">
+    app:startDestination="@id/splashFragment">
 
 
     <fragment
@@ -18,16 +18,15 @@
             android:id="@+id/action_client"
             app:destination="@id/clientFragment" />
         <action
-            android:id="@+id/action_splash"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_logout"
+            app:destination="@id/splashFragment" />
     </fragment>
 
 
     <fragment
         android:id="@+id/meetingsFragment"
-        android:name="co.almotech.digitalsupplieragent.fragments.MeetingsFragment"
+        android:name="co.almotech.digitalsupplieragent.ui.meeting.MeetingsFragment"
         android:label="Meetings"
-        app:launchSingleTop="true"
         tools:layout="@layout/fragment_meetings" >
 
         <action
@@ -79,8 +78,8 @@
 
     <action
         android:id="@+id/action_logout"
-        app:destination="@id/loginFragment"
-        app:popUpTo="@id/loginFragment"/>
+        app:destination="@id/splashFragment"
+        app:popUpTo="@id/splashFragment"/>
     <fragment
         android:id="@+id/cartFragment"
         android:name="co.almotech.digitalsupplieragent.ui.cart.CartFragment"
@@ -105,7 +104,7 @@
 
     <fragment
         android:id="@+id/addMeetingFragment"
-        android:name="co.almotech.digitalsupplieragent.fragments.AddMeetingFragment"
+        android:name="co.almotech.digitalsupplieragent.ui.meeting.AddMeetingFragment"
         android:label="Add Meeting"
         tools:layout="@layout/fragment_add_meeting" />
 
@@ -143,7 +142,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="co.almotech.digitalsupplieragent.fragments.SplashFragment"
+        android:name="co.almotech.digitalsupplieragent.ui.splash.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -187,7 +186,7 @@
         android:label="Forgot Password"
         tools:layout="@layout/fragment_forgot_password" >
         <action
-            android:id="@+id/action_forgotPasswordFragment_to_loginFragment"
+            android:id="@+id/action_login"
             app:destination="@id/loginFragment" />
     </fragment>
 

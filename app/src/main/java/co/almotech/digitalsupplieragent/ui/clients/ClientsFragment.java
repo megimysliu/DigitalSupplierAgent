@@ -1,19 +1,20 @@
 package co.almotech.digitalsupplieragent.ui.clients;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
+
 import androidx.navigation.fragment.FragmentNavigator;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
+
 import androidx.recyclerview.widget.RecyclerView;
-import android.os.Handler;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -22,10 +23,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
-import com.jakewharton.processphoenix.ProcessPhoenix;
 import java.util.ArrayList;
 import java.util.List;
 import co.almotech.digitalsupplieragent.BottomNavGraphDirections;
@@ -34,7 +32,6 @@ import co.almotech.digitalsupplieragent.auth.LoginViewModel;
 import co.almotech.digitalsupplieragent.databinding.FragmentClientsBinding;
 import co.almotech.digitalsupplieragent.data.model.ModelClients;
 import co.almotech.digitalsupplieragent.data.model.ModelClientsResponse;
-import co.almotech.digitalsupplieragent.fragments.SplashFragmentDirections;
 import dagger.hilt.android.AndroidEntryPoint;
 import java8.util.stream.StreamSupport;
 import static android.widget.LinearLayout.VERTICAL;
@@ -59,19 +56,55 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        System.out.println("Inside ClientsFragment");
+
         mBinding = FragmentClientsBinding.inflate(inflater,container,false);
         View v = mBinding.getRoot();
         mMainViewModel = new ViewModelProvider(requireActivity()).get(ClientsViewModel.class);
         mLoginViewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
         setHasOptionsMenu(true);
-
+        mBinding.setLifecycleOwner(getViewLifecycleOwner());
         mNavController = NavHostFragment.findNavController(this);
 
             if(mLoginViewModel.getToken() == null){
-                mNavController.navigate(ClientsFragmentDirections.actionSplash());
+                mNavController.navigate(ClientsFragmentDirections.actionLogout());
             }
-       return v;
+
+        mMainViewModel.getClients();
+        mMainViewModel.clients().observe(getViewLifecycleOwner(),this::consumeClients);
+
+        setupRecyclerView();
+
+
+
+        mBinding.addClient.setOnClickListener(view -> {
+
+            mNavController.navigate(ClientsFragmentDirections.actionAddClient());
+        });
+
+
+        mBinding.searchTxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                searchClient(s.toString());
+
+            }
+        });
+
+
+        System.out.println("Clients : " + mClients);
+
+        return v;
     }
 
 
@@ -173,8 +206,7 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setEnterTransition(new MaterialFadeThrough());
-//        setExitTransition(new MaterialFadeThrough());
+
 
 
     }
@@ -184,39 +216,6 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-        mMainViewModel.clients().observe(getViewLifecycleOwner(),this::consumeClients);
-        setupRecyclerView();
-
-
-        mMainViewModel.getClients();
-        mBinding.addClient.setOnClickListener(v -> {
-
-            mNavController.navigate(ClientsFragmentDirections.actionAddClient());
-        });
-
-
-        mBinding.searchTxt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                searchClient(s.toString());
-
-            }
-        });
-
-
-        System.out.println("Clients : " + mClients);
 
     }
 

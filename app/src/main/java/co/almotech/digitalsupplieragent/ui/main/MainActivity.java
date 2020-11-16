@@ -1,19 +1,27 @@
-package co.almotech.digitalsupplieragent;
+package co.almotech.digitalsupplieragent.ui.main;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.navigation.NavigationView;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import co.almotech.digitalsupplieragent.R;
 import co.almotech.digitalsupplieragent.databinding.ActivityMainBinding;
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -24,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private NavController mNavController;
     private MaterialToolbar mToolbar;
     private AppBarConfiguration mAppBarConfiguration;
+
+
 
 
     @Override
@@ -44,11 +54,12 @@ public class MainActivity extends AppCompatActivity {
         mNavController = navHostFragment.getNavController();
 
         NavigationUI.setupWithNavController(mBinding.bottomNavView, mNavController);
+
         mToolbar = mBinding.topAppBar;
         setSupportActionBar(mToolbar);
-        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.clientsFragment,R.id.meetingsFragment,
+         mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.clientsFragment,R.id.meetingsFragment,
                 R.id.addFragment,R.id.productsFragment,R.id.ordersFragment).build();
-        NavigationUI.setupWithNavController(mToolbar,mNavController,mAppBarConfiguration);
+        NavigationUI.setupActionBarWithNavController(this,mNavController,mAppBarConfiguration);
         List<Integer> noActionBarDestinations = Arrays.asList(R.id.splashFragment,
                 R.id.loginFragment, R.id.registrationFragment,R.id.addMeetingFragment,R.id.forgotPasswordFragment);
         List<Integer> noBottomNavBarDestinations = Arrays.asList(R.id.splashFragment,
@@ -78,6 +89,20 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        return mNavController.navigateUp() || super.onSupportNavigateUp();
+        return NavigationUI.navigateUp(mNavController,mAppBarConfiguration);
+   }
+
+
+
+
+    @Override
+    public void onBackPressed() {
+        NavDestination navDestination = mNavController.getCurrentDestination();
+        if (navDestination != null
+                && navDestination.getId() == R.id.clientsFragment) {
+            finish();
+            return;
+        }
+        super.onBackPressed();
     }
 }

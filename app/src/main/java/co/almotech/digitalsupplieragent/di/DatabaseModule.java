@@ -6,7 +6,6 @@ import androidx.room.Room;
 
 import javax.inject.Singleton;
 
-import co.almotech.digitalsupplieragent.MyApplication;
 import co.almotech.digitalsupplieragent.data.db.AppDatabase;
 import co.almotech.digitalsupplieragent.data.db.dao.CartDAO;
 import dagger.Module;

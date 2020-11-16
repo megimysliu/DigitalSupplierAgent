@@ -90,15 +90,16 @@ public class AddClientFragment extends Fragment {
 
         mBinding.addClient.setOnClickListener(v -> {
 
-           if(!checkName() || !checkEmail() || !checkPhone() || !checkNuis() || !checkAddress()) {
-               //PhoneNumberUtils.formatNumber(mBinding.phoneNumber.getText().toString(),"ALB");
+           if(!checkName() | !checkEmail() | !checkPhone() | !checkNuis() | !checkAddress()) {
+               Toast.makeText(getContext(),"Please check your inputs",Toast.LENGTH_SHORT).show();
+               return;
+           }else {
+
+               mClientsViewModel.createClient(mBinding.clientName.getText().toString(), mBinding.clientEmail.getText().toString(),
+                       mBinding.phoneNumber.getText().toString(), ACCOUNT_TYPE, mBinding.nuis.getText().toString(), String.valueOf(lat),
+                       String.valueOf(lng), mBinding.locationText.getText().toString());
+               System.out.println("Text " + mBinding.locationText.getText().toString());
            }
-
-                mClientsViewModel.createClient(mBinding.clientName.getText().toString(), mBinding.clientEmail.getText().toString(),
-                        mBinding.phoneNumber.getText().toString(), ACCOUNT_TYPE, mBinding.nuis.getText().toString(), String.valueOf(lat),
-                        String.valueOf(lng), mBinding.locationText.getText().toString());
-                System.out.println("Text " + mBinding.locationText.getText().toString());
-
 
         });
 
