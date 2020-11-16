@@ -53,18 +53,6 @@
                 android:visibility="gone"
                 android:layout_below="@id/search_cardview"/>
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/animation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginRight="24dp"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="true"
-                app:lottie_rawRes="@raw/coming_soon" />
-
         </RelativeLayout>
 
     </ScrollView>
@@ -84,5 +72,20 @@
         android:contentDescription="@string/fab_content_desc"
         app:srcCompat="@drawable/ic_add"
         app:tint="@android:color/white"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+       android:layout_gravity="center_horizontal|center_vertical"
+
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="24dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/coming_soon" />
+
 
 </FrameLayout>

@@ -223,7 +223,7 @@ public class ProductsFragment extends Fragment implements CategoriesAdapter.Cate
     private void logout(){
 
         mLoginViewModel.logout();
-        //ProcessPhoenix.triggerRebirth(requireContext());
+        ProcessPhoenix.triggerRebirth(requireContext());
 
     }
 

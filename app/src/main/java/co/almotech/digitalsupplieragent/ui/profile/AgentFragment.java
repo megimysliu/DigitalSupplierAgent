@@ -54,7 +54,7 @@ public class AgentFragment extends Fragment implements ClientsAdapter.ClientClic
         mClientsViewModel = new ViewModelProvider(requireActivity()).get(ClientsViewModel.class);
         mBinding = FragmentAgentBinding.inflate(inflater,container,false);
        navController = NavHostFragment.findNavController(this);
-        mBinding.editProfile.setOnClickListener(v -> navController.navigate(AgentFragmentDirections.actionAgentFragmentToEditProfileFragment()));
+        mBinding.editProfile.setOnClickListener(v -> navController.navigate(AgentFragmentDirections.actionChangePassword()));
         mClientsViewModel.loadClients();
         mClientsViewModel.getMyClients().observe(getViewLifecycleOwner(),this::consumeClients);
         setupRecyclerView();

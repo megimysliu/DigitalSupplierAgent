@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Arrays;
@@ -75,6 +76,18 @@ public class MainActivity extends AppCompatActivity {
             }
 
             mBinding.bottomNavView.setVisibility(noBottomNavBarDestinations.contains(destination.getId()) ? View.GONE : View.VISIBLE);
+            mBinding.bottomNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    int id = item.getItemId();
+                    NavOptions navOptions = new NavOptions.Builder()
+                            .setPopUpTo(R.id.clientsFragment, false)
+                            .build();
+
+                    mNavController.navigate(id,null, navOptions);
+                    return true;
+                }
+            });
 
 
 
@@ -94,15 +107,15 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-    @Override
-    public void onBackPressed() {
-        NavDestination navDestination = mNavController.getCurrentDestination();
-        if (navDestination != null
-                && navDestination.getId() == R.id.clientsFragment) {
-            finish();
-            return;
-        }
-        super.onBackPressed();
-    }
+//
+//    @Override
+//    public void onBackPressed() {
+//        NavDestination navDestination = mNavController.getCurrentDestination();
+//        if (navDestination != null
+//                && navDestination.getId() == R.id.clientsFragment) {
+//            finish();
+//            return;
+//        }
+//        super.onBackPressed();
+//    }
 }

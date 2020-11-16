@@ -123,6 +123,11 @@ public class AddOrderFragment extends Fragment {
     private void consumeItems(List<ModelItem> items){
         mItems.clear();
         mItems.addAll(items);
+        if(mItems.isEmpty()){
+            mBinding.emptyLinear.setVisibility(View.VISIBLE);
+        }else{
+            mBinding.emptyLinear.setVisibility(View.GONE);
+        }
         mItemAdapter.notifyDataSetChanged();
     }
 
@@ -139,24 +144,37 @@ public class AddOrderFragment extends Fragment {
             mBinding.clientAutocomplete.setError("Please select client");
             mBinding.client.requestFocus();
             return;
+        }else{
+            mBinding.clientAutocomplete.setError(null);
+        }
+
+        if(mBinding.notes.getText().toString().equals("")){
+
+            mBinding.noteLayout.setError("Field is required");
+            mBinding.notes.requestFocus();
+            return;
+        }else{
+            mBinding.noteLayout.setError(null);
+
         }
         String type = typeChoice;
         if(typeChoice.equals("")){
             mBinding.typeAutocomplete.setError("Please select type");
             mBinding.type.requestFocus();
             return;
+        }else{
+            mBinding.typeAutocomplete.setError(null);
         }
-        List<ModelItem> items = mCartViewModel.getItems().getValue();
-        if(items == null || items.isEmpty()){
-            Toast.makeText(getContext(),"Cart can't be empty",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(mBinding.notes.getText().toString().equals("")){
 
-            mBinding.noteLayout.setError("Field is required");
-            mBinding.notes.requestFocus();
+
+
+        List<ModelItem> items = mCartViewModel.getItems().getValue();
+        if(items == null || items.isEmpty()) {
+            Toast.makeText(getContext(), "Cart can't be empty", Toast.LENGTH_SHORT).show();
             return;
+
         }
+
 
         ModelCreateOrder order = new ModelCreateOrder(note, clientId,type, items);
 

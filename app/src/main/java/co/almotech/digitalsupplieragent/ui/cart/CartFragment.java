@@ -79,6 +79,7 @@ public class CartFragment extends Fragment {
             }
         });
 
+
         mBinding.deleteBtn.setOnClickListener( view -> {
             new MaterialAlertDialogBuilder(getContext())
                     .setTitle("Delete cart")
@@ -104,8 +105,12 @@ public class CartFragment extends Fragment {
         mItems.addAll(items);
         if(mItems.isEmpty()){
             mBinding.errorLinear.setVisibility(View.VISIBLE);
+            mBinding.deleteBtn.setEnabled(false);
+
         }else{
             mBinding.errorLinear.setVisibility(View.GONE);
+            mBinding.deleteBtn.setEnabled(true);
+
         }
         mAdapter.notifyDataSetChanged();
 

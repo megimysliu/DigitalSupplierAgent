@@ -79,7 +79,8 @@
     <action
         android:id="@+id/action_logout"
         app:destination="@id/splashFragment"
-        app:popUpTo="@id/splashFragment"/>
+        app:popUpTo="@id/bottom_nav_graph"
+        app:popUpToInclusive="true"/>
     <fragment
         android:id="@+id/cartFragment"
         android:name="co.almotech.digitalsupplieragent.ui.cart.CartFragment"
@@ -88,12 +89,13 @@
         android:id="@+id/agentFragment"
         android:name="co.almotech.digitalsupplieragent.ui.profile.AgentFragment"
         android:label="Agent" >
-        <action
-            android:id="@+id/action_agentFragment_to_editProfileFragment"
-            app:destination="@id/editProfileFragment" />
+
         <action
             android:id="@+id/action_client"
             app:destination="@id/clientFragment" />
+        <action
+            android:id="@+id/action_change_password"
+            app:destination="@id/changePasswordFragment" />
     </fragment>
 
 
@@ -163,7 +165,8 @@
             app:destination="@id/registrationFragment" />
         <action
             android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
-            app:destination="@id/forgotPasswordFragment" />
+            app:destination="@id/forgotPasswordFragment"
+            app:popUpTo="@id/loginFragment"/>
     </fragment>
 
 

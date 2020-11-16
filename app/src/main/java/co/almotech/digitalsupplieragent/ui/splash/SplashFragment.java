@@ -10,11 +10,15 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.Timer;
+
 import co.almotech.digitalsupplieragent.BottomNavGraphDirections;
 import co.almotech.digitalsupplieragent.auth.LoginViewModel;
 import co.almotech.digitalsupplieragent.databinding.FragmentSplashBinding;
 import co.almotech.digitalsupplieragent.ui.splash.SplashFragmentDirections;
 import dagger.hilt.android.AndroidEntryPoint;
+import timber.log.Timber;
 
 @AndroidEntryPoint
 public class SplashFragment extends Fragment {
@@ -45,7 +49,8 @@ public class SplashFragment extends Fragment {
 
         mBinding = FragmentSplashBinding.inflate(inflater,container,false);
         View v = mBinding.getRoot();
-       mLoginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+       mLoginViewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
+        Timber.e("Splash token: " + mLoginViewModel.getToken());
         new Handler().postDelayed(() -> {
 
             NavDirections directions;

@@ -117,5 +117,6 @@
     <string name="client_fragment_transition_name">client_fragment_transition</string>
     <string name="order_item_transition_name">order_item_%1$d</string>
     <string name="order_details_transition_name">order_fragment_transition</string>
+    <string name="no_items">No items</string>
 
 </resources>

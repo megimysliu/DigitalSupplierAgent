@@ -12,6 +12,7 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
         android:layout_height="wrap_content">
@@ -31,6 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{product.name}"
+                tools:text="Product name"
                 android:textSize="18sp" />
 
             <TextView
@@ -41,6 +43,7 @@
                 android:textColor="@android:color/black"
                 android:text="@{String.format(@string/currency,Integer.toString(item.price))}"
                 android:textSize="18sp"
+                tools:text="$26"
                 android:textStyle="bold"/>
 
             <TextView
@@ -49,6 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@{String.format(@string/quantity,item.quantity)}"
+                tools:text="items: 4"
                 android:textSize="16sp"
                 />
 

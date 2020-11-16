@@ -163,8 +163,8 @@ public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrd
     private void logout(){
 
         mLoginViewModel.logout();
-        //ProcessPhoenix.triggerRebirth(requireContext());
-        mController.navigate(BottomNavGraphDirections.actionLogout());
+        ProcessPhoenix.triggerRebirth(requireContext());
+       // mController.navigate(BottomNavGraphDirections.actionLogout());
 
 
 

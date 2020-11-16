@@ -55,6 +55,7 @@ public class OrderDetailsFragment extends Fragment {
         mAdapter = new OrderItemAdapter(mItems);
         recyclerView.setAdapter(mAdapter);
 
+
     }
 
     private void consumeItems(ModelOrderItemsResponse response){
@@ -63,6 +64,12 @@ public class OrderDetailsFragment extends Fragment {
             List<ModelOrderItems> items = response.getData();
             mItems.clear();
             mItems.addAll(items);
+            if(mItems.isEmpty()){
+                mBinding.emptyLinear.setVisibility(View.VISIBLE);
+            }else{
+                mBinding.emptyLinear.setVisibility(View.GONE);
+
+            }
             mAdapter.notifyDataSetChanged();
         }else{
             Toast.makeText(getContext(),response.getMessage(),Toast.LENGTH_SHORT).show();

@@ -77,6 +77,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:layout_marginBottom="24dp"
                     android:weightSum="2">
 
@@ -86,6 +87,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_weight="1"
+                        android:visibility="invisible"
                         android:layout_marginEnd="8dp"
                         android:text="@string/remember_me_check"/>
 
@@ -94,6 +96,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:visibility="gone"
                         android:layout_gravity="center_vertical|end"
                         android:text="@string/forgot_password"/>
                 </LinearLayout>
@@ -118,6 +121,7 @@
                     android:layout_gravity="center_horizontal"
                     android:textSize="16sp"
                     android:layout_marginBottom="16dp"
+                    android:visibility="gone"
                     android:text="@string/no_account_txt"/>
 
                 <TextView
@@ -128,6 +132,7 @@
                     android:textSize="16sp"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold"
+                    android:visibility="gone"
                     android:layout_marginBottom="16dp"
                     android:text="@string/sign_up"/>
             </LinearLayout>

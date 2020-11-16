@@ -24,6 +24,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.jakewharton.processphoenix.ProcessPhoenix;
+
 import java.util.ArrayList;
 import java.util.List;
 import co.almotech.digitalsupplieragent.BottomNavGraphDirections;
@@ -34,6 +38,8 @@ import co.almotech.digitalsupplieragent.data.model.ModelClients;
 import co.almotech.digitalsupplieragent.data.model.ModelClientsResponse;
 import dagger.hilt.android.AndroidEntryPoint;
 import java8.util.stream.StreamSupport;
+import timber.log.Timber;
+
 import static android.widget.LinearLayout.VERTICAL;
 import static java8.util.stream.Collectors.toList;
 
@@ -49,7 +55,6 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
      private  NavController mNavController;
      private LoginViewModel mLoginViewModel;
 
-    
 
 
     @Override
@@ -59,50 +64,7 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
 
         mBinding = FragmentClientsBinding.inflate(inflater,container,false);
         View v = mBinding.getRoot();
-        mMainViewModel = new ViewModelProvider(requireActivity()).get(ClientsViewModel.class);
-        mLoginViewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
-        setHasOptionsMenu(true);
-        mBinding.setLifecycleOwner(getViewLifecycleOwner());
-        mNavController = NavHostFragment.findNavController(this);
 
-            if(mLoginViewModel.getToken() == null){
-                mNavController.navigate(ClientsFragmentDirections.actionLogout());
-            }
-
-        mMainViewModel.getClients();
-        mMainViewModel.clients().observe(getViewLifecycleOwner(),this::consumeClients);
-
-        setupRecyclerView();
-
-
-
-        mBinding.addClient.setOnClickListener(view -> {
-
-            mNavController.navigate(ClientsFragmentDirections.actionAddClient());
-        });
-
-
-        mBinding.searchTxt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                searchClient(s.toString());
-
-            }
-        });
-
-
-        System.out.println("Clients : " + mClients);
 
         return v;
     }
@@ -127,7 +89,7 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
                 mNavController.navigate(BottomNavGraphDirections.actionCart());
                 return true;
             case R.id.action_logout:
-                new AlertDialog.Builder(getContext())
+                new MaterialAlertDialogBuilder(getContext())
                         .setTitle(R.string.logout)
                         .setMessage(R.string.logout_confirm_txt)
                         .setNegativeButton(android.R.string.no, null)
@@ -185,6 +147,7 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
     private void logout(){
 
         mLoginViewModel.logout();
+        Timber.e("Token :" + mLoginViewModel.getToken());
         //ProcessPhoenix.triggerRebirth(requireContext());
         mNavController.navigate(BottomNavGraphDirections.actionLogout());
 
@@ -215,6 +178,50 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mMainViewModel = new ViewModelProvider(requireActivity()).get(ClientsViewModel.class);
+        mLoginViewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
+        setHasOptionsMenu(true);
+        mBinding.setLifecycleOwner(getViewLifecycleOwner());
+        mNavController = NavHostFragment.findNavController(this);
+
+        if(mLoginViewModel.getToken() == null){
+            mNavController.navigate(ClientsFragmentDirections.actionLogout());
+        }
+
+        mMainViewModel.getClients();
+        mMainViewModel.clients().observe(getViewLifecycleOwner(),this::consumeClients);
+
+        setupRecyclerView();
+
+
+
+        mBinding.addClient.setOnClickListener(v -> {
+
+            mNavController.navigate(ClientsFragmentDirections.actionAddClient());
+        });
+
+
+        mBinding.searchTxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                searchClient(s.toString());
+
+            }
+        });
+
+
+        System.out.println("Clients : " + mClients);
 
 
     }
