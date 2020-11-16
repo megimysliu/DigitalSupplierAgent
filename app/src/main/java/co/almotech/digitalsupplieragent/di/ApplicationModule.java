@@ -17,7 +17,7 @@ public class ApplicationModule {
 
 
     @Provides
-    public SharedPreferences provideSharedPreferences(@ApplicationContext Context context){
+    public  static SharedPreferences provideSharedPreferences(@ApplicationContext Context context){
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 }
