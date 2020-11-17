@@ -42,7 +42,7 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         mBinding = FragmentLoginBinding.inflate(inflater,container,false);
 
-        mLoginViewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
+        mLoginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         mBinding.logInBtn.setOnClickListener(v -> {
         mLoginViewModel.login(Objects.requireNonNull(mBinding.email.getText().toString()),
