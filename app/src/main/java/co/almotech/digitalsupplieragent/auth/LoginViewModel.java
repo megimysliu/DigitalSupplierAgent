@@ -12,10 +12,8 @@ import androidx.lifecycle.ViewModel;
 import co.almotech.digitalsupplieragent.data.model.ModelUser;
 import co.almotech.digitalsupplieragent.data.model.ModelUserResponse;
 import co.almotech.digitalsupplieragent.repo.RepositoryLogin;
-import co.almotech.digitalsupplieragent.utils.SingleLiveEvent;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import timber.log.Timber;
 
 
 public class LoginViewModel extends ViewModel {
