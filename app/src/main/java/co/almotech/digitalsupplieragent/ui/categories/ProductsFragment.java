@@ -49,11 +49,11 @@ import static java8.util.stream.Collectors.toList;
 
 
 @AndroidEntryPoint
-public class ProductsFragment extends Fragment implements CategoriesAdapter.CategoryClickListener {
+public class ProductsFragment extends Fragment implements CategoriesListAdapter.CategoryClickListener {
 
     private FragmentProductsBinding mBinding;
     private List<ModelCategories> mCategories = new ArrayList<>();
-    private CategoriesAdapter mAdapter;
+    private CategoriesListAdapter mListAdapter;
     private CategoriesViewModel mViewModel;
     private CartViewModel mCartViewModel;
     private ProductAdapter mProductAdapter;
@@ -61,6 +61,7 @@ public class ProductsFragment extends Fragment implements CategoriesAdapter.Cate
     private NavController mNavController;
     private LoginViewModel mLoginViewModel;
     private int categoryId = -1;
+    private ProductListAdapter mProductListAdapter;
 
 
 
@@ -105,19 +106,9 @@ public class ProductsFragment extends Fragment implements CategoriesAdapter.Cate
         mBinding = FragmentProductsBinding.inflate(inflater,container,false);
         mBinding.setLifecycleOwner(getViewLifecycleOwner());
 
-        mViewModel.getFirstCategory().observe(getViewLifecycleOwner(), integer -> {
-            categoryId = integer;
-            System.out.println("Id value " + categoryId);
-            mViewModel.getCategoriesAndProducts(integer);
-
-        });
-
-        NavOptions navOptions = new NavOptions.Builder()
-                .setPopUpTo(R.id.clientsFragment, false)
-                .build();
 
 
-        System.out.println("First category id: " + String.valueOf(categoryId));
+
         mViewModel.categories().observe(getViewLifecycleOwner(), this::consumeCategories);
         setHasOptionsMenu(true);
         mViewModel.categoryProducts().observe(getViewLifecycleOwner(),this::consumeProducts);
@@ -149,15 +140,16 @@ public class ProductsFragment extends Fragment implements CategoriesAdapter.Cate
     }
     private void setupRecyclerView(){
 
-        mAdapter = new CategoriesAdapter(this,mCategories);
-        mBinding.categoriesRecyclerview.setAdapter(mAdapter);
+      //  mAdapter = new CategoriesAdapter(this,mCategories);
+        mListAdapter = new CategoriesListAdapter(this);
+        mBinding.categoriesRecyclerview.setAdapter(mListAdapter);
 
     }
 
     private void setupProductsRecyclerView(){
 
-        mProductAdapter = new ProductAdapter(mProducts,mCartViewModel,getContext());
-        mBinding.productsRecyclerview.setAdapter(mProductAdapter);
+        mProductListAdapter = new ProductListAdapter(mCartViewModel,getContext());
+        mBinding.productsRecyclerview.setAdapter(mProductListAdapter);
 
     }
 
@@ -169,15 +161,16 @@ public class ProductsFragment extends Fragment implements CategoriesAdapter.Cate
             List<ModelCategories> categories = response.getData();
             mCategories.clear();
             mCategories.addAll(categories);
+            mListAdapter.submitList(categories);
             if(mViewModel.selectedCategory != -1){
-                mAdapter.setSelected(mViewModel.selectedCategory);
+                mListAdapter.setSelected(mViewModel.selectedCategory);
                 mViewModel.selectedCategory = -1;
             }else{
-                mAdapter.setSelected(categories.get(0).getId());
-                //updateProducts(categories.get(0).getId());
+                mListAdapter.setSelected(categories.get(0).getId());
+
             }
 
-            mAdapter.notifyDataSetChanged();
+
 
         }else{
             Toast.makeText(getContext(),response.getMessage(),Toast.LENGTH_SHORT).show();
@@ -189,16 +182,17 @@ public class ProductsFragment extends Fragment implements CategoriesAdapter.Cate
 
         if(!response.getError()){
             List<ModelProducts> products = response.getData();
-            mProducts.clear();
-            mProducts.addAll(products);
-            if(mProducts.isEmpty()){
+             mProductListAdapter.submitList(products);
+             mProducts.clear();
+             mProducts.addAll(products);
+            if(products.isEmpty()){
                 mBinding.productsRecyclerview.setVisibility(View.GONE);
                 mBinding.errorProductsLinear.setVisibility(View.VISIBLE);
             }else{
                 mBinding.productsRecyclerview.setVisibility(View.VISIBLE);
                 mBinding.errorProductsLinear.setVisibility(View.GONE);
             }
-            mProductAdapter.notifyDataSetChanged();
+
 
         }else{
             Toast.makeText(getContext(),response.getMessage(),Toast.LENGTH_SHORT).show();
@@ -211,7 +205,7 @@ public class ProductsFragment extends Fragment implements CategoriesAdapter.Cate
     public void onCategoryClick(int id) {
 
         mViewModel.selectedCategory = id;
-        mAdapter.setSelected(id);
+        mListAdapter.setSelected(id);
         updateProducts(id);
     }
 
@@ -223,7 +217,8 @@ public class ProductsFragment extends Fragment implements CategoriesAdapter.Cate
     private void logout(){
 
         mLoginViewModel.logout();
-        ProcessPhoenix.triggerRebirth(requireContext());
+        //ProcessPhoenix.triggerRebirth(requireContext());
+        mNavController.navigate(BottomNavGraphDirections.actionLogout());
 
     }
 
@@ -232,17 +227,18 @@ public class ProductsFragment extends Fragment implements CategoriesAdapter.Cate
                 .filter(modelProducts -> modelProducts.getName()!=null)
                 .filter(modelProducts -> modelProducts.getName().toLowerCase().contains(s.toLowerCase())).collect(toList());
 
-        mProductAdapter = new ProductAdapter( data,mCartViewModel,getContext());
-        mBinding.productsRecyclerview.setAdapter(mProductAdapter);
-        mProductAdapter.notifyDataSetChanged();
+        mProductListAdapter = new ProductListAdapter( mCartViewModel,getContext());
+        mProductListAdapter.submitList(data);
+        mBinding.productsRecyclerview.setAdapter(mProductListAdapter);
+
 
         List<ModelCategories> dataCat = StreamSupport.stream(mCategories)
                 .filter(modelCategories -> modelCategories.getName() != null)
                 .filter(modelCategories -> modelCategories.getName().toLowerCase().contains(s.toLowerCase())).collect(toList());
 
-        mAdapter = new CategoriesAdapter(this, dataCat);
-        mBinding.categoriesRecyclerview.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
+        mListAdapter = new CategoriesListAdapter(this);
+        mListAdapter.submitList(dataCat);
+        mBinding.categoriesRecyclerview.setAdapter(mListAdapter);
     }
 
     @Override

@@ -81,7 +81,8 @@ public class MeetingsFragment extends Fragment  {
     private void logout(){
 
         mLoginViewModel.logout();
-        ProcessPhoenix.triggerRebirth(requireContext());
+       // ProcessPhoenix.triggerRebirth(requireContext());
+        mNavController.navigate(BottomNavGraphDirections.actionLogout());
 
     }
 

@@ -76,17 +76,24 @@ public class MainActivity extends AppCompatActivity {
             }
 
             mBinding.bottomNavView.setVisibility(noBottomNavBarDestinations.contains(destination.getId()) ? View.GONE : View.VISIBLE);
-            mBinding.bottomNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    int id = item.getItemId();
-                    NavOptions navOptions = new NavOptions.Builder()
-                            .setPopUpTo(R.id.clientsFragment, false)
+            mBinding.bottomNavView.setOnNavigationItemSelectedListener(item -> {
+                int id = item.getItemId();
+                NavOptions navOptions;
+                if(id == R.id.clientFragment){
+                     navOptions = new NavOptions.Builder()
+                            .setPopUpTo(R.id.splashFragment, false)
                             .build();
+                }else{
+                 navOptions = new NavOptions.Builder()
+                        .setPopUpTo(R.id.clientsFragment, false)
+                        .build();
 
-                    mNavController.navigate(id,null, navOptions);
-                    return true;
                 }
+
+
+
+                mNavController.navigate(id,null, navOptions);
+                return true;
             });
 
 

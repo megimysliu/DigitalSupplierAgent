@@ -49,15 +49,17 @@ public class SplashFragment extends Fragment {
 
         mBinding = FragmentSplashBinding.inflate(inflater,container,false);
         View v = mBinding.getRoot();
-       mLoginViewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
+       mLoginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         Timber.e("Splash token: " + mLoginViewModel.getToken());
         new Handler().postDelayed(() -> {
 
             NavDirections directions;
-            if(mLoginViewModel.getToken() == null){
+            if(mLoginViewModel.getToken()== null){
 
 
-                directions = SplashFragmentDirections.actionSplashFragmentToLoginFragment();
+                directions = SplashFragmentDirections.actionLogin();
+
+
 
             }
             else{

@@ -29,7 +29,7 @@ public class AllProductsFragment extends Fragment {
 
     private FragmentAllProductsBinding mBinding;
     private CategoriesViewModel mViewModel;
-    private ProductAdapter mProductAdapter;
+    private ProductListAdapter mProductAdapter;
     private List<ModelProducts> mProducts = new ArrayList<>();
     private NavController mNavController;
     private CartViewModel mCartViewModel;
@@ -68,7 +68,7 @@ public class AllProductsFragment extends Fragment {
 
     private void setupProductsRecyclerView(){
 
-        mProductAdapter = new ProductAdapter(mProducts,mCartViewModel,getContext());
+        mProductAdapter = new ProductListAdapter(mCartViewModel,getContext());
         mBinding.productsRecyclerview.setAdapter(mProductAdapter);
 
     }
@@ -80,11 +80,12 @@ public class AllProductsFragment extends Fragment {
             List<ModelProducts> products = response.getData();
             mProducts.clear();
             mProducts.addAll(products);
-            if(mProducts.isEmpty()){
+            mProductAdapter.submitList(products);
+            if(products.isEmpty()){
                 mBinding.productsRelative.setVisibility(View.GONE);
                 mBinding.errorLinear.setVisibility(View.VISIBLE);
             }
-            mProductAdapter.notifyDataSetChanged();
+
 
         }else{
             Toast.makeText(getContext(),response.getMessage(),Toast.LENGTH_SHORT).show();
@@ -99,9 +100,10 @@ public class AllProductsFragment extends Fragment {
                 .filter(modelProducts -> modelProducts.getName()!=null)
                 .filter(modelProducts -> modelProducts.getName().toLowerCase().contains(s.toLowerCase())).collect(toList());
 
-        mProductAdapter = new ProductAdapter( data,mCartViewModel,getContext());
+        mProductAdapter = new ProductListAdapter( mCartViewModel,getContext());
+        mProductAdapter.submitList(data);
         mBinding.productsRecyclerview.setAdapter(mProductAdapter);
-        mProductAdapter.notifyDataSetChanged();
+
     }
 
 }

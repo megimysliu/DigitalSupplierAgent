@@ -32,6 +32,7 @@ public class ClientsViewModel extends ViewModel {
     public ClientsViewModel(MainRepository mainRepository,@Assisted SavedStateHandle savedStateHandle){
         mRepository = mainRepository;
         this.savedStateHandle = savedStateHandle;
+        getClients();
     }
 
     public void getClients(){

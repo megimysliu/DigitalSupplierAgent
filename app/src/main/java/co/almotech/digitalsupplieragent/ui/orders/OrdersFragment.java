@@ -40,11 +40,11 @@ import static java8.util.stream.Collectors.toList;
  * A simple {@link Fragment} subclass.
  */
 @AndroidEntryPoint
-public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrderListener {
+public class OrdersFragment extends Fragment implements OrderListAdapter.OnClickOrderListener {
     private FragmentOrdersBinding mBinding;
     private OrdersViewModel mViewModel;
     private List<ModelOrders> mOrders = new ArrayList<>();
-    private OrdersAdapter mAdapter;
+    private OrderListAdapter mAdapter;
     private NavController mController;
     private LoginViewModel mLoginViewModel;
 
@@ -124,7 +124,7 @@ public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrd
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), VERTICAL);
         recyclerView.addItemDecoration(itemDecor);
-        mAdapter = new OrdersAdapter(mOrders,this);
+        mAdapter = new OrderListAdapter(this);
         recyclerView.setAdapter(mAdapter);
 
     }
@@ -149,7 +149,8 @@ public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrd
             List<ModelOrders> orders = response.getOrders();
             mOrders.clear();
             mOrders.addAll(orders);
-            if(mOrders.isEmpty()){
+            mAdapter.submitList(orders);
+            if(orders.isEmpty()){
                 mBinding.ordersRelative.setVisibility(View.GONE);
                 mBinding.errorLinear.setVisibility(View.VISIBLE);
             }
@@ -163,8 +164,7 @@ public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrd
     private void logout(){
 
         mLoginViewModel.logout();
-        ProcessPhoenix.triggerRebirth(requireContext());
-       // mController.navigate(BottomNavGraphDirections.actionLogout());
+        mController.navigate(BottomNavGraphDirections.actionLogout());
 
 
 
@@ -175,9 +175,10 @@ public class OrdersFragment extends Fragment implements OrdersAdapter.OnClickOrd
                 .filter(modelOrders -> modelOrders.getClientName()!=null)
                 .filter(modelOrders -> modelOrders.getClientName().toLowerCase().contains(s.toLowerCase())).collect(toList());
 
-        mAdapter = new OrdersAdapter(data,this);
+        mAdapter = new OrderListAdapter(this);
+        mAdapter.submitList(data);
         mBinding.ordersRecyclerview.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
+
     }
 
     @Override

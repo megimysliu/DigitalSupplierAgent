@@ -1,30 +1,32 @@
 package co.almotech.digitalsupplieragent.ui.clients;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-import java.util.List;
-import co.almotech.digitalsupplieragent.databinding.ClientItemBinding;
+
 import co.almotech.digitalsupplieragent.data.model.ModelClients;
+import co.almotech.digitalsupplieragent.databinding.ClientItemBinding;
 import timber.log.Timber;
 
-public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsViewHolder>{
+public class ClientsListAdapter extends ListAdapter<ModelClients, ClientsListAdapter.ClientsViewHolder> {
 
     private ClientClickListener mListener;
-    private List<ModelClients> mClients;
 
-    public ClientsAdapter(ClientClickListener listener, List<ModelClients> clients){
+    public ClientsListAdapter(ClientClickListener listener){
+        super(diffCallback);
         mListener = listener;
-        mClients = clients;
     }
 
 
     @NonNull
     @Override
     public ClientsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         ClientItemBinding binding = ClientItemBinding.inflate(inflater,parent,false);
         Timber.e("Log here");
@@ -33,14 +35,8 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsV
 
     @Override
     public void onBindViewHolder(@NonNull ClientsViewHolder holder, int position) {
-         ModelClients client = mClients.get(position);
-         holder.bind(client,mListener);
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return  mClients != null ? mClients.size() : 0 ;
+        ModelClients client = getItem(position);
+        holder.bind(client,mListener);
     }
 
     public static class ClientsViewHolder extends RecyclerView.ViewHolder{
@@ -60,7 +56,7 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsV
             View v = mBinding.getRoot();
             v.setOnClickListener(view ->
 
-                listener.onClientClick(client,v)
+                    listener.onClientClick(client,v)
             );
 
 
@@ -72,4 +68,20 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsV
 
         void onClientClick(ModelClients client, View view);
     }
+
+    public static final DiffUtil.ItemCallback<ModelClients>  diffCallback = new DiffUtil.ItemCallback<ModelClients>(){
+
+        @Override
+        public boolean areItemsTheSame(@NonNull ModelClients oldItem, @NonNull ModelClients newItem) {
+            return (oldItem.getId() == newItem.getId());
+        }
+
+        @SuppressLint("DiffUtilEquals")
+        @Override
+        public boolean areContentsTheSame(@NonNull ModelClients oldItem, @NonNull ModelClients newItem) {
+            return (oldItem == newItem);
+        }
+    };
+
 }
+

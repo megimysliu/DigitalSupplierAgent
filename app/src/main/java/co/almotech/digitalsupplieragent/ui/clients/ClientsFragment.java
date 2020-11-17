@@ -1,7 +1,5 @@
 package co.almotech.digitalsupplieragent.ui.clients;
 
-import android.app.AlertDialog;
-import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,7 +24,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +43,7 @@ import static java8.util.stream.Collectors.toList;
 
 
 @AndroidEntryPoint
-public class ClientsFragment extends Fragment  implements  ClientsAdapter.ClientClickListener{
+public class ClientsFragment extends Fragment  implements  ClientsListAdapter.ClientClickListener{
 
      private ClientsViewModel mMainViewModel;
      private FragmentClientsBinding mBinding;
@@ -54,6 +51,7 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
      private ClientsAdapter mClientsAdapter;
      private  NavController mNavController;
      private LoginViewModel mLoginViewModel;
+     private ClientsListAdapter mListAdapter;
 
 
 
@@ -104,10 +102,11 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
 
     private void setupRecyclerView(){
         RecyclerView recyclerView =  mBinding.clientsRecyclerview;
-        DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), VERTICAL);
-        recyclerView.addItemDecoration(itemDecor);
-        mClientsAdapter = new ClientsAdapter(this,mClients);
-        recyclerView.setAdapter(mClientsAdapter);
+
+       // recyclerView.addItemDecoration(itemDecor);
+       // mClientsAdapter = new ClientsAdapter(this,mClients);
+        mListAdapter = new ClientsListAdapter(this);
+        recyclerView.setAdapter(mListAdapter);
 
 
     }
@@ -125,18 +124,21 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
     }
 
     private void consumeClients(ModelClientsResponse response){
+        Timber.e("Response: " + response.toString());
 
         mBinding.progressCircular.setVisibility(View.GONE);
         if(!response.getError()){
             List<ModelClients> clients =response.getData();
             if(clients != null){
-                mClients.clear();
-                mClients.addAll(clients);
-                if(mClients.isEmpty()){
+                Timber.e("Clients: " + mClients.toString());
+                DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), VERTICAL);
+                mBinding.clientsRecyclerview.addItemDecoration(itemDecor);
+                mListAdapter.submitList(clients);
+                if(clients.isEmpty()){
+
                     mBinding.clientsRelative.setVisibility(View.GONE);
                     mBinding.errorLinear.setVisibility(View.VISIBLE);
                 }
-                mClientsAdapter.notifyDataSetChanged();
 
             }
         }else{
@@ -148,7 +150,7 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
 
         mLoginViewModel.logout();
         Timber.e("Token :" + mLoginViewModel.getToken());
-        //ProcessPhoenix.triggerRebirth(requireContext());
+
         mNavController.navigate(BottomNavGraphDirections.actionLogout());
 
 
@@ -159,9 +161,9 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
                 .filter(modelClients -> modelClients.getName()!=null)
                 .filter(modelClients -> modelClients.getName().toLowerCase().contains(s.toLowerCase())).collect(toList());
 
-        mClientsAdapter = new ClientsAdapter(this, data);
-        mBinding.clientsRecyclerview.setAdapter(mClientsAdapter);
-        mClientsAdapter.notifyDataSetChanged();
+        mListAdapter = new ClientsListAdapter(this);
+        mBinding.clientsRecyclerview.setAdapter(mListAdapter);
+        mListAdapter.notifyDataSetChanged();
     }
 
 
@@ -179,19 +181,21 @@ public class ClientsFragment extends Fragment  implements  ClientsAdapter.Client
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mMainViewModel = new ViewModelProvider(requireActivity()).get(ClientsViewModel.class);
-        mLoginViewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
+        mLoginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         setHasOptionsMenu(true);
         mBinding.setLifecycleOwner(getViewLifecycleOwner());
+
         mNavController = NavHostFragment.findNavController(this);
 
         if(mLoginViewModel.getToken() == null){
             mNavController.navigate(ClientsFragmentDirections.actionLogout());
         }
 
-        mMainViewModel.getClients();
-        mMainViewModel.clients().observe(getViewLifecycleOwner(),this::consumeClients);
+
 
         setupRecyclerView();
+
+        mMainViewModel.clients().observe(getViewLifecycleOwner(),this::consumeClients);
 
 
 

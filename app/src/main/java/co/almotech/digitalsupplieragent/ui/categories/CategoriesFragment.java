@@ -23,11 +23,12 @@ import java8.util.stream.StreamSupport;
 import static java8.util.stream.Collectors.toList;
 
 @AndroidEntryPoint
-public class CategoriesFragment extends Fragment {
+public class CategoriesFragment extends Fragment implements CategoryListAdapter.CategoryClickListener{
 
     private FragmentCategoriesBinding mBinding;
     private List<ModelCategories> mCategories = new ArrayList<>();
-    private CategoryAdapter mAdapter;
+    private CategoryListAdapter mAdapter;
+
     CategoriesViewModel mViewModel;
 
 
@@ -64,7 +65,7 @@ public class CategoriesFragment extends Fragment {
 
         RecyclerView recyclerView = mBinding.categoriesRecyclerview;
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-        mAdapter = new CategoryAdapter(mCategories);
+        mAdapter = new CategoryListAdapter(this);
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -75,7 +76,7 @@ public class CategoriesFragment extends Fragment {
             List<ModelCategories> categories = response.getData();
             mCategories.clear();
             mCategories.addAll(categories);
-            mAdapter.notifyDataSetChanged();
+            mAdapter.submitList(categories);
         }else{
             Toast.makeText(getContext(),response.getMessage(),Toast.LENGTH_SHORT).show();
         }
@@ -86,8 +87,14 @@ public class CategoriesFragment extends Fragment {
                 .filter(modelCategories -> modelCategories.getName()!=null)
                 .filter(modelCategories -> modelCategories.getName().toLowerCase().contains(s.toLowerCase())).collect(toList());
 
-        mAdapter = new CategoryAdapter(data);
+        mAdapter = new CategoryListAdapter(this);
+        mAdapter.submitList(data);
         mBinding.categoriesRecyclerview.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void onCategoryClick(int id) {
+
     }
 }

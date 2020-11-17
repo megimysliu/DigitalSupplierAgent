@@ -21,7 +21,7 @@ import timber.log.Timber;
 public class LoginViewModel extends ViewModel {
 
     private final CompositeDisposable mDisposables = new CompositeDisposable();
-    public final SingleLiveEvent<ModelUserResponse> loginLiveData = new SingleLiveEvent<>();
+    public final MutableLiveData<ModelUserResponse> loginLiveData = new MutableLiveData<>();
     public final MutableLiveData<ModelUser> user = new MutableLiveData<>();
 
     private RepositoryLogin mRepositoryLogin;

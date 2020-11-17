@@ -30,7 +30,6 @@ public class CategoriesViewModel extends ViewModel {
     private final HashMap<Integer, ModelProductsResponse> prodCategory = new HashMap<>();
     private final MutableLiveData<ModelProductsResponse> allProducts = new MutableLiveData<>();
     private final MutableLiveData<Integer> firstCategory =  new MutableLiveData<>();
-    public final ObservableInt firstCat = new ObservableInt();
     private final SavedStateHandle savedStateHandle;
 
 
@@ -56,11 +55,9 @@ public class CategoriesViewModel extends ViewModel {
             List<ModelCategories> categories = response.getData();
             if(categories != null || !categories.isEmpty()){
 
-                firstCategory.setValue(categories.get(0).getId());
+                getProductsByCategory(categories.get(0).getId());
                 System.out.println("Category id viewmodel check: " + firstCategory);
 
-            }else{
-                firstCategory.setValue(-1);
             }
                 } ,
                 throwable -> categories.setValue(ModelCategoriesResponse.modelError(throwable))));
