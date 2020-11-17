@@ -43,6 +43,7 @@ public class CartFragment extends Fragment {
     private CartAdapter mAdapter;
     private List<ModelItem> mItems = new ArrayList<>();
     private List<ModelProducts> mProducts = new ArrayList<>();
+    private CartListAdapter mCartListAdapter;
 
     public CartFragment() {
 
@@ -93,7 +94,8 @@ public class CartFragment extends Fragment {
     private void setupRecyclerView(){
 
         mAdapter = new CartAdapter(mItems, mProducts, mViewModel,getContext());
-        mBinding.cartRecyclerview.setAdapter(mAdapter);
+        mCartListAdapter = new CartListAdapter(mProducts,mViewModel,getContext());
+        mBinding.cartRecyclerview.setAdapter(mCartListAdapter);
         enableSwipeToDeleteAndUndo();
 
     }
@@ -103,6 +105,7 @@ public class CartFragment extends Fragment {
         mBinding.progressCircular.setVisibility(View.GONE);
         mItems.clear();
         mItems.addAll(items);
+        mCartListAdapter.submitList(items);
         if(mItems.isEmpty()){
             mBinding.errorLinear.setVisibility(View.VISIBLE);
             mBinding.deleteBtn.setEnabled(false);
@@ -112,14 +115,15 @@ public class CartFragment extends Fragment {
             mBinding.deleteBtn.setEnabled(true);
 
         }
-        mAdapter.notifyDataSetChanged();
+
 
     }
 
     private void consumeProducts(List<ModelProducts> products){
         mProducts.clear();
         mProducts.addAll(products);
-        mAdapter.notifyDataSetChanged();
+        mCartListAdapter.setProducts(products);
+        mCartListAdapter.notifyDataSetChanged();
     }
 
     private void enableSwipeToDeleteAndUndo() {
@@ -129,9 +133,9 @@ public class CartFragment extends Fragment {
 
 
                 final int position = viewHolder.getAdapterPosition();
-                final ModelItem item = mAdapter.getData().get(position);
+                final ModelItem item = mCartListAdapter.getCurrentList().get(position);
 
-                mAdapter.removeItem(position);
+                mCartListAdapter.removeItem(position);
 
 
                 Snackbar snackbar = Snackbar
@@ -140,7 +144,7 @@ public class CartFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-                        mAdapter.restoreItem(item, position);
+                        mCartListAdapter.restoreItem(item, position);
                         mBinding.cartRecyclerview.scrollToPosition(position);
                     }
                 });
@@ -169,9 +173,9 @@ public class CartFragment extends Fragment {
 
        }
 
-        mAdapter = new CartAdapter(items, data, mViewModel,getContext());
-        mBinding.cartRecyclerview.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
+        mCartListAdapter = new CartListAdapter( data, mViewModel,getContext());
+        mBinding.cartRecyclerview.setAdapter(mCartListAdapter);
+
     }
 
     private boolean isItem(List<ModelProducts> products, ModelItem item){
@@ -186,6 +190,6 @@ public class CartFragment extends Fragment {
 
     private void deleteAll(){
         mViewModel.clearCart();
-        mAdapter.notifyDataSetChanged();
+
     }
 }

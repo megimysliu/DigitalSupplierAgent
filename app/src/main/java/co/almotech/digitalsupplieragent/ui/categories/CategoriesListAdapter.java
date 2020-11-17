@@ -6,10 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import co.almotech.digitalsupplieragent.R;
 import co.almotech.digitalsupplieragent.data.model.ModelCategories;
 import co.almotech.digitalsupplieragent.databinding.CategoryItemBinding;
 
@@ -37,7 +39,7 @@ public class CategoriesListAdapter  extends ListAdapter<ModelCategories, Categor
     @Override
     public void onBindViewHolder(@NonNull CategoriesViewHolder holder, int position) {
         ModelCategories category = getItem(position);
-        holder.bind(category,mListener);
+        holder.bind(category,mListener,categorySelected == category.getId());
     }
 
     public static class CategoriesViewHolder extends RecyclerView.ViewHolder{
@@ -49,13 +51,20 @@ public class CategoriesListAdapter  extends ListAdapter<ModelCategories, Categor
             mBinding = binding;
         }
 
-        public void bind(ModelCategories category, CategoryClickListener listener){
+        public void bind(ModelCategories category, CategoryClickListener listener,boolean clicked){
 
             mBinding.setCategory(category);
             mBinding.executePendingBindings();
             View v = mBinding.getRoot();
+            int colorDefault = android.R.color.white;
+            if(clicked){
+                colorDefault = R.color.colorLightGray;
+            }
             v.setOnClickListener(view ->
                     listener.onCategoryClick(category.getId()));
+
+            mBinding.categoryLinear.setBackgroundColor(ContextCompat.getColor(v.getContext(), colorDefault));
+            mBinding.cardView.setBackgroundColor(ContextCompat.getColor(v.getContext(), colorDefault));
         }
     }
 

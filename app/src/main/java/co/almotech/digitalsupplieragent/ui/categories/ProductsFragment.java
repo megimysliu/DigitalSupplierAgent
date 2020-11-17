@@ -206,6 +206,7 @@ public class ProductsFragment extends Fragment implements CategoriesListAdapter.
 
         mViewModel.selectedCategory = id;
         mListAdapter.setSelected(id);
+        mListAdapter.notifyDataSetChanged();
         updateProducts(id);
     }
 
