@@ -58,7 +58,7 @@ public class CategoriesListAdapter  extends ListAdapter<ModelCategories, Categor
             View v = mBinding.getRoot();
             int colorDefault = android.R.color.white;
             if(clicked){
-                colorDefault = R.color.colorLightGray;
+                colorDefault = R.color.colorMediumGray;
             }
             v.setOnClickListener(view ->
                     listener.onCategoryClick(category.getId()));

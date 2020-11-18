@@ -102,8 +102,8 @@ public class ClientsFragment extends Fragment  implements  ClientsListAdapter.Cl
 
     private void setupRecyclerView(){
         RecyclerView recyclerView =  mBinding.clientsRecyclerview;
-
-       // recyclerView.addItemDecoration(itemDecor);
+        DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), VERTICAL);
+        recyclerView.addItemDecoration(itemDecor);
        // mClientsAdapter = new ClientsAdapter(this,mClients);
         mListAdapter = new ClientsListAdapter(this);
         recyclerView.setAdapter(mListAdapter);
@@ -131,15 +131,15 @@ public class ClientsFragment extends Fragment  implements  ClientsListAdapter.Cl
             List<ModelClients> clients =response.getData();
             if(clients != null){
                 Timber.e("Clients: " + mClients.toString());
-                DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), VERTICAL);
-                mBinding.clientsRecyclerview.addItemDecoration(itemDecor);
+                //DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), VERTICAL);
+               // mBinding.clientsRecyclerview.addItemDecoration(itemDecor);
                 mListAdapter.submitList(clients);
                 if(clients.isEmpty()){
 
                     mBinding.clientsRelative.setVisibility(View.GONE);
                     mBinding.errorLinear.setVisibility(View.VISIBLE);
                 }
-
+               mListAdapter.notifyDataSetChanged();
             }
         }else{
             Toast.makeText(getContext(),response.getMessage(),Toast.LENGTH_SHORT).show();

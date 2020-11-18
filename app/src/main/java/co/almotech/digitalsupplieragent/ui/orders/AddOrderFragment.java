@@ -86,7 +86,7 @@ public class AddOrderFragment extends Fragment {
 
         });
 
-        mCartViewModel.getNewOrder().observe(getViewLifecycleOwner(),this::consumeOrderCreation);
+
 
         return mBinding.getRoot();
     }
@@ -179,6 +179,8 @@ public class AddOrderFragment extends Fragment {
         ModelCreateOrder order = new ModelCreateOrder(note, clientId,type, items);
 
         mCartViewModel.createOrder(order);
+        mCartViewModel.getNewOrder().observe(getViewLifecycleOwner(),this::consumeOrderCreation);
+
 
     }
 

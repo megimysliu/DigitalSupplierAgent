@@ -20,7 +20,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Toast;
+
+import com.google.android.material.transition.MaterialElevationScale;
 import com.jakewharton.processphoenix.ProcessPhoenix;
 import java.util.ArrayList;
 import java.util.List;
@@ -139,6 +142,12 @@ public class OrdersFragment extends Fragment implements OrderListAdapter.OnClick
                 .addSharedElement(v,transitionName).build();
         mViewModel.setOrder(order);
         mController.navigate(OrdersFragmentDirections.actionOrderDetail(),extras);
+         MaterialElevationScale exitTransition =  new MaterialElevationScale(false);
+         exitTransition.setDuration(200);
+        MaterialElevationScale reenterTransition = new MaterialElevationScale(true);
+        reenterTransition.setDuration(200);
+        setExitTransition(exitTransition);
+        setReenterTransition(reenterTransition);
 
     }
 
@@ -150,11 +159,12 @@ public class OrdersFragment extends Fragment implements OrderListAdapter.OnClick
             mOrders.clear();
             mOrders.addAll(orders);
             mAdapter.submitList(orders);
+            mAdapter.notifyDataSetChanged();
             if(orders.isEmpty()){
                 mBinding.ordersRelative.setVisibility(View.GONE);
                 mBinding.errorLinear.setVisibility(View.VISIBLE);
             }
-            mAdapter.notifyDataSetChanged();
+
         }else{
             Toast.makeText(getContext(),response.getMessage(),Toast.LENGTH_SHORT).show();
             Timber.e(response.getMessage());
@@ -187,5 +197,17 @@ public class OrdersFragment extends Fragment implements OrderListAdapter.OnClick
 
     }
 
-
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        postponeEnterTransition();
+        final ViewTreeObserver observer = view.getViewTreeObserver();
+        observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                startPostponedEnterTransition();
+                return true;
+            }
+        });
+    }
 }
