@@ -238,6 +238,7 @@ public class MapsFragment extends Fragment implements EasyPermissions.Permission
 //
 //        if(EasyPermissions.hasPermissions(getContext(),Manifest.permission.ACCESS_FINE_LOCATION)){
 //
+
 //        }
 
 

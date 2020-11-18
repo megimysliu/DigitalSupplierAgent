@@ -146,8 +146,7 @@ public class OrdersFragment extends Fragment implements OrderListAdapter.OnClick
          exitTransition.setDuration(200);
         MaterialElevationScale reenterTransition = new MaterialElevationScale(true);
         reenterTransition.setDuration(200);
-        setExitTransition(exitTransition);
-        setReenterTransition(reenterTransition);
+
 
     }
 
@@ -200,14 +199,14 @@ public class OrdersFragment extends Fragment implements OrderListAdapter.OnClick
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        postponeEnterTransition();
-        final ViewTreeObserver observer = view.getViewTreeObserver();
-        observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                startPostponedEnterTransition();
-                return true;
-            }
-        });
+//        postponeEnterTransition();
+//        final ViewTreeObserver observer = view.getViewTreeObserver();
+//        observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+//            @Override
+//            public boolean onPreDraw() {
+//                startPostponedEnterTransition();
+//                return true;
+//            }
+//        });
     }
 }
