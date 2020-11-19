@@ -29,7 +29,6 @@ public class ClientsListAdapter extends ListAdapter<ModelClients, ClientsListAda
     public ClientsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         ClientItemBinding binding = ClientItemBinding.inflate(inflater,parent,false);
-        Timber.e("Log here");
         return new ClientsViewHolder(binding);
     }
 

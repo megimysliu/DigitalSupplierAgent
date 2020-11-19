@@ -16,7 +16,7 @@
         tools:context=".ui.orders.OrderDetailsFragment"
         android:transitionName="@string/order_details_transition_name">
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none">
@@ -84,8 +84,8 @@
 
                 <ImageView
                     android:id="@+id/imageView3"
-                    android:layout_width="155dp"
-                    android:layout_height="142dp"
+                    android:layout_width="130dp"
+                    android:layout_height="120dp"
                     android:layout_marginTop="24dp"
                     android:layout_below="@+id/clientLinear"
                     android:layout_centerHorizontal="true"
@@ -285,7 +285,7 @@
                 </LinearLayout>
 
             </RelativeLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
 
     </FrameLayout>

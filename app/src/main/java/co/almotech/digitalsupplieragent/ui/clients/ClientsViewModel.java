@@ -13,6 +13,7 @@ import co.almotech.digitalsupplieragent.data.model.ModelCreateClientResponse;
 import co.almotech.digitalsupplieragent.repo.MainRepository;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class ClientsViewModel extends ViewModel {
 
@@ -39,6 +40,7 @@ public class ClientsViewModel extends ViewModel {
 
         mDisposable.add(mRepository.getAllClients()
         .observeOn(AndroidSchedulers.mainThread())
+
                 .subscribe(clients::setValue,
                         throwable ->
                         clients.setValue(ModelClientsResponse.modelError(throwable))
@@ -61,7 +63,7 @@ public class ClientsViewModel extends ViewModel {
     public void loadClients(){
         mDisposable.add(mRepository.getMyClients()
                 .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(response -> myClients.setValue(response), throwable -> myClients.setValue(ModelClientsResponse.modelError(throwable)))
+        .subscribe(myClients::setValue, throwable -> myClients.setValue(ModelClientsResponse.modelError(throwable)))
         );
     }
 

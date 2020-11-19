@@ -1,12 +1,6 @@
 package co.almotech.digitalsupplieragent.ui.clients;
 
-import android.app.AlertDialog;
-import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -14,29 +8,17 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.transition.Transition;
-
-import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.transition.MaterialContainerTransform;
-
 import java.util.regex.Pattern;
-
-import co.almotech.digitalsupplieragent.R;
 import co.almotech.digitalsupplieragent.data.model.ModelCreateClientResponse;
 import co.almotech.digitalsupplieragent.databinding.FragmentAddClientBinding;
 import co.almotech.digitalsupplieragent.ui.maps.SharedViewModel;
-
-import static com.google.android.gms.common.GooglePlayServicesUtil.isGooglePlayServicesAvailable;
 
 
 public class AddClientFragment extends Fragment {
@@ -64,22 +46,15 @@ public class AddClientFragment extends Fragment {
         mNavController = NavHostFragment.findNavController(this);
         mViewModel = ViewModelProviders.of(requireActivity()).get(SharedViewModel.class);
         mClientsViewModel = new ViewModelProvider(requireActivity()).get(ClientsViewModel.class);
-
         mViewModel.getLocation().observe(getViewLifecycleOwner(), locationData -> {
-
             System.out.println("Location:  " + locationData.toString());
             lat = locationData.getLat();
             lng = locationData.getLng();
             mBinding.locationText.setText(locationData.getAddress());
-
-
         });
-        mClientsViewModel.getCreateClientRes().observe(getViewLifecycleOwner(), this::consumeResponse);
 
 
         mBinding.locationText.setOnClickListener(v -> {
-
-
             if (isGooglePlayServicesInstalled()) {
                 mNavController.navigate(AddClientFragmentDirections.actionAddClientFragmentToMapsFragment());
             } else {
@@ -95,10 +70,8 @@ public class AddClientFragment extends Fragment {
                return;
            }else {
 
-               mClientsViewModel.createClient(mBinding.clientName.getText().toString(), mBinding.clientEmail.getText().toString(),
-                       mBinding.phoneNumber.getText().toString(), ACCOUNT_TYPE, mBinding.nuis.getText().toString(), String.valueOf(lat),
-                       String.valueOf(lng), mBinding.locationText.getText().toString());
-               System.out.println("Text " + mBinding.locationText.getText().toString());
+               createClient();
+
            }
 
         });
@@ -109,7 +82,6 @@ public class AddClientFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        MaterialContainerTransform transform = new MaterialContainerTransform();
 
     }
 
@@ -134,7 +106,6 @@ public class AddClientFragment extends Fragment {
 
 
     private boolean checkName() {
-
         if (mBinding.clientName.getText().toString().equals("")) {
             mBinding.clientTextLayout.setError("Field is required");
             mBinding.clientName.requestFocus();
@@ -144,6 +115,8 @@ public class AddClientFragment extends Fragment {
             return true;
         }
     }
+
+
 
     private boolean checkEmail(){
         if(mBinding.clientEmail.getText().toString().equals("")){
@@ -160,8 +133,10 @@ public class AddClientFragment extends Fragment {
         }
     }
 
-    private boolean checkNuis(){
 
+
+
+    private boolean checkNuis(){
         if (mBinding.nuis.getText().toString().equals("")) {
             mBinding.nuisLayout.setError("Field is required");
             mBinding.nuis.requestFocus();
@@ -170,14 +145,13 @@ public class AddClientFragment extends Fragment {
             mBinding.nuisLayout.setError(null);
             return true;
         }
-
     }
 
-    private boolean checkPhone(){
 
+
+    private boolean checkPhone(){
         TextInputEditText phoneNo = mBinding.phoneNumber;
         String regex = "\\d+";
-
         if (phoneNo.getText().toString().equals("")) {
             mBinding.phoneNumberLayout.setError("Field is required");
             phoneNo.requestFocus();
@@ -195,8 +169,10 @@ public class AddClientFragment extends Fragment {
             mBinding.phoneNumberLayout.setError(null);
             return true;
         }
-
     }
+
+
+
 
     private boolean checkAddress(){
         if(lat == 9999 && lng == 9999){
@@ -211,6 +187,21 @@ public class AddClientFragment extends Fragment {
             mBinding.addressLayout.setError(null);
             return true;
         }
+    }
+
+
+
+    private void createClient(){
+        String name = mBinding.clientName.getText().toString();
+        String email = mBinding.clientEmail.getText().toString();
+        String phoneNo = mBinding.phoneNumber.getText().toString();
+        String businessNuis =  mBinding.nuis.getText().toString();
+        String latitude = String.valueOf(lat);
+        String longitude =  String.valueOf(lng);
+        String address = mBinding.locationText.getText().toString();
+        mClientsViewModel.createClient(name,email,phoneNo,ACCOUNT_TYPE, businessNuis, latitude,longitude,address);
+        mClientsViewModel.getCreateClientRes().observe(getViewLifecycleOwner(), this::consumeResponse);
+
     }
 
 

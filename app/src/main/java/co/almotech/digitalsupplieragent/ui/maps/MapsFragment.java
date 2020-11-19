@@ -13,6 +13,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
+import android.telephony.mbms.StreamingServiceInfo;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -198,29 +199,61 @@ public class MapsFragment extends Fragment implements EasyPermissions.Permission
     @AfterPermissionGranted(MY_PERMISSIONS_REQUEST_LOCATION)
     private void getLocation(){
 
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            String [] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION};
 
-        if(EasyPermissions.hasPermissions(requireContext(),Manifest.permission.ACCESS_FINE_LOCATION)){
-            mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
+            if(EasyPermissions.hasPermissions(requireContext(),permissions)) {
+                mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
 
-                if (location != null) {
+                    if (location != null) {
 
-                    MarkerOptions markerOptions = new MarkerOptions();
-                    markerOptions.position(new LatLng(location.getLatitude(), location.getLongitude()));
-                    mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
-                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 15));
-                    mFusedLocationProviderClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
-                    mGoogleMap.setMyLocationEnabled(true);
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        markerOptions.position(new LatLng(location.getLatitude(), location.getLongitude()));
+                        mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+                        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 15));
+                        mFusedLocationProviderClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+                        mGoogleMap.setMyLocationEnabled(true);
 
-                }
-            });
+                    }
+                });
 
 
-                } else {
+            }else{
 
-            EasyPermissions.requestPermissions(
-                    this, getString(R.string.location_rationale),
-                    MY_PERMISSIONS_REQUEST_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION);
+                EasyPermissions.requestPermissions(
+                        this, getString(R.string.location_rationale),
+                        MY_PERMISSIONS_REQUEST_LOCATION, permissions);
+
+            }
+
+        } else {
+
+            if(EasyPermissions.hasPermissions(requireContext(),Manifest.permission.ACCESS_FINE_LOCATION)){
+                mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
+
+                    if (location != null) {
+
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        markerOptions.position(new LatLng(location.getLatitude(), location.getLongitude()));
+                        mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+                        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 15));
+                        mFusedLocationProviderClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+                        mGoogleMap.setMyLocationEnabled(true);
+
+                    }
+                });
+
+
+            } else {
+
+                EasyPermissions.requestPermissions(
+                        this, getString(R.string.location_rationale),
+                        MY_PERMISSIONS_REQUEST_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION);
+            }
+
         }
+
+
 
 
             }
@@ -236,10 +269,27 @@ public class MapsFragment extends Fragment implements EasyPermissions.Permission
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
 //
-//        if(EasyPermissions.hasPermissions(getContext(),Manifest.permission.ACCESS_FINE_LOCATION)){
-//
 
-//        }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            String [] permissions = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_BACKGROUND_LOCATION};
+
+            if(EasyPermissions.hasPermissions(getContext(),permissions)){
+
+                System.out.println("Permission granted");
+
+
+            }
+
+
+        }
+
+        if(EasyPermissions.hasPermissions(getContext(),Manifest.permission.ACCESS_COARSE_LOCATION)){
+
+          System.out.println("Permission granted");
+
+
+      }
+
 
 
 
@@ -248,7 +298,9 @@ public class MapsFragment extends Fragment implements EasyPermissions.Permission
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
 
-        if(EasyPermissions.somePermissionDenied(this,Manifest.permission.ACCESS_FINE_LOCATION)){
+        if(EasyPermissions.somePermissionDenied(this,Manifest.permission.ACCESS_COARSE_LOCATION)){
+
+            System.out.println("Permission denied");
 
             Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
             final List<Address>[] addresses = new List[]{new ArrayList<>()};

@@ -5,41 +5,74 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+
         tools:context=".ui.categories.ProductsFragment">
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/search_cardview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:elevation="2dp"
+            app:cardBackgroundColor="@color/colorSearchGray"
+            app:cardCornerRadius="5dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/search_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableStart="@drawable/ic_search"
+                android:drawablePadding="8dp"
+                android:hint="@string/search_categories_and_products"
+                android:padding="8dp" />
+
+        </com.google.android.material.card.MaterialCardView>
 
 
         <LinearLayout
             android:id="@+id/error_linear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
             android:orientation="vertical"
             android:visibility="gone"
-            android:layout_gravity="center_vertical|center_horizontal">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <ImageView
                 android:id="@+id/error_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                app:srcCompat="@drawable/ic_error_404"
                 android:contentDescription="@string/img_description"
+                app:srcCompat="@drawable/ic_error_404"
 
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/no_results"
                 android:layout_marginTop="16dp"
-                android:textSize="24sp"
-                android:textColor="@color/colorPrimary"/>
+                android:text="@string/no_results"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24sp" />
 
         </LinearLayout>
-
 
 
         <ProgressBar
@@ -47,91 +80,73 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/nestedScrollView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none"
+            android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp">
+            android:scrollbars="none"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_cardview">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
 
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/search_cardview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:elevation="2dp"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    app:cardBackgroundColor="@color/colorSearchGray"
-                    app:cardCornerRadius="5dp"
-                    android:layout_marginTop="8dp"
-                    >
-
-
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/search_txt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/search_categories_and_products"
-                        android:padding="8dp"
-                        android:drawableStart="@drawable/ic_search"
-                        android:drawablePadding="8dp"
-                        android:background="@null"/>
-
-                </com.google.android.material.card.MaterialCardView>
 
                 <TextView
                     android:id="@+id/categories_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/categories"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:layout_below="@id/search_cardview"
+                    android:layout_alignParentTop="true"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="24dp"/>
+                    android:layout_marginTop="24dp"
+                    android:text="@string/categories"
+                    android:textAppearance="?attr/textAppearanceHeadline6" />
 
                 <TextView
                     android:id="@+id/view_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/categories_label"
-                    android:text="@string/view_all"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="8dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/colorPrimary"/>
+                    android:text="@string/view_all"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/categories_recyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/categories_label"
+                    android:layout_alignParentStart="true"
                     android:layout_margin="8dp"
                     android:orientation="horizontal"
-                    app:reverseLayout="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@id/categories_label"/>
+                    app:reverseLayout="false" />
 
                 <TextView
                     android:id="@+id/products_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/products"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
                     android:layout_below="@+id/categories_recyclerview"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"/>
+                    android:layout_marginTop="16dp"
+                    android:text="@string/products"
+                    android:textAppearance="?attr/textAppearanceHeadline6" />
 
 
                 <TextView
@@ -139,60 +154,60 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@id/products_label"
-                    android:text="@string/view_all"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="8dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/colorPrimary"/>
+                    android:text="@string/view_all"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
 
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/products_recyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/products_label"
+                    android:layout_alignParentStart="true"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:orientation="vertical"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@id/products_label"/>
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 <LinearLayout
                     android:id="@+id/error_products_linear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="24dp"
-                    android:visibility="gone"
+                    android:layout_below="@id/products_label"
                     android:layout_centerHorizontal="true"
-                    android:layout_below="@id/products_label">
+                    android:layout_marginTop="24dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/error_product_img"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        app:srcCompat="@drawable/ic_error_404"
                         android:contentDescription="@string/img_description"
+                        app:srcCompat="@drawable/ic_error_404"
 
                         />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/no_results"
                         android:layout_marginTop="8dp"
+                        android:text="@string/no_results"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorPrimary"/>
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
             </RelativeLayout>
 
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
 
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

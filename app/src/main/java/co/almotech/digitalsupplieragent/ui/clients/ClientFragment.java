@@ -1,6 +1,9 @@
 package co.almotech.digitalsupplieragent.ui.clients;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,6 +21,8 @@ public class ClientFragment extends Fragment {
 
     private FragmentClientBinding mBinding;
     private ClientsViewModel mModel;
+    private String lat;
+    private String lng;
 
     public ClientFragment() {
 
@@ -44,8 +49,40 @@ public class ClientFragment extends Fragment {
         mModel = new ViewModelProvider(requireActivity()).get(ClientsViewModel.class);
         mBinding = FragmentClientBinding.inflate(inflater,container,false);
         mBinding.setClient(mModel.getClient().getValue());
-        mModel.getClient().observe(getViewLifecycleOwner(), modelClients -> mBinding.setClient(modelClients));
+        mModel.getClient().observe(getViewLifecycleOwner(), modelClients ->{
 
+            mBinding.setClient(modelClients);
+        lat = modelClients.getLat();
+        lng = modelClients.getLng();
+
+
+        }) ;
+        mBinding.phoneNumber.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + mBinding.phoneNumber.getText().toString()));
+            getContext().startActivity(intent);
+        });
+
+        mBinding.email.setOnClickListener(v -> {
+
+            try{
+                Intent intent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + mBinding.email.getText().toString()));
+                intent.putExtra(Intent.EXTRA_SUBJECT, "");
+                intent.putExtra(Intent.EXTRA_TEXT, "");
+                getContext().startActivity(intent);
+            }catch(ActivityNotFoundException e){
+                e.printStackTrace();
+            }
+        });
+
+        mBinding.location.setOnClickListener(v ->{
+            Uri gmmIntentUri = Uri.parse("geo:" + lat +"," + lng + "q=" + mBinding.location.getText().toString());
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                startActivity(mapIntent);
+            }
+        });
         return mBinding.getRoot();
 
     }

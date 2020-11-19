@@ -48,7 +48,6 @@ public class ClientsFragment extends Fragment  implements  ClientsListAdapter.Cl
      private ClientsViewModel mMainViewModel;
      private FragmentClientsBinding mBinding;
      private List<ModelClients> mClients = new ArrayList<>();
-     private ClientsAdapter mClientsAdapter;
      private  NavController mNavController;
      private LoginViewModel mLoginViewModel;
      private ClientsListAdapter mListAdapter;
@@ -59,9 +58,45 @@ public class ClientsFragment extends Fragment  implements  ClientsListAdapter.Cl
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         mBinding = FragmentClientsBinding.inflate(inflater,container,false);
         View v = mBinding.getRoot();
+        mMainViewModel = new ViewModelProvider(requireActivity()).get(ClientsViewModel.class);
+        mLoginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        setHasOptionsMenu(true);
+
+        mNavController = NavHostFragment.findNavController(this);
+
+        mMainViewModel.getClients();
+        mMainViewModel.clients().observe(getViewLifecycleOwner(),this::consumeClients);
+
+        setupRecyclerView();
+
+
+
+        mBinding.addClient.setOnClickListener(view -> {
+
+            mNavController.navigate(ClientsFragmentDirections.actionAddClient());
+        });
+
+
+        mBinding.searchTxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                searchClient(s.toString());
+
+            }
+        });
 
 
         return v;
@@ -104,7 +139,7 @@ public class ClientsFragment extends Fragment  implements  ClientsListAdapter.Cl
         RecyclerView recyclerView =  mBinding.clientsRecyclerview;
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), VERTICAL);
         recyclerView.addItemDecoration(itemDecor);
-       // mClientsAdapter = new ClientsAdapter(this,mClients);
+
         mListAdapter = new ClientsListAdapter(this);
         recyclerView.setAdapter(mListAdapter);
 
@@ -131,15 +166,17 @@ public class ClientsFragment extends Fragment  implements  ClientsListAdapter.Cl
             List<ModelClients> clients =response.getData();
             if(clients != null){
                 Timber.e("Clients: " + mClients.toString());
-                //DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), VERTICAL);
-               // mBinding.clientsRecyclerview.addItemDecoration(itemDecor);
+
                 mListAdapter.submitList(clients);
+                mListAdapter.notifyDataSetChanged();
+                mClients.clear();
+                mClients.addAll(clients);
                 if(clients.isEmpty()){
 
                     mBinding.clientsRelative.setVisibility(View.GONE);
                     mBinding.errorLinear.setVisibility(View.VISIBLE);
                 }
-               mListAdapter.notifyDataSetChanged();
+
             }
         }else{
             Toast.makeText(getContext(),response.getMessage(),Toast.LENGTH_SHORT).show();
@@ -149,7 +186,7 @@ public class ClientsFragment extends Fragment  implements  ClientsListAdapter.Cl
     private void logout(){
 
         mLoginViewModel.logout();
-        Timber.e("Token :" + mLoginViewModel.getToken());
+
 
         mNavController.navigate(BottomNavGraphDirections.actionLogout());
 
@@ -162,8 +199,10 @@ public class ClientsFragment extends Fragment  implements  ClientsListAdapter.Cl
                 .filter(modelClients -> modelClients.getName().toLowerCase().contains(s.toLowerCase())).collect(toList());
 
         mListAdapter = new ClientsListAdapter(this);
-        mBinding.clientsRecyclerview.setAdapter(mListAdapter);
+        mListAdapter.submitList(data);
         mListAdapter.notifyDataSetChanged();
+        mBinding.clientsRecyclerview.setAdapter(mListAdapter);
+
     }
 
 
@@ -180,52 +219,9 @@ public class ClientsFragment extends Fragment  implements  ClientsListAdapter.Cl
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mMainViewModel = new ViewModelProvider(requireActivity()).get(ClientsViewModel.class);
-        mLoginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-        setHasOptionsMenu(true);
-        mBinding.setLifecycleOwner(getViewLifecycleOwner());
-
-        mNavController = NavHostFragment.findNavController(this);
-
-        if(mLoginViewModel.getToken() == null){
-            mNavController.navigate(ClientsFragmentDirections.actionLogout());
-        }
 
 
 
-        setupRecyclerView();
-
-        mMainViewModel.clients().observe(getViewLifecycleOwner(),this::consumeClients);
-
-
-
-        mBinding.addClient.setOnClickListener(v -> {
-
-            mNavController.navigate(ClientsFragmentDirections.actionAddClient());
-        });
-
-
-        mBinding.searchTxt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                searchClient(s.toString());
-
-            }
-        });
-
-
-        System.out.println("Clients : " + mClients);
 
 
     }
