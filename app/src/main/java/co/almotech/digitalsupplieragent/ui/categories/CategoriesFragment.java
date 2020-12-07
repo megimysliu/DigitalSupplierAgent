@@ -71,11 +71,18 @@ public class CategoriesFragment extends Fragment implements CategoryListAdapter.
 
     private void consumeCategories(ModelCategoriesResponse response){
 
+        mBinding.progressCircular.setVisibility(View.GONE);
         if(! response.getError()){
 
             List<ModelCategories> categories = response.getData();
             mCategories.clear();
             mCategories.addAll(categories);
+            if(categories.isEmpty()){
+                mBinding.errorLinear.setVisibility(View.VISIBLE);
+            }else{
+                mBinding.errorLinear.setVisibility(View.GONE);
+
+            }
             mAdapter.submitList(categories);
         }else{
             Toast.makeText(getContext(),response.getMessage(),Toast.LENGTH_SHORT).show();

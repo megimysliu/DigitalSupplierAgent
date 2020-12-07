@@ -47,7 +47,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="32dp"
+                        android:layout_marginTop="16dp"
                         android:background="@drawable/circle"
                         android:gravity="center"
                         android:paddingBottom="16dp"
@@ -63,8 +63,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_marginStart="28dp"
-                        android:layout_marginTop="40dp"
+                        android:layout_marginStart="16dp"
                         android:layout_alignBaseline="@id/avatar"
                         android:layout_toEndOf="@id/avatar"
                         android:text="@{viemodel.user.name}"
@@ -138,12 +137,10 @@
                         android:layout_alignBaseline="@id/clientName"
                         android:layout_marginEnd="16dp"
                         android:padding="4dp"
-                        android:drawableLeft="@drawable/ic_edit"
                         android:drawablePadding="4dp"
-                        android:drawableTint="@color/colorPrimary"
-                        android:gravity="center"
                         android:backgroundTint="@android:color/white"
-                        />
+                        app:drawableTint="@color/colorPrimary"
+                        app:drawableLeftCompat="@drawable/ic_edit" />
                 </RelativeLayout>
 
                 <TextView

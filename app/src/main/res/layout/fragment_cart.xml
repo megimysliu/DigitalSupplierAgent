@@ -9,12 +9,73 @@
             type="co.almotech.digitalsupplieragent.ui.cart.CartViewModel" />
     </data>
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="true"
         android:focusableInTouchMode="true"
         tools:context=".ui.clients.ClientsFragment">
+
+
+        <LinearLayout
+            android:id="@+id/topLinear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="100"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="16dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/search_cardview"
+                android:layout_width="0dp"
+                android:layout_weight="90"
+                android:layout_height="wrap_content"
+                android:elevation="2dp"
+                app:cardBackgroundColor="@color/colorSearchGray"
+                app:cardCornerRadius="5dp"
+
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/search_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/search_order_items"
+                    android:padding="8dp"
+                    android:layout_gravity="center_horizontal"
+                    android:drawableLeft="@drawable/ic_search"
+                    android:drawablePadding="8dp"
+                    android:background="@null"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/delete_btn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:elevation="2dp"
+                android:layout_weight="10"
+                app:cardBackgroundColor="@color/colorLightRed"
+
+                android:layout_marginStart="8dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        app:srcCompat="@drawable/ic_trash" />
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
 
 
 
@@ -24,7 +85,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone"
-            android:layout_gravity="center_vertical|center_horizontal">
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true">
 
             <ImageView
                 android:id="@+id/error_img"
@@ -53,7 +115,8 @@
             android:id="@+id/progress_circular"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             />
 
         <androidx.core.widget.NestedScrollView
@@ -63,75 +126,12 @@
             android:layout_marginTop="16dp"
             android:scrollbars="none"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_below="@id/topLinear"
+            android:layout_marginBottom="16dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <LinearLayout
-                    android:id="@+id/topLinear"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="100"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_marginTop="8dp">
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/search_cardview"
-                        android:layout_width="0dp"
-                        android:layout_weight="90"
-                        android:layout_height="wrap_content"
-                        android:elevation="2dp"
-                        app:cardBackgroundColor="@color/colorSearchGray"
-                        app:cardCornerRadius="5dp"
-
-                        >
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/search_txt"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/search_order_items"
-                            android:padding="8dp"
-                            android:layout_gravity="center_horizontal"
-                            android:drawableLeft="@drawable/ic_search"
-                            android:drawablePadding="8dp"
-                            android:background="@null"/>
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/delete_btn"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:elevation="2dp"
-                        android:layout_weight="10"
-                        app:cardBackgroundColor="@color/colorLightRed"
-
-                        android:layout_marginStart="8dp">
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="8dp">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                app:srcCompat="@drawable/ic_trash" />
-                        </RelativeLayout>
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                </LinearLayout>
-
-
-
-
-
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/cart_recyclerview"
@@ -140,9 +140,9 @@
                     android:layout_marginTop="16dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:orientation="vertical"
-                    android:layout_below="@id/topLinear"/>
+                   />
             </RelativeLayout>
 
         </androidx.core.widget.NestedScrollView>
-    </FrameLayout>
+    </RelativeLayout>
 </layout>

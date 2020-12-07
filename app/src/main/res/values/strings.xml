@@ -92,7 +92,7 @@
     <string name="created_at">Created on</string>
     <string name="cash">Cash</string>
     <string name="quantity">Items: %s </string>
-    <string name="currency">$%s</string>
+    <string name="currency">%s ALL</string>
     <string name="url_category_photos">https://develop.almotech.co/digital_supplier/public/storage/</string>
     <string name="escape_char">\n</string>
     <string name="empty_str"> </string>

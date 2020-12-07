@@ -79,16 +79,12 @@ public class MainActivity extends AppCompatActivity {
             mBinding.bottomNavView.setOnNavigationItemSelectedListener(item -> {
                 int id = item.getItemId();
                 NavOptions navOptions;
-                if(id == R.id.clientFragment){
-                     navOptions = new NavOptions.Builder()
-                            .setPopUpTo(R.id.splashFragment, false)
-                            .build();
-                }else{
+
                  navOptions = new NavOptions.Builder()
                         .setPopUpTo(R.id.clientsFragment, false)
                         .build();
 
-                }
+
 
 
 
@@ -114,15 +110,15 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-//
-//    @Override
-//    public void onBackPressed() {
-//        NavDestination navDestination = mNavController.getCurrentDestination();
-//        if (navDestination != null
-//                && navDestination.getId() == R.id.clientsFragment) {
-//            finish();
-//            return;
-//        }
-//        super.onBackPressed();
-//    }
+
+    @Override
+    public void onBackPressed() {
+        NavDestination navDestination = mNavController.getCurrentDestination();
+        if (navDestination != null
+                && navDestination.getId() == R.id.clientsFragment) {
+            finish();
+            return;
+        }
+        super.onBackPressed();
+    }
 }

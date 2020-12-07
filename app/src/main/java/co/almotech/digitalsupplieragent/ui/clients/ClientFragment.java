@@ -76,12 +76,14 @@ public class ClientFragment extends Fragment {
         });
 
         mBinding.location.setOnClickListener(v ->{
-            Uri gmmIntentUri = Uri.parse("geo:" + lat +"," + lng + "q=" + mBinding.location.getText().toString());
+            Uri gmmIntentUri = Uri.parse("geo:<" + lat +">,<" + lng + ">?q=" + mBinding.location.getText().toString().trim());
+            System.out.println("Address txt" + mBinding.location.getText().toString());
             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
             mapIntent.setPackage("com.google.android.apps.maps");
             if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null) {
                 startActivity(mapIntent);
             }
+
         });
         return mBinding.getRoot();
 
