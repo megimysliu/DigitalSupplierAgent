@@ -198,15 +198,18 @@ public class MapsFragment extends Fragment implements EasyPermissions.Permission
     @SuppressLint("MissingPermission")
     @AfterPermissionGranted(MY_PERMISSIONS_REQUEST_LOCATION)
     private void getLocation(){
+        String [] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_BACKGROUND_LOCATION};
+
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-            String [] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION};
+
 
             if(EasyPermissions.hasPermissions(requireContext(),permissions)) {
                 mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
 
-                    if (location != null) {
 
+                    if (location != null) {
+                        System.out.println("Has permissions");
                         MarkerOptions markerOptions = new MarkerOptions();
                         markerOptions.position(new LatLng(location.getLatitude(), location.getLongitude()));
                         mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
@@ -248,7 +251,7 @@ public class MapsFragment extends Fragment implements EasyPermissions.Permission
 
                 EasyPermissions.requestPermissions(
                         this, getString(R.string.location_rationale),
-                        MY_PERMISSIONS_REQUEST_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION);
+                        MY_PERMISSIONS_REQUEST_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION);
             }
 
         }
@@ -266,29 +269,79 @@ public class MapsFragment extends Fragment implements EasyPermissions.Permission
 
 
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
 //
-
+        String [] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_BACKGROUND_LOCATION};
+        String []foregroundPermissions =  new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION};
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-            String [] permissions = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_BACKGROUND_LOCATION};
 
-            if(EasyPermissions.hasPermissions(getContext(),permissions)){
+
+            if(EasyPermissions.hasPermissions(requireContext(),permissions)){
 
                 System.out.println("Permission granted");
+
+                mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
+
+                    if (location != null) {
+
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        markerOptions.position(new LatLng(location.getLatitude(), location.getLongitude()));
+                        mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+                        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 15));
+                        mFusedLocationProviderClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+                        mGoogleMap.setMyLocationEnabled(true);
+
+                    }
+                });
+
+
+
+            }else if(EasyPermissions.hasPermissions(requireContext(), foregroundPermissions)){
+                System.out.println(" Foreground Permission granted");
+
+                mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
+
+                    if (location != null) {
+
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        markerOptions.position(new LatLng(location.getLatitude(), location.getLongitude()));
+                        mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+                        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 15));
+                        mFusedLocationProviderClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+                        mGoogleMap.setMyLocationEnabled(true);
+
+                    }
+                });
 
 
             }
 
 
+
+        }else {
+
+            if (EasyPermissions.hasPermissions(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                //System.out.println("Permission granted");
+                mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
+
+                    if (location != null) {
+
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        markerOptions.position(new LatLng(location.getLatitude(), location.getLongitude()));
+                        mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+                        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 15));
+                        mFusedLocationProviderClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+                        mGoogleMap.setMyLocationEnabled(true);
+
+                    }
+                });
+
+
+            }
         }
-
-        if(EasyPermissions.hasPermissions(getContext(),Manifest.permission.ACCESS_COARSE_LOCATION)){
-
-          System.out.println("Permission granted");
-
-
-      }
 
 
 

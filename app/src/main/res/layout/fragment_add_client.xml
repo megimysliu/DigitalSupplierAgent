@@ -133,7 +133,6 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/locationText"
                             android:layout_width="match_parent"
-                            android:textSize="14sp"
                             android:focusableInTouchMode="false"
                             android:cursorVisible="false"
                             android:inputType="textNoSuggestions"

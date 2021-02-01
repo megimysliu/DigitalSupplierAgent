@@ -61,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{order.clientName}"
                 android:textSize="16sp"
+
                 tools:text="@string/client_name_placeholder"
                 android:layout_marginBottom="4dp"
                 android:textStyle="bold" />
@@ -78,9 +79,8 @@
                 android:id="@+id/sum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{String.format(@string/currency,Integer.toString(order.priceTotal))}"
-
-                android:textSize="18sp"
+                android:text="@{String.format(@string/currency_formatted,order.priceTotal)}"
+                android:textSize="16sp"
                 tools:text="@string/quantity_placeholder"
                 android:textStyle="bold"
              />

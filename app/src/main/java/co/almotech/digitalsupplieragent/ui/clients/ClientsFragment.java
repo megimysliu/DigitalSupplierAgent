@@ -21,9 +21,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.transition.MaterialElevationScale;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,11 +67,11 @@ public class ClientsFragment extends Fragment  implements  ClientsListAdapter.Cl
         setHasOptionsMenu(true);
 
         mNavController = NavHostFragment.findNavController(this);
-
+        setupRecyclerView();
         mMainViewModel.getClients();
         mMainViewModel.clients().observe(getViewLifecycleOwner(),this::consumeClients);
 
-        setupRecyclerView();
+
 
 
 
@@ -152,6 +154,10 @@ public class ClientsFragment extends Fragment  implements  ClientsListAdapter.Cl
 
         FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder()
                 .addSharedElement(view,transitionName).build();
+        MaterialElevationScale exitTransition =  new MaterialElevationScale(false);
+        exitTransition.setDuration(200);
+        MaterialElevationScale reenterTransition = new MaterialElevationScale(true);
+        reenterTransition.setDuration(200);
 
         mMainViewModel.setClient(client);
         mNavController.navigate(ClientsFragmentDirections.actionClient(),extras);
@@ -173,7 +179,7 @@ public class ClientsFragment extends Fragment  implements  ClientsListAdapter.Cl
                 mClients.addAll(clients);
                 if(clients.isEmpty()){
 
-                    mBinding.clientsRelative.setVisibility(View.GONE);
+
                     mBinding.errorLinear.setVisibility(View.VISIBLE);
                 }
 
@@ -219,6 +225,14 @@ public class ClientsFragment extends Fragment  implements  ClientsListAdapter.Cl
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                startPostponedEnterTransition();
+                return true;
+            }
+        });
 
 
 

@@ -11,6 +11,7 @@ import co.almotech.digitalsupplieragent.data.model.ModelClients;
 import co.almotech.digitalsupplieragent.data.model.ModelClientsResponse;
 import co.almotech.digitalsupplieragent.data.model.ModelCreateClientResponse;
 import co.almotech.digitalsupplieragent.repo.MainRepository;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -27,12 +28,11 @@ public class ClientsViewModel extends ViewModel {
 
     private final MutableLiveData<ModelClients> client = new MutableLiveData<>();
     public final ObservableInt selectedClient = new ObservableInt(-1);
-    private final SavedStateHandle savedStateHandle;
+
 
     @ViewModelInject
-    public ClientsViewModel(MainRepository mainRepository,@Assisted SavedStateHandle savedStateHandle){
+    public ClientsViewModel(MainRepository mainRepository){
         mRepository = mainRepository;
-        this.savedStateHandle = savedStateHandle;
         getClients();
     }
 
@@ -40,7 +40,7 @@ public class ClientsViewModel extends ViewModel {
 
         mDisposable.add(mRepository.getAllClients()
         .observeOn(AndroidSchedulers.mainThread())
-
+        .subscribeOn(Schedulers.io())
                 .subscribe(clients::setValue,
                         throwable ->
                         clients.setValue(ModelClientsResponse.modelError(throwable))

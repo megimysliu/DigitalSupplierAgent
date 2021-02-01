@@ -131,22 +131,24 @@
                         android:orientation="vertical"
                         android:layout_margin="8dp"
                         android:visibility="gone">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            app:srcCompat="@drawable/ic_blank"/>
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:layout_width="300dp"
+                            android:layout_height="300dp"
+                            android:layout_gravity="center_horizontal"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/empty_box"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/no_items"
-                            android:layout_marginTop="16dp"
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:layout_gravity="center"
                             android:gravity="center"/>
                     </LinearLayout>
+<!--
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -155,6 +157,7 @@
                         android:layout_marginTop="8dp"
                         android:src="@drawable/dashed"
                         android:layerType="software"/>
+-->
 
 
 
@@ -185,43 +188,12 @@
 
                     </RelativeLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/colorMediumGray"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"/>
-
-                    <LinearLayout
-                        android:id="@+id/linearLayout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/paymentMethodLabel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/payment_method"
-                            android:textAppearance="?attr/textAppearanceHeadline6"
-                            android:textSize="16sp"/>
-                        <TextView
-                            android:id="@+id/paymentMethod"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="Cash"/>
-                    </LinearLayout>
 
 
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/colorMediumGray"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"/>
+
+
+
 
                     <Button
                         android:id="@+id/add_order"
@@ -230,7 +202,7 @@
                         android:background="@drawable/button_shape"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="24dp"
                         android:textAllCaps="false"
                         style="@style/MainButton"
                         android:layout_marginBottom="24dp"

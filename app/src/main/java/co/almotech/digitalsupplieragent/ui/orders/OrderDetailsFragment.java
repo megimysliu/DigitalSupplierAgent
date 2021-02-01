@@ -51,7 +51,7 @@ public class OrderDetailsFragment extends Fragment {
         RecyclerView recyclerView = mBinding.itemsRecycler;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), VERTICAL);
-        //recyclerView.addItemDecoration(itemDecor);
+        recyclerView.addItemDecoration(itemDecor);
         mAdapter = new OrderItemAdapter(mItems);
         recyclerView.setAdapter(mAdapter);
 

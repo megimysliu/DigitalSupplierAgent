@@ -54,6 +54,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:text="@string/products"
+                        android:textStyle="bold"
                         android:text="@{product.name}"
                         android:textSize="16sp" />
 
@@ -63,7 +64,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         tools:text="@string/img_description"
-                        android:text="@{product.description !=null ? Html.fromHtml(product.description).toString().replace(@string/escape_char,@string/empty_str) : @string/empty_str}"
+
+                        android:text="@{product.description !=null ? Html.fromHtml(product.description).toString().replace(@string/escape_char,@string/empty_str) : @string/no_description}"
                         android:textSize="14sp" />
 
                     <TextView
@@ -71,7 +73,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@{String.format(@string/currency,Integer.toString(product.price))}"
+                        android:text="@{String.format(@string/currency_formatted,product.price)}"
+                        tools:text="39.9 ALL"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 

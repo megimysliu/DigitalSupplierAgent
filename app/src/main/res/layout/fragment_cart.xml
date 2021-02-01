@@ -25,6 +25,10 @@
             android:weightSum="100"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="4dp"
+            android:layout_marginStart="16dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
             android:layout_marginRight="4dp"
             android:layout_marginTop="16dp">
 
@@ -88,24 +92,16 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true">
 
-            <ImageView
-                android:id="@+id/error_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                app:srcCompat="@drawable/ic_empty_cart"
-                android:contentDescription="@string/img_description"
 
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no_items_err_msg"
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animation"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
                 android:layout_marginTop="16dp"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimary"/>
+                app:lottie_rawRes="@raw/empty_cart" />
+
 
         </LinearLayout>
 

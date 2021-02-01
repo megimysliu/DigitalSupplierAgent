@@ -28,9 +28,10 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="32dp"
-                android:textStyle="bold"
+                android:fontFamily="@font/open_sans"
                 android:text="@string/edit_profile"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"

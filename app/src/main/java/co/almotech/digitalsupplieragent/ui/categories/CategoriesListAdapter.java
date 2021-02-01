@@ -63,8 +63,8 @@ public class CategoriesListAdapter  extends ListAdapter<ModelCategories, Categor
             v.setOnClickListener(view ->
                     listener.onCategoryClick(category.getId()));
 
-            mBinding.categoryLinear.setBackgroundColor(ContextCompat.getColor(v.getContext(), colorDefault));
-            mBinding.cardView.setBackgroundColor(ContextCompat.getColor(v.getContext(), colorDefault));
+            //mBinding.categoryLinear.setBackgroundColor(ContextCompat.getColor(v.getContext(), colorDefault));
+            mBinding.cardView.setCardBackgroundColor(ContextCompat.getColor(v.getContext(), colorDefault));
         }
     }
 

@@ -56,6 +56,7 @@
                         android:layout_height="wrap_content"
                         android:text="@{product.name}"
                         android:textSize="16sp"
+                        android:textStyle="bold"
                         tools:text="Product name" />
 
                     <TextView
@@ -64,7 +65,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:layout_marginEnd="50dp"
-                        android:text="@{Html.fromHtml(product.description).toString().replace(@string/escape_char,@string/empty_str)}"
+                        android:text="@{ product.description.empty ? @string/no_description: Html.fromHtml(product.description).toString().replace(@string/escape_char,@string/empty_str)}"
                         android:textSize="14sp"
                         tools:text="Product description" />
 
@@ -73,7 +74,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@{String.format(@string/currency,Integer.toString(product.price))}"
+                        android:text="@{String.format(@string/currency_formatted,product.price)}"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         tools:text="$30" />

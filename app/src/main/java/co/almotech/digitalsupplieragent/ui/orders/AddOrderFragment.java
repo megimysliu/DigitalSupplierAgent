@@ -147,7 +147,7 @@ public class AddOrderFragment extends Fragment {
         RecyclerView recyclerView = mBinding.itemsRecycler;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), VERTICAL);
-       // recyclerView.addItemDecoration(itemDecor);
+        recyclerView.addItemDecoration(itemDecor);
         mItemAdapter = new AddItemAdapter(mItems,mProducts);
         recyclerView.setAdapter(mItemAdapter);
     }

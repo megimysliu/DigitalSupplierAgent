@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import co.almotech.digitalsupplieragent.R;
 import co.almotech.digitalsupplieragent.data.model.ModelCategories;
 import co.almotech.digitalsupplieragent.data.model.ModelItem;
 import co.almotech.digitalsupplieragent.data.model.ModelProducts;
@@ -67,6 +68,8 @@ public class CartListAdapter extends ListAdapter<ModelItem, CartListAdapter.View
             mBinding.setItem(item);
             mBinding.setProduct(product);
             mBinding.setViewmodel(viewModel);
+
+
             mBinding.executePendingBindings();
         }
     }

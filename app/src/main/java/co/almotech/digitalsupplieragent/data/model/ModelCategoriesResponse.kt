@@ -5,6 +5,7 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import co.almotech.digitalsupplieragent.R
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.gson.annotations.Expose
 
 data class ModelCategoriesResponse(@Expose val error:Boolean,
@@ -23,7 +24,7 @@ data class ModelCategoriesResponse(@Expose val error:Boolean,
             if (!url.isNullOrEmpty()){
 
                 Glide.with(image.context).load(url).centerCrop()
-                        .placeholder(R.drawable.ic_noimg)
+                        .apply( RequestOptions().placeholder(R.drawable.loading_animation).error(R.drawable.ic_broken))
                         .into(image)
             }
             else{
