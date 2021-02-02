@@ -1,17 +1,27 @@
 package co.almotech.digitalsupplieragent.ui.profile;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.fragment.FragmentNavigator;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Toast;
+
+import com.google.android.material.transition.MaterialElevationScale;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import co.almotech.digitalsupplieragent.R;
 import co.almotech.digitalsupplieragent.auth.LoginViewModel;
 import co.almotech.digitalsupplieragent.data.model.ModelClients;
 import co.almotech.digitalsupplieragent.data.model.ModelClientsResponse;
@@ -74,9 +84,17 @@ public class AgentFragment extends Fragment implements ClientsAdapter.ClientClic
 
     @Override
     public void onClientClick(ModelClients client,View view) {
+        String transitionName =  getString(R.string.client_fragment_transition_name);
+
+        FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder()
+                .addSharedElement(view,transitionName).build();
+        MaterialElevationScale exitTransition =  new MaterialElevationScale(false);
+        exitTransition.setDuration(200);
+        MaterialElevationScale reenterTransition = new MaterialElevationScale(true);
+        reenterTransition.setDuration(200);
 
         mClientsViewModel.setClient(client);
-        navController.navigate(AgentFragmentDirections.actionClient());
+        navController.navigate(AgentFragmentDirections.actionClient(),extras);
 
     }
 
@@ -95,6 +113,17 @@ public class AgentFragment extends Fragment implements ClientsAdapter.ClientClic
         }else{
             Toast.makeText(getContext(), response.getMessage(), Toast.LENGTH_SHORT).show();
         }
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        view.getViewTreeObserver().addOnPreDrawListener(() -> {
+            startPostponedEnterTransition();
+            return true;
+        });
 
     }
 }

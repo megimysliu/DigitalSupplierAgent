@@ -12,83 +12,84 @@
             type="co.almotech.digitalsupplieragent.data.model.ModelClients"/>
     </data>
 
-    <RelativeLayout
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:transitionName="@{@string/client_item_transition_name(client.id)}"
-        android:padding="4dp">
+        <RelativeLayout
 
-        <TextView
-            android:id="@+id/avatar"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:background="@drawable/circle"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="8dp"
-            android:padding="4dp"
-            android:paddingBottom="16dp"
-            android:backgroundTint="@color/colorSearchGray"
-            android:text="@{client.name.substring(0,1).toUpperCase()}"
-            android:textColor="@color/colorPrimary"
-            tools:text="A"
-            android:textSize="30sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:id="@+id/clientLinear"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/avatar"
-            android:layout_marginStart="8dp"
-            android:padding="8dp"
-            android:layout_marginTop="8dp">
+            xmlns:tools="http://schemas.android.com/tools"
+            android:transitionName="@{@string/client_item_transition_name(client.id)}"
+            android:padding="4dp">
 
-
-
-
+            <TextView
+                android:id="@+id/avatar"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/circle"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="8dp"
+                android:padding="4dp"
+                android:paddingBottom="16dp"
+                android:backgroundTint="@color/colorSearchGray"
+                android:text="@{client.name.substring(0,1).toUpperCase()}"
+                android:textColor="@color/colorPrimary"
+                tools:text="A"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
             <LinearLayout
+                android:id="@+id/clientLinear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/avatar"
+                android:layout_marginStart="8dp"
                 android:padding="8dp"
-                android:layout_gravity="center_vertical"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/clientName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{client.name}"
-                    tools:text="Client name"
-                    android:textStyle="bold"
-                    android:textSize="18sp"/>
+                android:layout_marginTop="8dp">
 
-                <TextView
-                    android:id="@+id/email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    tools:text="email@email.com"
-                    android:text="@{client.email}"/>
 
-                <TextView
-                    android:id="@+id/phone_number"
+
+
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    tools:text="0897567890"
-                    android:text="@{client.phoneNumber}"/>
+                    android:padding="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/clientName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{client.name}"
+                        tools:text="Client name"
+                        android:textStyle="bold"
+                        android:textSize="18sp"/>
+
+                    <TextView
+                        android:id="@+id/email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        tools:text="email@email.com"
+                        android:text="@{client.email}"/>
+
+                    <TextView
+                        android:id="@+id/phone_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        tools:text="0897567890"
+                        android:text="@{client.phoneNumber}"/>
+
+                </LinearLayout>
+
+
 
             </LinearLayout>
-
-
-
-        </LinearLayout>
 
 
             <ImageView
@@ -106,5 +107,7 @@
 
 
 
-    </RelativeLayout>
+        </RelativeLayout>
+
+
 </layout>

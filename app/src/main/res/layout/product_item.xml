@@ -67,6 +67,8 @@
                         android:layout_marginEnd="50dp"
                         android:text="@{ product.description.empty ? @string/no_description: Html.fromHtml(product.description).toString().replace(@string/escape_char,@string/empty_str)}"
                         android:textSize="14sp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="Product description" />
 
                     <TextView

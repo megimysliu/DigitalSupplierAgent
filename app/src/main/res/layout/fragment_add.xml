@@ -41,15 +41,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+
                     android:layout_below="@id/addOrderLabel">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/client_autocomplete"
-
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="16dp"
                         app:errorEnabled="true"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
@@ -71,8 +73,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:errorEnabled="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_marginBottom="16dp">
+                        android:layout_marginBottom="8dp">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/notes"
                             android:layout_width="match_parent"
@@ -86,8 +90,10 @@
                         android:id="@+id/type_autocomplete"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="8dp"
                         app:errorEnabled="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
                         <AutoCompleteTextView
@@ -116,7 +122,9 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginBottom="8dp"
                         android:textSize="20sp"
-                        android:textAppearance="?attr/textAppearanceHeadline6"/>
+                        android:textStyle="bold"
+                        android:textColor="@color/colorBlack"
+                       />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/itemsRecycler"
@@ -172,8 +180,9 @@
                             android:layout_height="wrap_content"
                             android:text="@string/total_label"
                             android:layout_alignParentStart="true"
-                            android:textAppearance="?attr/textAppearanceHeadline6"
-                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="18sp"
                             android:layout_marginStart="8dp"/>
                         <TextView
                             android:id="@+id/total"
@@ -181,8 +190,9 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="16dp"
-                            android:textAppearance="?attr/textAppearanceHeadline6"
-                            android:textSize="18sp"
+                            android:textColor="@color/colorBlack"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
                             android:text="@{String.format(@string/currency,String.valueOf(viewmodel.totalSum))}"/>
 
 

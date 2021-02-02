@@ -234,10 +234,6 @@ public class ClientsFragment extends Fragment  implements  ClientsListAdapter.Cl
             }
         });
 
-
-
-
-
     }
 
 
